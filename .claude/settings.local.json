@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Select-String -Path \"C:\\\\Users\\\\张轶林\\\\.claude\\\\projects\\\\d--AI-Workspace\\\\bcf9e58c-aeec-4325-996a-7612167e6327.jsonl\" -Pattern \"Oasis|oasis|绿洲\" | Select-Object -First 5 | ForEach-Object { $_.Line.Substring\\(0, [Math]::Min\\(500, $_.Line.Length\\)\\) })",
+      "PowerShell($lines = Get-Content \"C:\\\\Users\\\\张轶林\\\\.claude\\\\projects\\\\C--Users----\\\\a90aa4c4-c66d-4a54-b714-0a421d670331.jsonl\" -Encoding UTF8 | Where-Object { $_ -match '\"type\":\"user\"' -and $_ -match '\"text\":\"' }; for \\($i = 0; $i -lt [Math]::Min\\($lines.Count, 15\\); $i++\\) { $line = $lines[$i]; $match = [regex]::Match\\($line, '\"text\":\"\\([^\"]{1,200}\\)\"'\\); if \\($match.Success\\) { Write-Output \"--- User msg $i ---\"; Write-Output $match.Groups[1].Value } })",
+      "PowerShell(& \"D:\\\\Oasis_Project\\\\python_backend\\\\.venv\\\\Scripts\\\\python.exe\" -c \"import lunar_python; print\\(dir\\(lunar_python\\)\\)\")",
+      "PowerShell(& \"D:\\\\Oasis_Project\\\\python_backend\\\\.venv\\\\Scripts\\\\python.exe\" -c \"from lunar_python import Solar, Lunar, EightChar; s = Solar.fromYmd\\(1990, 5, 20\\); l = s.getLunar\\(\\); print\\('ũ��:', l.toFullString\\(\\)\\); print\\('����:', l.getEightChar\\(\\).toFullString\\(\\)\\); print\\('����:', l.getEightChar\\(\\).getYear\\(\\), l.getEightChar\\(\\).getMonth\\(\\), l.getEightChar\\(\\).getDay\\(\\), l.getEightChar\\(\\).getTime\\(\\)\\)\")"
+    ]
+  }
+}

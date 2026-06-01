@@ -8,16 +8,20 @@ from app.api.auth_api import router as auth_router
 from app.api.oasis_api import router as oasis_router
 from app.core.config import settings
 from app.core.exceptions import global_exception_handler
+from app.core.kb_provider import init_kb
 from app.core.logger import logger
 from app.db.base import Base
 from app.db.database import engine
 
 
 # 应用启动时自动创建所有表（幂等，已存在的表不重建）
+# 同时加载 RAG 知识库（应用级单例，整个进程生命周期内只加载一次）
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     logger.info("Database tables ensured.")
+    init_kb()
+    logger.info("Knowledge base initialized.")
     yield
 
 

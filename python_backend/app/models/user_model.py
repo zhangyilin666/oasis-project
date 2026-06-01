@@ -11,7 +11,7 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     openid: Mapped[str] = mapped_column(
-        String(255), unique=True, index=True, nullable=False
+        String(128), unique=True, index=True, nullable=False
     )
     nickname: Mapped[str | None] = mapped_column(String(255), nullable=True)
     avatar_url: Mapped[str | None] = mapped_column(String(500), nullable=True)

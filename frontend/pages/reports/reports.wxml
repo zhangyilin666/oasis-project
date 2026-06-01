@@ -1,0 +1,40 @@
+<!-- 报告列表页 -->
+<view class="reports-page">
+  <!-- 列表 -->
+  <view wx:if="{{!isEmpty && !isError}}">
+    <view
+      class="card report-item"
+      wx:for="{{reports}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onTapReport"
+    >
+      <view class="report-item-header">
+        <text class="report-info">{{item.birth_info}}</text>
+        <text class="report-arrow">→</text>
+      </view>
+      <text class="report-preview" wx:if="{{item.ai_analysis_preview}}">
+        {{item.ai_analysis_preview}}...
+      </text>
+      <text class="report-date">{{item.created_at}}</text>
+    </view>
+  </view>
+
+  <!-- 加载更多提示 -->
+  <view class="load-more" wx:if="{{isLoading && reports.length > 0}}">
+    <text>正在加载...</text>
+  </view>
+  <view class="load-more" wx:if="{{!hasMore && reports.length > 0}}">
+    <text class="no-more">— 共 {{total}} 条报告 —</text>
+  </view>
+
+  <!-- 空状态 -->
+  <empty-state
+    wx:if="{{isEmpty && !isLoading && !isError}}"
+    message="还没有分析报告"
+    hint="前往首页开始你的第一次八字分析"
+  />
+
+  <!-- 错误状态 -->
+  <error-retry wx:if="{{isError && !isLoading}}" bindretry="loadReports" />
+</view>

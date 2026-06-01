@@ -1,3 +1,5 @@
+import json
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -8,6 +10,8 @@ engine = create_engine(
     pool_size=10,
     max_overflow=20,
     pool_pre_ping=True,
+    json_serializer=lambda obj: json.dumps(obj, ensure_ascii=False),
+    json_deserializer=json.loads,
 )
 
 SessionLocal = sessionmaker(

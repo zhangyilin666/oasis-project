@@ -39,18 +39,6 @@ class OasisResponse(BaseModel):
     message: str = "ok"
 
 
-class WechatLoginRequest(BaseModel):
-    """微信小程序登录请求"""
-    code: str = Field(..., min_length=1, max_length=256)
-
-    @field_validator("code")
-    @classmethod
-    def validate_code_not_empty(cls, v: str) -> str:
-        if not v.strip():
-            raise ValueError("code must not be empty or whitespace")
-        return v
-
-
 class LoginData(BaseModel):
     """登录成功返回的业务数据"""
     token: str

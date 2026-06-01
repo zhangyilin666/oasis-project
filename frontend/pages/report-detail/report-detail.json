@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "分析报告",
+  "usingComponents": {
+    "loading-overlay": "/components/loading-overlay/loading-overlay",
+    "error-retry": "/components/error-retry/error-retry"
+  }
+}

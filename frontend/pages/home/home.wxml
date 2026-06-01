@@ -1,0 +1,85 @@
+<!-- 首页 -->
+<view class="home-page">
+  <!-- 页面头部 -->
+  <view class="home-header">
+    <text class="header-title">Oasis 绿洲</text>
+    <text class="header-date">{{todayFormatted}}</text>
+  </view>
+
+  <!-- 黄历卡片 -->
+  <view class="card almanac-card" wx:if="{{almanac}}">
+    <view class="almanac-top">
+      <view class="almanac-date-row">
+        <text class="lunar-date">{{almanac.lunar_year_cn}}{{almanac.lunar_month_cn}}{{almanac.lunar_day_cn}}</text>
+      </view>
+      <view class="almanac-ganzhi">
+        <text class="ganzhi-text">{{almanac.day_gan_zhi}}</text>
+        <text class="animal-text">{{almanac.animal}}年</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 冲生肖 -->
+    <view class="almanac-chong" wx:if="{{almanac.chong_sheng_xiao}}">
+      <text class="chong-label">冲煞</text>
+      <text class="chong-value">{{almanac.chong_sheng_xiao}}</text>
+    </view>
+
+    <!-- 宜 -->
+    <view class="almanac-section" wx:if="{{almanac.yi.length > 0}}">
+      <text class="section-label yi-label">宜</text>
+      <view class="tag-list">
+        <text class="tag tag-yi" wx:for="{{almanac.yi}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 忌 -->
+    <view class="almanac-section" wx:if="{{almanac.ji.length > 0}}">
+      <text class="section-label ji-label">忌</text>
+      <view class="tag-list">
+        <text class="tag tag-ji" wx:for="{{almanac.ji}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 吉神 -->
+    <view class="almanac-section" wx:if="{{almanac.ji_shen.length > 0}}">
+      <text class="section-label">吉神</text>
+      <view class="tag-list">
+        <text class="tag tag-ji-shen" wx:for="{{almanac.ji_shen}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 凶煞 -->
+    <view class="almanac-section" wx:if="{{almanac.xiong_sha.length > 0}}">
+      <text class="section-label">凶煞</text>
+      <view class="tag-list">
+        <text class="tag tag-ji" wx:for="{{almanac.xiong_sha}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="card loading-placeholder" wx:if="{{isLoading && !almanac}}">
+    <view class="skeleton-line"></view>
+    <view class="skeleton-line short"></view>
+    <view class="skeleton-line"></view>
+  </view>
+
+  <!-- 加载失败 -->
+  <error-retry wx:if="{{isError && !almanac}}" bindretry="loadAlmanac" />
+
+  <!-- 快速操作区 -->
+  <view class="quick-actions">
+    <button class="btn-analyze" bindtap="onTapAnalyze">🪐 立即分析八字</button>
+  </view>
+
+  <!-- 介绍卡片 -->
+  <view class="card intro-card">
+    <text class="intro-title">关于 Oasis 绿洲</text>
+    <text class="intro-text">
+      基于传统历法（lunar-python）和 AI 大模型，为您提供专业的八字命理分析、
+      五行生克解读、运势建议及每日黄历宜忌查询。
+    </text>
+  </view>
+</view>

@@ -1,0 +1,48 @@
+<!-- 个人中心 -->
+<view class="profile-page">
+
+  <!-- 用户信息卡片 -->
+  <view class="card profile-card">
+    <view class="avatar-placeholder">
+      <text class="avatar-text">{{avatarInitial}}</text>
+    </view>
+
+    <view class="profile-info">
+      <view class="id-row" bindtap="handleCopyUserId">
+        <text class="id-label">用户 ID</text>
+        <text class="id-value">{{userId}}</text>
+        <text class="copy-hint">点击复制</text>
+      </view>
+
+      <view class="login-time-row" wx:if="{{loginTime}}">
+        <text class="meta-label">登录时间</text>
+        <text class="meta-value">{{loginTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="action-section">
+    <button
+      class="btn-logout"
+      bindtap="handleLogout"
+      loading="{{isLoggingOut}}"
+      disabled="{{isLoggingOut}}"
+    >
+      {{isLoggingOut ? '正在退出...' : '退出登录'}}
+    </button>
+  </view>
+
+  <!-- 法律链接 -->
+  <view class="legal-section">
+    <text class="legal-link" bindtap="handleUserAgreement">《用户协议》</text>
+    <text class="legal-separator">|</text>
+    <text class="legal-link" bindtap="handlePrivacyPolicy">《隐私政策》</text>
+  </view>
+
+  <!-- 版本号 -->
+  <view class="version-footer">
+    <text class="version-text">Oasis 绿洲 v{{appVersion}}</text>
+  </view>
+
+</view>

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from app.services.ai_client import AIClient, create_claude_executor
+from app.services.analysis_service import analyze_user_input
 from app.services.calendar_service import (
     AlmanacDay,
     BaziResult,
@@ -11,8 +13,6 @@ from app.services.rag_service import (
     Document,
     KnowledgeBase,
     SearchResult,
-    get_kb,
-    reload_kb,
 )
 from app.services.wechat_service import authenticate_wechat_user
 from app.services.workflow_service import (
@@ -27,6 +27,8 @@ from app.services.workflow_service import (
 __all__ = [
     # 微信
     "authenticate_wechat_user",
+    # 分析编排
+    "analyze_user_input",
     # 工作流
     "StepConfig",
     "StepExecutor",
@@ -45,6 +47,7 @@ __all__ = [
     "Document",
     "KnowledgeBase",
     "SearchResult",
-    "get_kb",
-    "reload_kb",
+    # AI
+    "AIClient",
+    "create_claude_executor",
 ]

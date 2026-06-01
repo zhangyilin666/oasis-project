@@ -11,6 +11,7 @@ Agent 工作流编排引擎。
 """
 from __future__ import annotations
 
+import re
 import time
 from dataclasses import dataclass, field
 from typing import Any, Callable, Optional
@@ -22,9 +23,9 @@ from app.core.logger import logger
 # 数据模型
 # ---------------------------------------------------------------------------
 
-@dataclass
+@dataclass(frozen=True)
 class StepConfig:
-    """单个 Agent 步骤的运行时配置。"""
+    """单个 Agent 步骤的运行时配置（不可变）。"""
 
     name: str
     """步骤唯一标识，如 'bazi_calc'、'ai_analysis'"""
@@ -43,6 +44,14 @@ class StepConfig:
 
     output_schema: Optional[dict] = None
     """输出 JSON Schema（预留校验）"""
+
+    def extract_variables(self) -> set[str]:
+        """
+        提取 prompt_template 中所有 {variable} 占位符。
+
+        ``{{literal}}`` 双花括号转义不会被识别为变量。
+        """
+        return set(re.findall(r"(?<!\{)\{(\w+)\}(?!\})", self.prompt_template))
 
 
 @dataclass
@@ -177,13 +186,37 @@ class WorkflowPipeline:
 
     def __init__(self, name: str, executor: Optional[StepExecutor] = None):
         self.name = name
-        self.steps: list[StepConfig] = []
+        self._steps: list[StepConfig] = []
         self.executor = executor or StepExecutor()
 
     def add_step(self, step: StepConfig) -> "WorkflowPipeline":
         """链式添加步骤。"""
-        self.steps.append(step)
+        self._steps.append(step)
         return self
+
+    def _validate_template_variables(self, input_data: dict) -> None:
+        """
+        校验 input_data 覆盖所有外部模板变量。
+
+        跳过以 ``step_`` 开头的变量（这些是管线内部累积数据）。
+
+        Raises:
+            KeyError: 当模板引用了 input_data 中不存在的变量时。
+        """
+        external_vars: set[str] = set()
+        for step in self._steps:
+            for var in step.extract_variables():
+                if not var.startswith("step_"):
+                    external_vars.add(var)
+
+        missing = external_vars - set(input_data)
+        if missing:
+            raise KeyError(
+                f"Workflow '{self.name}' template references variables "
+                f"not found in input_data: {sorted(missing)}. "
+                f"Expected: {sorted(external_vars)}. "
+                f"Got: {sorted(input_data)}"
+            )
 
     def run(self, input_data: dict) -> WorkflowResult:
         """
@@ -199,13 +232,16 @@ class WorkflowPipeline:
         step_results: list[StepResult] = []
         accumulated_data = dict(input_data)
 
+        # ---- 模板变量校验：在执行任何步骤前检查 ----
+        self._validate_template_variables(input_data)
+
         logger.info(
             "Workflow '%s' started (%d steps)",
             self.name,
-            len(self.steps),
+            len(self._steps),
         )
 
-        for step in self.steps:
+        for step in self._steps:
             result = self.executor.execute(step, accumulated_data)
             step_results.append(result)
 
@@ -221,7 +257,7 @@ class WorkflowPipeline:
                     step.name,
                 )
                 # 将剩余步骤标记为 skipped
-                for remaining in self.steps[self.steps.index(step) + 1:]:
+                for remaining in self._steps[self._steps.index(step) + 1:]:
                     step_results.append(
                         StepResult(
                             step_name=remaining.name,
@@ -262,7 +298,9 @@ class WorkflowPipeline:
 # 预定义工作流
 # ---------------------------------------------------------------------------
 
-def create_oasis_analyze_workflow() -> WorkflowPipeline:
+def create_oasis_analyze_workflow(
+    executor: Optional[StepExecutor] = None,
+) -> WorkflowPipeline:
     """
     创建 Oasis 八字分析标准工作流。
 
@@ -271,10 +309,14 @@ def create_oasis_analyze_workflow() -> WorkflowPipeline:
       2. ai_analysis       — AI 命理分析
       3. suggestion        — 综合建议生成
 
+    Args:
+        executor: 步骤执行器。默认使用 StepExecutor()（mock）。
+                  对接真实 AI 时注入 StepExecutor(callable_fn=...)。
+
     Returns:
-        配置好的 WorkflowPipeline 实例（mock executor）。
+        配置好的 WorkflowPipeline 实例。
     """
-    pipeline = WorkflowPipeline(name="oasis_analyze")
+    pipeline = WorkflowPipeline(name="oasis_analyze", executor=executor)
 
     # Step 1: 八字计算（由 calendar_service 提供真实数据后替换）
     pipeline.add_step(
@@ -291,14 +333,21 @@ def create_oasis_analyze_workflow() -> WorkflowPipeline:
         )
     )
 
-    # Step 2: AI 命理分析
+    # Step 2: AI 命理分析（含古籍引用上下文）
     pipeline.add_step(
         StepConfig(
             name="ai_analysis",
             prompt_template=(
-                "基于以下八字数据进行命理分析：\n"
-                "{step_bazi_calculation_output}\n"
-                "请分析用户的五行格局、性格特征与人生趋势。"
+                "你是一位精通传统命理学的专家。请基于以下信息进行八字命理分析：\n\n"
+                "{kb_context}\n"
+                "八字排盘数据：\n"
+                "{step_bazi_calculation_output}\n\n"
+                "分析要求：\n"
+                "1. 先解读日主五行强弱与格局\n"
+                "2. 结合十神关系分析性格特征\n"
+                "3. 引用古籍原文佐证你的分析（引用时注明出处）\n"
+                "4. 分析人生主要趋势与关键节点\n"
+                "5. 语气温和、客观，避免绝对化断言"
             ),
             model="claude-sonnet-4-6",
             temperature=0.7,
@@ -312,8 +361,9 @@ def create_oasis_analyze_workflow() -> WorkflowPipeline:
             name="suggestion",
             prompt_template=(
                 "基于分析结果，给出个性化建议：\n"
-                "{step_ai_analysis_output}\n"
-                "请从健康、事业、感情三个维度给出实用建议。"
+                "{step_ai_analysis_output}\n\n"
+                "请从健康养生、事业方向、人际关系三个维度给出实用建议。"
+                "每条建议应具体、可执行，并关联命理分析中的发现。"
             ),
             model="claude-sonnet-4-6",
             temperature=0.8,

@@ -15,6 +15,14 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 10080  # 7 days
 
+    # Anthropic Claude API
+    ANTHROPIC_API_KEY: str = ""
+    ANTHROPIC_DEFAULT_MODEL: str = "claude-sonnet-4-6"
+
+    # WeChat Mini-Program
+    WECHAT_APPID: str = ""
+    WECHAT_SECRET: str = ""
+
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
 

@@ -13,10 +13,13 @@ RAG 知识库检索服务。
 
 用法::
 
-    from app.services.rag_service import KnowledgeBase, get_kb
+    from app.services.rag_service import KnowledgeBase
 
-    kb = get_kb()
+    kb = KnowledgeBase(data_dir=Path("data_center/knowledge"))
+    kb.load_all()
     results = kb.search("五行 金木水火土", top_k=5)
+
+应用级生命周期管理见 ``app.core.kb_provider``（FastAPI lifespan + Depends 注入）。
 """
 from __future__ import annotations
 
@@ -279,6 +282,53 @@ class KnowledgeBase:
     def document_count(self) -> int:
         return self.retriever.count()
 
+    def list_documents(self) -> list[dict]:
+        """
+        列出所有已加载文档的元信息。
+
+        Returns:
+            [{"id": "shishen_detail", "title": "十神详解", "paragraph_count": 25,
+              "source_file": "data_center/knowledge/shishen_detail.txt"}, ...]
+        """
+        docs: list[dict] = []
+        for doc in self.retriever._documents:
+            para_count = sum(
+                1 for d, _, _ in self.retriever._paragraphs if d.id == doc.id
+            )
+            docs.append({
+                "id": doc.id,
+                "title": doc.title,
+                "paragraph_count": para_count,
+                "source_file": doc.source_file,
+            })
+        return docs
+
+    def get_document(self, doc_id: str) -> dict | None:
+        """
+        获取单个文档的完整内容。
+
+        Args:
+            doc_id: 文档 ID（文件名 stem）。
+
+        Returns:
+            {"id": "shishen_detail", "title": "十神详解", "content": "...",
+             "paragraph_count": 25, "source_file": "..."}
+            若文档不存在返回 None。
+        """
+        for doc in self.retriever._documents:
+            if doc.id == doc_id:
+                para_count = sum(
+                    1 for d, _, _ in self.retriever._paragraphs if d.id == doc.id
+                )
+                return {
+                    "id": doc.id,
+                    "title": doc.title,
+                    "content": doc.content,
+                    "paragraph_count": para_count,
+                    "source_file": doc.source_file,
+                }
+        return None
+
     @staticmethod
     def _load_file(file_path: Path) -> Document:
         """加载单个文本文件为 Document。"""
@@ -290,33 +340,3 @@ class KnowledgeBase:
             content=content,
             source_file=str(file_path),
         )
-
-
-# ---------------------------------------------------------------------------
-# 单例（应用级）
-# ---------------------------------------------------------------------------
-
-_kb_instance: Optional[KnowledgeBase] = None
-
-
-def get_kb(data_dir: Optional[Path] = None) -> KnowledgeBase:
-    """
-    获取知识库单例。
-
-    首次调用时自动加载 data_dir 下所有文档。
-    """
-    global _kb_instance
-    if _kb_instance is None:
-        _kb_instance = KnowledgeBase(data_dir=data_dir)
-        _kb_instance.load_all()
-    return _kb_instance
-
-
-def reload_kb(data_dir: Optional[Path] = None) -> KnowledgeBase:
-    """
-    强制重建知识库索引（文档更新后调用）。
-    """
-    global _kb_instance
-    _kb_instance = KnowledgeBase(data_dir=data_dir)
-    _kb_instance.load_all()
-    return _kb_instance

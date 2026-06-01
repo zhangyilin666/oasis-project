@@ -1,0 +1,134 @@
+/* 个人中心 */
+.profile-page {
+  padding-top: 40rpx;
+}
+
+/* ── 用户信息卡片 ─────────────────── */
+.profile-card {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 32rpx;
+}
+
+.avatar-placeholder {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 28rpx;
+}
+
+.avatar-text {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.id-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.id-label {
+  font-size: 24rpx;
+  color: var(--color-text-light);
+  margin-right: 12rpx;
+}
+
+.id-value {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-right: 12rpx;
+}
+
+.copy-hint {
+  font-size: 20rpx;
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+  padding: 2rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+.login-time-row {
+  display: flex;
+  align-items: center;
+}
+
+.meta-label {
+  font-size: 24rpx;
+  color: var(--color-text-light);
+  margin-right: 12rpx;
+}
+
+.meta-value {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+}
+
+/* ── 操作区 ────────────────────────── */
+.action-section {
+  margin: 40rpx 20rpx;
+}
+
+.btn-logout {
+  width: 100%;
+  background: #ffffff;
+  color: var(--color-danger);
+  border: 2rpx solid var(--color-danger);
+  border-radius: 14rpx;
+  font-size: 32rpx;
+  padding: 22rpx;
+}
+
+.btn-logout:active {
+  background: rgba(217, 83, 79, 0.05);
+}
+
+.btn-logout[disabled] {
+  opacity: 0.5;
+  border-color: var(--color-border);
+  color: var(--color-text-light);
+}
+
+/* ── 法律链接 ──────────────────────── */
+.legal-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.legal-link {
+  font-size: 26rpx;
+  color: var(--color-text-light);
+  padding: 8rpx 16rpx;
+}
+
+.legal-separator {
+  color: var(--color-border);
+  font-size: 24rpx;
+}
+
+/* ── 版本号 ────────────────────────── */
+.version-footer {
+  display: flex;
+  justify-content: center;
+  padding: 32rpx;
+  margin-top: 20rpx;
+}
+
+.version-text {
+  font-size: 24rpx;
+  color: var(--color-text-light);
+}

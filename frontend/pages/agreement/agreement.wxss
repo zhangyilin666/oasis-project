@@ -1,0 +1,16 @@
+.agreement-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.agreement-body {
+  padding: 32rpx 28rpx 60rpx;
+}
+
+.agreement-text {
+  font-size: 28rpx;
+  color: var(--color-text);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

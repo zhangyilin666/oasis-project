@@ -1,0 +1,170 @@
+/* 首页样式 */
+.home-page {
+  padding-bottom: 40rpx;
+}
+
+.home-header {
+  padding: 40rpx 40rpx 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.header-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.header-date {
+  font-size: 26rpx;
+  color: var(--color-text-light);
+}
+
+/* 黄历卡片 */
+.almanac-card {
+  margin-top: 10rpx;
+}
+
+.almanac-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.lunar-date {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.almanac-ganzhi {
+  text-align: right;
+}
+
+.ganzhi-text {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.animal-text {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+}
+
+.almanac-chong {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  gap: 16rpx;
+}
+
+.chong-label {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+.chong-value {
+  font-size: 28rpx;
+  color: var(--color-danger);
+  font-weight: 500;
+}
+
+.almanac-section {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20rpx;
+}
+
+.section-label {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  min-width: 60rpx;
+  padding-top: 6rpx;
+}
+
+.yi-label {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.ji-label {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.tag-list {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* 骨架屏 */
+.loading-placeholder {
+  padding: 40rpx 24rpx;
+}
+
+.skeleton-line {
+  height: 28rpx;
+  background: linear-gradient(90deg, #f0ede6 25%, #e8e4db 50%, #f0ede6 75%);
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 快速操作 */
+.quick-actions {
+  padding: 20rpx;
+}
+
+.btn-analyze {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: #ffffff;
+  border-radius: 16rpx;
+  font-size: 34rpx;
+  padding: 28rpx;
+  text-align: center;
+  border: none;
+  box-shadow: 0 4rpx 20rpx rgba(44, 95, 45, 0.2);
+}
+
+.btn-analyze:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+/* 介绍 */
+.intro-card {
+  margin-top: 10rpx;
+}
+
+.intro-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 16rpx;
+}
+
+.intro-text {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}

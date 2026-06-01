@@ -51,8 +51,9 @@ D:\Oasis_Project\
 │       ├── core\                      ← 基础设施
 │       │   ├── config.py             ← Settings (pydantic-settings)
 │       │   ├── exceptions.py         ← 全局异常处理
+│       │   ├── kb_provider.py        ← RAG 知识库应用单例
 │       │   ├── logger.py             ← 日志配置
-│       │   ├── security_deps.py      ← JWT 鉴权依赖（待建）
+│       │   ├── security_deps.py      ← JWT 鉴权依赖 (get_current_user)
 │       │   └── __init__.py
 │       ├── db\                        ← 数据库层
 │       │   ├── base.py               ← DeclarativeBase
@@ -60,22 +61,57 @@ D:\Oasis_Project\
 │       │   └── __init__.py
 │       ├── models\                    ← ORM 模型（数据表）
 │       │   ├── user_model.py         ← User 表
+│       │   ├── report_model.py       ← Report 表（分析报告）
+│       │   ├── log_model.py          ← AnalysisLog 表（AI 调用审计）
 │       │   └── __init__.py
 │       ├── schemas\                   ← Pydantic 请求/响应模型
 │       │   ├── auth_schema.py        ← 鉴权相关 Schema
-│       │   ├── oasis_schema.py       ← 分析相关 Schema
+│       │   ├── oasis_schema.py       ← 分析相关 Schema (UserInput, OasisResponse)
 │       │   └── __init__.py
 │       ├── services\                  ← 业务逻辑层
-│       │   ├── wechat_service.py     ← 微信认证服务
-│       │   ├── workflow_service.py   ← Agent 编排引擎（待建）
-│       │   ├── calendar_service.py   ← 农历历法服务（待建）
-│       │   ├── rag_service.py        ← RAG 检索服务（待建）
+│       │   ├── ai_client.py          ← Claude API 客户端 + mock fallback
+│       │   ├── analysis_service.py   ← 分析编排（八字→RAG→AI→入库）
+│       │   ├── calendar_service.py   ← 农历历法服务 (lunar-python)
+│       │   ├── rag_service.py        ← RAG 检索服务 (KeywordRetriever + KnowledgeBase)
+│       │   ├── wechat_service.py     ← 微信认证服务 (code2session)
+│       │   ├── workflow_service.py   ← Agent 编排引擎 (WorkflowPipeline)
 │       │   └── __init__.py
 │       └── utils\                     ← 工具函数
-│           ├── security.py           ← JWT 签发/验证
+│           ├── security.py           ← JWT 签发/验证/宽限刷新
 │           └── __init__.py
-├── frontend\                          ← 微信小程序代码（待建）
-└── data_center\                       ← 数据存储（知识库文档等）
+├── frontend\                          ← 微信小程序（6 页面 + 3 组件）
+│   ├── app.js / app.json / app.wxss  ← 应用入口
+│   ├── pages\                         ← 页面
+│   │   ├── login\                    ← 微信一键登录
+│   │   ├── home\                     ← 首页（黄历概览）
+│   │   ├── analyze\                  ← 八字分析（表单+结果）
+│   │   ├── reports\                  ← 报告列表（分页）
+│   │   ├── report-detail\            ← 报告详情（完整分析）
+│   │   ├── profile\                  ← 个人中心
+│   │   └── agreement\               ← 用户协议
+│   ├── components\                    ← 通用组件
+│   │   ├── loading-overlay\          ← 加载遮罩
+│   │   ├── empty-state\              ← 空状态占位
+│   │   └── error-retry\              ← 错误重试
+│   ├── services\                      ← API 调用封装
+│   │   ├── auth.service.js           ← 登录/刷新
+│   │   ├── oasis.service.js          ← 分析/报告
+│   │   └── almanac.service.js        ← 黄历查询
+│   └── utils\                         ← 工具
+│       ├── request.js                ← HTTP 客户端（401 静默刷新）
+│       ├── storage.js                ← 本地存储
+│       └── ui.js                     ← UI 工具（loading/toast）
+├── data_center\                       ← 数据存储
+│   └── knowledge\                     ← 古籍知识库文档
+│       ├── shishen_detail.txt        ← 十神详解
+│       ├── bazi_patterns.txt         ← 八字格局基础
+│       └── ditian_sui.txt            ← 滴天髓精选
+└── tests\                             ← 测试（85 个，全部通过）
+    ├── test_api_integration.py       ← API 集成测试
+    ├── test_calendar_service.py      ← 历法模块测试
+    ├── test_kb_provider.py           ← 知识库测试
+    ├── test_rag_service.py           ← RAG 检索测试
+    └── test_workflow_service.py      ← 工作流引擎测试
 ```
 
 ---
@@ -178,16 +214,17 @@ oasis_api.analyze()
 | Method | Path | Auth | 说明 |
 |---|---|---|---|
 | POST | `/api/v1/wechat/login` | 无 | 微信 code 登录，返回 JWT |
-| POST | `/api/v1/wechat/refresh` | JWT | 刷新 Token（待建） |
+| POST | `/api/v1/wechat/refresh` | JWT | 刷新 Token（30 天宽限期） |
 
 ### 6.2 分析模块
 
 | Method | Path | Auth | 说明 |
 |---|---|---|---|
 | GET | `/health` | 无 | 健康检查 |
-| POST | `/api/v1/wechat/oasis/analyze` | JWT | 八字分析（核心接口） |
-| GET | `/api/v1/wechat/oasis/almanac` | JWT | 黄历宜忌查询（待建） |
-| GET | `/api/v1/wechat/oasis/report/{id}` | JWT | 历史报告查询（待建） |
+| POST | `/api/v1/wechat/oasis/analyze` | JWT | 八字分析（核心接口，含 RAG 古籍引用） |
+| GET | `/api/v1/wechat/oasis/reports` | JWT | 用户报告列表（分页，skip/limit） |
+| GET | `/api/v1/wechat/oasis/report/{report_id}` | JWT | 报告详情（八字 + AI 分析全文 + 审计日志） |
+| GET | `/api/v1/wechat/oasis/almanac` | JWT | 黄历宜忌查询（支持 ?solar_date=YYYY-MM-DD） |
 
 ### 6.3 通用响应格式
 
@@ -212,7 +249,7 @@ oasis_api.analyze()
 
 ## 7. 数据库设计
 
-### 7.1 users 表（已建）
+### 7.1 users 表
 
 | Column | Type | Constraint | 说明 |
 |---|---|---|---|
@@ -223,10 +260,33 @@ oasis_api.analyze()
 | created_at | DATETIME | NOT NULL, DEFAULT NOW() | 创建时间 |
 | updated_at | DATETIME | NOT NULL, DEFAULT NOW(), ON UPDATE | 更新时间 |
 
-### 7.2 待建表
+### 7.2 reports 表
 
-- **reports** — 分析报告（user_id, type, input_data, result_json, created_at）
-- **analysis_logs** — AI 调用日志（user_id, model, tokens_in, tokens_out, latency_ms, created_at）
+| Column | Type | Constraint | 说明 |
+|---|---|---|---|
+| id | INT | PK, AUTO_INCREMENT | 报告 ID |
+| user_id | INT | FK → users.id, INDEX, NOT NULL | 所属用户 |
+| birth_info | VARCHAR(100) | NOT NULL | 出生信息摘要 |
+| calendar_data | JSON | NOT NULL | 八字排盘完整数据 |
+| ai_analysis | TEXT | NULLABLE | AI 分析全文 |
+| created_at | DATETIME | NOT NULL, DEFAULT NOW() | 创建时间 |
+| updated_at | DATETIME | NOT NULL, DEFAULT NOW(), ON UPDATE | 更新时间 |
+
+### 7.3 analysis_logs 表
+
+| Column | Type | Constraint | 说明 |
+|---|---|---|---|
+| id | INT | PK, AUTO_INCREMENT | 日志 ID |
+| user_id | INT | FK → users.id, INDEX, NOT NULL | 所属用户 |
+| report_id | INT | FK → reports.id, INDEX, NOT NULL | 关联报告 |
+| model_name | VARCHAR(50) | NOT NULL, DEFAULT 'unknown' | AI 模型名 |
+| status | VARCHAR(20) | NOT NULL, DEFAULT 'success' | 步骤状态 |
+| prompt_tokens | INT | NULLABLE | 输入 Token 数 |
+| completion_tokens | INT | NULLABLE | 输出 Token 数 |
+| total_tokens | INT | NULLABLE | 总 Token 数 |
+| latency_ms | INT | NULLABLE | 步骤耗时（毫秒） |
+| trace_id | VARCHAR(20) | INDEX, NULLABLE | 链路追踪 ID |
+| created_at | DATETIME | NOT NULL, DEFAULT NOW() | 创建时间 |
 
 ---
 
@@ -265,10 +325,14 @@ POST /api/v1/wechat/login (公开)
 | Phase | 内容 | 状态 |
 |---|---|---|
 | **Phase 1** | FastAPI 骨架 + DB + JWT + 微信登录 | ✅ 完成 |
-| **Phase 2** | Agent 编排引擎 + 历法模块 + 鉴权中间件 | 🟡 今日进行 |
-| **Phase 3** | RAG 知识库 + 真实微信对接 | ⬜ 待开始 |
-| **Phase 4** | 微信小程序前端 + 报告系统 | ⬜ 待开始 |
-| **Phase 5** | 多模型支持 + 缓存 + 限流 + 生产部署 | ⬜ 待开始 |
+| **Phase 2** | Agent 编排引擎 + 历法模块 + 鉴权中间件 | ✅ 完成 |
+| **Phase 3** | RAG 知识库 + AI 分析管线 + 报告系统 | ✅ 完成 |
+| **Phase 4** | 微信小程序前端（6 页面 + 3 组件） | ✅ 完成 |
+| **Phase 4B** | Alembic 数据库迁移 + reports/analysis_logs 表 | ✅ 完成 |
+| **Phase 5** | 前端后端联调 + 集成测试（85 个测试通过） | ✅ 完成 |
+| **Phase 6** | 真实 API Key 配置 + 微信 APPID/SECRET 对接 | 🟡 待配置 |
+| **Phase 7** | Docker 容器化 + 生产部署 | ⬜ 待开始 |
+| **Phase 8** | CI/CD + 监控 + 限流 + 缓存 | ⬜ 待开始 |
 
 ---
 
@@ -285,4 +349,4 @@ POST /api/v1/wechat/login (公开)
 
 ---
 
-*文档版本: 0.2.0 | 最后更新: 2026-05-30 | 维护者: Oasis 架构组*
+*文档版本: 0.5.0 | 最后更新: 2026-06-01 | 维护者: Oasis 架构组*

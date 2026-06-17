@@ -1,0 +1,32 @@
+# 密钥文件（绝对不入镜像）
+.env
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Git
+.git/
+.gitignore
+.dockerignore
+
+# 日志
+app/logs/*.log
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# 测试缓存
+.pytest_cache/
+
+# 开发工具
+*.md
+!README.md

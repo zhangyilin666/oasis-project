@@ -3,9 +3,12 @@
 const isDev = typeof __wxConfig !== 'undefined'
   && __wxConfig.envVersion === 'develop'
 
+// ⚠️ 部署前必须替换为你的生产域名（HTTPS，已备案，不含端口号）
+// 示例: 'https://api.oasis-app.cn'
+const PROD_API_BASE_URL = 'https://api.your-oasis-domain.com'
+
 module.exports = {
-  // 开发环境使用本地后端，生产环境替换为线上域名
   API_BASE_URL: isDev
     ? 'http://127.0.0.1:8000'
-    : 'https://api.your-oasis-domain.com'
+    : PROD_API_BASE_URL
 }

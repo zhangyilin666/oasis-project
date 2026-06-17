@@ -9,12 +9,12 @@
 - [ ] 为该域名申请 SSL 证书（Let's Encrypt 免费，或用云服务商提供的）
 - [ ] 域名 DNS 解析到服务器 IP
 
-### A2. 微信公众平台 → 开发管理 → 开发设置
+### A2. App 端配置
 
-- [ ] 填入真实 **AppSecret**（AppID `wx02953379e1c05a27` 已配置）
-- [ ] **服务器域名 → request 合法域名** 添加：`https://你的生产域名`
-  - 注意：必须是 HTTPS，必须是备案域名，不能带端口号
-- [ ] 服务器域名每月仅可修改 5 次，确认无误后保存
+- [ ] `oasis-uniapp/.env.local` — 将 `VITE_API_BASE_URL` 指向服务器地址
+  - 测试阶段可用 `http://服务器IP:8000`
+  - 正式上线用 `https://你的域名`
+- [ ] HBuilderX 重新打包 APK/IPA
 
 ### A3. 填写公司/运营方信息
 
@@ -28,7 +28,7 @@
 APP_NAME=小易
 APP_VERSION=0.1.0
 DEBUG=False
-DATABASE_URL=mysql+pymysql://oasis_user:强密码@127.0.0.1:3306/oasis_db?charset=utf8mb4
+DATABASE_URL=mysql+pymysql://oasis_user:强密码@db:3306/oasis_db?charset=utf8mb4
 JWT_SECRET_KEY=使用 openssl rand -hex 32 生成的随机密钥
 
 # AI Provider
@@ -37,12 +37,8 @@ DEEPSEEK_API_KEY=sk-你的真实DeepSeek密钥
 DEEPSEEK_BASE_URL=https://api.deepseek.com
 DEEPSEEK_DEFAULT_MODEL=deepseek-chat
 
-# WeChat（必须填真实值！否则所有用户拿到 fake openid）
-WECHAT_APPID=wx02953379e1c05a27
-WECHAT_SECRET=你的微信小程序AppSecret
-
-# CORS
-CORS_ORIGINS=https://你的生产域名
+# CORS（App 无需域名限制）
+CORS_ORIGINS=*
 
 # 速率限制
 RATE_LIMIT_ANALYZE_PER_DAY=5
@@ -52,9 +48,8 @@ RATE_LIMIT_ANALYZE_PER_DAY=5
 
 ## B. 代码中的 TODO（搜索替换）
 
-- [ ] `frontend/config/env.js:9` — `PROD_API_BASE_URL` 替换为 `https://你的生产域名`
+- [ ] `oasis-uniapp/.env.local` — `VITE_API_BASE_URL` 替换为服务器地址
 - [ ] `deploy/nginx/oasis.conf` — 全局搜索 `your-domain.com` 替换为真实域名
-- [x] `frontend/pages/agreement/agreement.js` — 已填入【张轶林】和 `3438627347@qq.com`
 
 ---
 
@@ -147,12 +142,12 @@ systemctl start oasis
 
 ```bash
 # 后端健康检查
-curl -s https://你的域名/ | jq
+curl -s https://你的域名/health | jq
 
-# 登录测试
-curl -s -X POST https://你的域名/api/v1/wechat/login \
+# 匿名登录测试
+curl -s -X POST https://你的域名/api/v1/app/anonymous-login \
   -H 'Content-Type: application/json' \
-  -d '{"code":"test_code"}' | jq
+  -d '{"device_id":"test-device-uuid-12345678"}' | jq
 
 # 数据库连接检查
 mysql -u oasis_user -p -e "SELECT COUNT(*) FROM users" oasis_db
@@ -169,3 +164,35 @@ mysql -u oasis_user -p -e "SELECT COUNT(*) FROM users" oasis_db
 | 3 | 登录页添加协议勾选框 | ✅ 已添加 |
 | 4 | `env.js` 生产/开发环境自动切换 | ✅ 已实现 |
 | 5 | `ANTHROPIC_BASE_URL` 配置项 | ✅ 已添加 |
+
+---
+
+## G. 本次对话新增的部署文件
+
+| 文件 | 用途 |
+|------|------|
+| `python_backend/Dockerfile` | Backend 容器镜像构建 |
+| `docker-compose.yml` | 一键部署（MySQL + Backend + Nginx） |
+| `deploy/systemd/oasis.service` | 非 Docker 部署的 systemd 进程守护 |
+| `deploy/mysql/init.sql` | 数据库初始化脚本 |
+| `deploy/.env.production.template` | 生产环境变量模板（含注释） |
+| `deploy/deploy.sh` | 一键部署脚本（自动生成密钥+构建+SSL） |
+
+## H. 上线前最终待办（按优先级）
+
+### 🔴 必须完成（否则无法正常上线）
+1. [ ] 生成强密码 JWT_SECRET_KEY：`openssl rand -hex 32`
+2. [ ] 生成强密码 MYSQL_PASSWORD：`openssl rand -hex 16`
+3. [ ] 更换 DeepSeek API Key（当前 .env 中的密钥已在本机使用过）
+4. [ ] deploy/nginx/oasis.conf 替换 `your-domain.com` 为真实域名
+5. [ ] App 端 `oasis-uniapp/.env.local` 的 `VITE_API_BASE_URL` 指向服务器
+
+### 🟡 强烈建议
+6. [ ] 部署后立即在 DeepSeek 控制台重置当前 API Key（防止泄露）
+7. [ ] 完成 ICP 备案 + SSL 证书
+
+### 🟢 首次部署
+8. [ ] 服务器安装 Docker: `curl -fsSL https://get.docker.com | bash`
+9. [ ] 上传项目到服务器
+10. [ ] 运行 `./deploy/deploy.sh` 或 `docker compose up -d`
+11. [ ] App 端 HBuilderX 重新打包 APK

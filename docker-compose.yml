@@ -1,0 +1,105 @@
+# 小易 — 一键部署配置
+# 用法:
+#   1. 复制 .env.example 为 .env，填入真实密钥
+#   2. docker compose up -d
+#   3. docker compose ps  确认所有容器运行中
+#
+# 前置条件: 域名 DNS 已解析到服务器 IP
+# SSL 证书: docker compose exec nginx certbot --nginx -d 你的域名
+
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: oasis-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: oasis_db
+      MYSQL_USER: oasis_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"   # 仅本地访问
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./deploy/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - oasis-net
+
+  backend:
+    build:
+      context: ./python_backend
+      dockerfile: Dockerfile
+    container_name: oasis-backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_NAME: ${APP_NAME:-小易}
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+      DEBUG: "False"
+      DATABASE_URL: mysql+pymysql://oasis_user:${MYSQL_PASSWORD}@db:3306/oasis_db?charset=utf8mb4
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      AI_PROVIDER: ${AI_PROVIDER:-deepseek}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_DEFAULT_MODEL: ${DEEPSEEK_DEFAULT_MODEL:-deepseek-chat}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_BASE_URL: ${ANTHROPIC_BASE_URL:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      RATE_LIMIT_ANALYZE_PER_DAY: ${RATE_LIMIT_ANALYZE_PER_DAY:-5}
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks:
+      - oasis-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: oasis-nginx
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx/oasis-docker.conf:/etc/nginx/conf.d/oasis.conf:ro
+      - certbot_data:/var/www/certbot
+      - ssl_certs:/etc/letsencrypt
+    networks:
+      - oasis-net
+
+  # certbot — 仅 SSL 证书申请/续期时运行，平时不启动
+  certbot:
+    image: certbot/certbot
+    container_name: oasis-certbot
+    profiles: ["ssl"]
+    depends_on:
+      - nginx
+    volumes:
+      - certbot_data:/var/www/certbot
+      - ssl_certs:/etc/letsencrypt
+    networks:
+      - oasis-net
+    entrypoint: ["echo", "certbot ready — run via deploy.sh or manually"]
+
+volumes:
+  mysql_data:
+  certbot_data:
+  ssl_certs:
+
+networks:
+  oasis-net:
+    driver: bridge

@@ -31,7 +31,15 @@ from app.models.log_model import AnalysisLog
 from app.models.report_model import Report
 from app.schemas.oasis_schema import UserInput
 from app.services.ai_client import create_claude_executor
-from app.services.calendar_service import BaziResult, calculate_bazi
+from app.services.calendar_service import (
+    BaziResult,
+    YunResult,
+    calculate_bazi,
+    calculate_dayun,
+    format_bazi_data_text,
+    format_yun_data_text,
+)
+from app.services.deepseek_client import create_deepseek_executor
 from app.services.workflow_service import (
     StepResult,
     create_oasis_analyze_workflow,
@@ -88,14 +96,26 @@ def analyze_user_input(
         is_solar_time=user_input.is_solar_time,
     )
 
+    # ---- 1.5 大运/流年排盘 ----
+    yun_result = calculate_dayun(
+        birth_date=user_input.birth_date,
+        birth_time=user_input.birth_time,
+        gender=user_input.gender,
+        is_solar_time=user_input.is_solar_time,
+    )
+    yun_data_text = format_yun_data_text(yun_result)
+
+    # ---- 1.6 格式化八字排盘文本（供 AI prompt 使用） ----
+    bazi_data_text = format_bazi_data_text(bazi_result)
+
     # ---- 2. RAG 知识检索 ----
     # 从八字结果提取关键词 → 检索古籍知识库 → 构建引用上下文
     kb_context = _build_kb_context(bazi_result)
 
     # ---- 3. AI 分析管线 ----
-    # API key 配置时注入真实 Claude executor，否则走 mock
-    executor = create_claude_executor() if settings.ANTHROPIC_API_KEY else None
-    pipeline = create_oasis_analyze_workflow(executor=executor)
+    # 按 AI_PROVIDER 配置选择 executor 和模型名
+    executor, ai_model = _resolve_ai_backend()
+    pipeline = create_oasis_analyze_workflow(executor=executor, ai_model=ai_model)
     workflow_result = pipeline.run(
         input_data={
             "birth_date": user_input.birth_date,
@@ -104,18 +124,27 @@ def analyze_user_input(
             "location": user_input.location,
             "is_solar_time": user_input.is_solar_time,
             "bazi_full": bazi_result.full_bazi,
+            "bazi_data_text": bazi_data_text,
             "kb_context": kb_context,
+            "yun_data_text": yun_data_text,
         }
     )
 
     # ---- 3. 提取 AI 分析文本 ----
     analysis_text = _extract_analysis_text(workflow_result)
 
+    # ---- 3.5 提取大运白话总结 ----
+    yun_summary_text = _extract_step_output(workflow_result, "dayun_summary")
+
     # ---- 4. 持久化 Report ----
+    calendar_data = bazi_result.to_dict()
+    calendar_data["yun"] = yun_result.to_dict()
+    calendar_data["yun_summary"] = yun_summary_text
+
     report = Report(
         user_id=user_id,
         birth_info=_format_birth_info(user_input),
-        calendar_data=bazi_result.to_dict(),
+        calendar_data=calendar_data,
         ai_analysis=analysis_text,
     )
     db.add(report)
@@ -144,7 +173,7 @@ def analyze_user_input(
     return {
         "user_id": user_id,
         "report_id": report.id,
-        "calendar_data": bazi_result.to_dict(),
+        "calendar_data": calendar_data,
         "ai_analysis_text": analysis_text,
         "workflow_status": workflow_result.status,
         "workflow_steps": [
@@ -165,6 +194,38 @@ def analyze_user_input(
 # ---------------------------------------------------------------------------
 
 
+def _resolve_ai_backend() -> tuple:
+    """
+    根据 AI_PROVIDER 配置解析 AI executor 和模型名。
+
+    优先级：
+      1. AI_PROVIDER=deepseek + DEEPSEEK_API_KEY → DeepSeek
+      2. AI_PROVIDER=anthropic + ANTHROPIC_API_KEY → Claude
+      3. 其他 → mock（无 API key 也走 mock）
+
+    Returns:
+        (StepExecutor | None, ai_model: str)
+        executor=None 时走 mock 模式。
+    """
+    provider = settings.AI_PROVIDER.lower().strip()
+
+    if provider == "deepseek" and settings.DEEPSEEK_API_KEY:
+        logger.info("AI backend: DeepSeek (model=%s)", settings.DEEPSEEK_DEFAULT_MODEL)
+        return create_deepseek_executor(), settings.DEEPSEEK_DEFAULT_MODEL
+
+    if provider == "anthropic" and settings.ANTHROPIC_API_KEY:
+        logger.info("AI backend: Anthropic Claude (model=%s)", settings.ANTHROPIC_DEFAULT_MODEL)
+        return create_claude_executor(), settings.ANTHROPIC_DEFAULT_MODEL
+
+    logger.warning(
+        "AI backend: MOCK (provider=%s, deepseek_key=%s, anthropic_key=%s)",
+        provider,
+        "set" if settings.DEEPSEEK_API_KEY else "empty",
+        "set" if settings.ANTHROPIC_API_KEY else "empty",
+    )
+    return None, "mock"
+
+
 def _format_birth_info(user_input: UserInput) -> str:
     """将 UserInput 格式化为 Report.birth_info 字符串（≤100 chars）。"""
     parts = [
@@ -179,14 +240,50 @@ def _format_birth_info(user_input: UserInput) -> str:
 
 
 def _extract_analysis_text(workflow_result) -> str:
-    """从 workflow 最终输出中提取 AI 分析纯文本。"""
-    if workflow_result.final_output is None:
-        return ""
-    if isinstance(workflow_result.final_output, str):
-        return workflow_result.final_output
-    if isinstance(workflow_result.final_output, dict):
-        return workflow_result.final_output.get("analysis", "")
-    return str(workflow_result.final_output)
+    """从 workflow 结果中提取 AI 命理分析纯文本（Step 2: ai_analysis）。"""
+    return _extract_step_output(workflow_result, "ai_analysis")
+
+
+def _extract_step_output(workflow_result, step_name: str) -> str:
+    """
+    从 WorkflowResult 中提取指定步骤的 AI 分析文本。
+
+    遍历所有步骤，找到 name 匹配的步骤，从其 output dict
+    中提取 "analysis" 字段。未找到或失败时返回空字符串。
+
+    Args:
+        workflow_result: 工作流执行结果。
+        step_name: 步骤名，如 "dayun_summary"。
+
+    Returns:
+        AI 生成的纯文本，或空字符串。
+    """
+    for step in workflow_result.steps:
+        if step.step_name == step_name and step.status == "success":
+            output = step.output
+            if isinstance(output, dict):
+                return output.get("analysis", "")
+            if isinstance(output, str):
+                return output
+    return ""
+
+
+# 底层 AI 提供商名称 → 面向用户的品牌名映射
+# 目的：用户不需要知道后台用了 DeepSeek / Claude，避免“AI 算命”抵触心理
+_MODEL_BRAND_MAP: dict[str, str] = {
+    "deepseek-chat": "小易 AI",
+    "deepseek-reasoner": "小易 AI",
+    "claude-sonnet-4-6": "小易 AI",
+    "claude-opus-4-8": "小易 AI",
+    "mock": "小易 AI",
+    "unknown": "小易 AI",
+}
+_DEFAULT_BRAND_NAME: str = "小易 AI"
+
+
+def _brand_model_name(raw_name: str) -> str:
+    """将底层 AI 模型名映射为面向用户的品牌名。"""
+    return _MODEL_BRAND_MAP.get(raw_name, _DEFAULT_BRAND_NAME)
 
 
 def _build_analysis_log(
@@ -217,7 +314,9 @@ def _build_analysis_log(
     else:
         total_tokens = None
 
-    model_name = str(output.get("model", "unknown"))[:50]
+    raw_model = str(output.get("model", "unknown"))[:50]
+    # 面向用户的分析日志：隐藏底层 AI 提供商名称，展示产品品牌名
+    model_name = _brand_model_name(raw_model)
 
     return AnalysisLog(
         user_id=user_id,

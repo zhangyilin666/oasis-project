@@ -39,18 +39,23 @@ class AIClient:
     封装 SDK 调用、错误处理与 Token 用量记录。
     """
 
+    _DEFAULT_TIMEOUT: float = 120.0
+
     def __init__(
         self,
         api_key: Optional[str] = None,
         default_model: Optional[str] = None,
+        timeout: Optional[float] = None,
     ):
         """
         Args:
             api_key: Anthropic API key。默认从 settings.ANTHROPIC_API_KEY 读取。
             default_model: 默认模型。默认从 settings.ANTHROPIC_DEFAULT_MODEL 读取。
+            timeout: API 调用超时秒数。默认 120s。
         """
         self.api_key = api_key or settings.ANTHROPIC_API_KEY
         self.default_model = default_model or settings.ANTHROPIC_DEFAULT_MODEL
+        self.timeout = timeout if timeout is not None else self._DEFAULT_TIMEOUT
         self._client = anthropic.Anthropic(api_key=self.api_key)
 
     # ------------------------------------------------------------------
@@ -87,6 +92,7 @@ class AIClient:
                 max_tokens=step.max_tokens,
                 temperature=step.temperature,
                 messages=[{"role": "user", "content": prompt}],
+                timeout=self.timeout,
             )
         except anthropic.APIError as exc:
             logger.error("Anthropic API error in step '%s': %s", step.name, exc)

@@ -9,7 +9,8 @@ engine = create_engine(
     settings.DATABASE_URL,
     pool_size=10,
     max_overflow=20,
-    pool_pre_ping=True,
+    pool_pre_ping=True,          # 每次使用前 ping 测试连接
+    pool_recycle=1800,           # 30分钟后主动回收连接，避免 MySQL wait_timeout 断连
     json_serializer=lambda obj: json.dumps(obj, ensure_ascii=False),
     json_deserializer=json.loads,
 )
@@ -23,9 +24,12 @@ SessionLocal = sessionmaker(
 
 
 def get_db():
-    """FastAPI 依赖注入：每个请求获取独立 session，请求结束自动关闭。"""
+    """FastAPI 依赖注入：每个请求获取独立 session，请求结束自动回滚/关闭。"""
     db = SessionLocal()
     try:
         yield db
+    except Exception:
+        db.rollback()
+        raise
     finally:
         db.close()

@@ -84,6 +84,33 @@ def temp_knowledge_dir(tmp_path) -> Path:
 
 
 # ---------------------------------------------------------------------------
+# 强制测试使用 mock AI provider（不调用真实 API）
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture(autouse=True)
+def _force_mock_ai():
+    """
+    所有测试强制使用 mock 模式，避免依赖外部 API。
+
+    - AI_PROVIDER = "" → 使用 mock AI（不调用真实 API）
+    - RATE_LIMIT_ANALYZE_PER_DAY = 0 → 不限速
+    """
+    import app.core.config as _cfg
+
+    original_provider = _cfg.settings.AI_PROVIDER
+    original_rate_limit = _cfg.settings.RATE_LIMIT_ANALYZE_PER_DAY
+
+    _cfg.settings.AI_PROVIDER = ""
+    _cfg.settings.RATE_LIMIT_ANALYZE_PER_DAY = 0  # 测试环境不限速
+
+    yield
+
+    _cfg.settings.AI_PROVIDER = original_provider
+    _cfg.settings.RATE_LIMIT_ANALYZE_PER_DAY = original_rate_limit
+
+
+# ---------------------------------------------------------------------------
 # API 集成测试 fixtures
 # ---------------------------------------------------------------------------
 
@@ -175,10 +202,17 @@ def other_user(client):
 
 def create_analysis(client, headers: dict, overrides: dict | None = None) -> dict:
     """
-    发起一次八字分析请求，返回响应 JSON 的 data 字段。
+    发起一次八字分析请求，轮询至完成，返回报告详情 data。
+
+    适配异步轮询模式：
+    1. POST /analyze → 获取 report_id
+    2. 轮询 GET /report/{id} → 等待 status="completed"
+    3. 返回与旧同步接口兼容的字段名（ai_analysis_text, workflow_steps 等）
 
     同时追踪产生的 report_id 便于最终清理。
     """
+    import time
+
     payload: dict = {
         "name": "测试用户",
         "birth_date": "1990-06-15",
@@ -189,17 +223,61 @@ def create_analysis(client, headers: dict, overrides: dict | None = None) -> dic
     }
     if overrides:
         payload.update(overrides)
+
+    # 1. 提交分析（立即返回 report_id）
     response = client.post(
         "/api/v1/wechat/oasis/analyze",
         json=payload,
         headers=headers,
     )
     assert response.status_code == 200, (
-        f"Analysis failed: {response.status_code} {response.json()}"
+        f"Analysis submission failed: {response.status_code} {response.json()}"
     )
-    result = response.json()
-    data = result.get("data", {})
-    report_id = data.get("report_id")
-    if report_id is not None:
-        _TEST_REPORT_IDS.append(report_id)
-    return data
+    submit_data = response.json()["data"]
+    report_id = submit_data["report_id"]
+    assert report_id > 0
+    _TEST_REPORT_IDS.append(report_id)
+
+    # 2. 轮询至完成（mock 模式下后台处理几乎瞬间完成，最多等 5 秒）
+    for _ in range(50):
+        detail_res = client.get(
+            f"/api/v1/wechat/oasis/report/{report_id}",
+            headers=headers,
+        )
+        assert detail_res.status_code == 200, (
+            f"Report detail fetch failed: {detail_res.status_code}"
+        )
+        detail_data = detail_res.json()["data"]
+        status = detail_data.get("status", "completed")  # 兼容旧记录
+        if status == "completed":
+            break
+        if status == "failed":
+            raise AssertionError(
+                f"Analysis failed: {detail_data.get('error_message', 'unknown')}"
+            )
+        time.sleep(0.1)
+    else:
+        raise AssertionError(
+            f"Analysis timed out after 5s, last status={status}"
+        )
+
+    # 3. 提取 trace_id（取自第一条分析日志）
+    trace_id = ""
+    logs = detail_data.get("analysis_logs", [])
+    if logs:
+        trace_id = logs[0].get("trace_id", "")
+
+    # 4. 返回兼容旧字段名的数据
+    return {
+        "report_id": detail_data["id"],
+        "user_id": detail_data["user_id"],
+        "calendar_data": detail_data["calendar_data"],
+        "ai_analysis_text": detail_data["ai_analysis"] or "",
+        "ai_analysis": detail_data["ai_analysis"] or "",
+        "workflow_status": detail_data["status"],
+        "workflow_steps": logs,
+        "analysis_logs": logs,
+        "trace_id": trace_id,
+        "status": detail_data["status"],
+        "birth_info": detail_data["birth_info"],
+    }

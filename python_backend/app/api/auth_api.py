@@ -32,13 +32,13 @@ async def wechat_login(
     """
     logger.info("Login request received, code prefix: %s...", request.code[:8])
 
-    user = authenticate_wechat_user(db=db, wechat_code=request.code)
+    user = await authenticate_wechat_user(db=db, wechat_code=request.code)
 
     token = create_access_token(
         data={"sub": str(user.id), "openid": user.openid},
     )
 
-    logger.info("Login success: user_id=%s, openid=%s", user.id, user.openid)
+    logger.info("Login success: user_id=%s, openid=%s***", user.id, (user.openid or "")[:8])
 
     return WechatLoginResponse(
         data={

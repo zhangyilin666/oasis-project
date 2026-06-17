@@ -128,6 +128,7 @@ class AlmanacDay:
     lunar_year_cn: str = ""
     lunar_month_cn: str = ""
     lunar_day_cn: str = ""
+    year_gan_zhi: str = ""
     day_gan_zhi: str = ""
     animal: str = ""
     yi: list[str] = field(default_factory=list)  # 宜
@@ -143,6 +144,7 @@ class AlmanacDay:
             "lunar_year_cn": self.lunar_year_cn,
             "lunar_month_cn": self.lunar_month_cn,
             "lunar_day_cn": self.lunar_day_cn,
+            "year_gan_zhi": self.year_gan_zhi,
             "day_gan_zhi": self.day_gan_zhi,
             "animal": self.animal,
             "yi": self.yi,
@@ -150,6 +152,78 @@ class AlmanacDay:
             "ji_shen": self.ji_shen,
             "xiong_sha": self.xiong_sha,
             "chong_sheng_xiao": self.chong_sheng_xiao,
+        }
+
+
+@dataclass
+class LiunianInfo:
+    """单个流年信息（一年内的运势干支）。"""
+
+    year: int = 0  # 公历年份
+    age: int = 0  # 虚岁
+    gan_zhi: str = ""  # 流年干支
+    xun: str = ""  # 所在旬
+    xun_kong: str = ""  # 旬空(空亡)
+
+    def to_dict(self) -> dict:
+        return {
+            "year": self.year,
+            "age": self.age,
+            "gan_zhi": self.gan_zhi,
+            "xun": self.xun,
+            "xun_kong": self.xun_kong,
+        }
+
+
+@dataclass
+class DayunInfo:
+    """单步大运信息（十年一步）。"""
+
+    index: int = 0  # 大运序号（1 起）
+    gan_zhi: str = ""  # 大运干支
+    start_age: int = 0  # 起始虚岁
+    end_age: int = 0  # 结束虚岁
+    start_year: int = 0  # 起始公历年份
+    end_year: int = 0  # 结束公历年份
+    xun: str = ""  # 所在旬
+    xun_kong: str = ""  # 旬空(空亡)
+    liu_nian: list[LiunianInfo] = field(default_factory=list)  # 该大运内的流年列表
+
+    def to_dict(self) -> dict:
+        return {
+            "index": self.index,
+            "gan_zhi": self.gan_zhi,
+            "start_age": self.start_age,
+            "end_age": self.end_age,
+            "start_year": self.start_year,
+            "end_year": self.end_year,
+            "xun": self.xun,
+            "xun_kong": self.xun_kong,
+            "liu_nian": [ln.to_dict() for ln in self.liu_nian],
+        }
+
+
+@dataclass
+class YunResult:
+    """大运排盘完整结果（起运信息 + 八步大运）。"""
+
+    gender_int: int = 1  # 1=男, 0=女
+    start_year_num: int = 0  # 起运年数
+    start_month_num: int = 0  # 起运月数（配合年数使用）
+    start_day_num: int = 0  # 起运天数
+    is_forward: bool = True  # 顺推 / 逆推
+    start_solar_date: str = ""  # 起运公历日期
+    da_yun: list[DayunInfo] = field(default_factory=list)  # 大运列表
+
+    def to_dict(self) -> dict:
+        return {
+            "gender_int": self.gender_int,
+            "start_year_num": self.start_year_num,
+            "start_month_num": self.start_month_num,
+            "start_day_num": self.start_day_num,
+            "is_forward": self.is_forward,
+            "start_solar_date": self.start_solar_date,
+            "da_yun": [dy.to_dict() for dy in self.da_yun],
         }
 
 
@@ -327,7 +401,7 @@ def calculate_bazi(
         lunar_year_cn=_safe_str(lunar.getYearInChinese()),
         lunar_month_cn=_safe_str(lunar.getMonthInChinese()),
         lunar_day_cn=_safe_str(lunar.getDayInChinese()),
-        animal=_safe_str(lunar.getAnimal()),
+        animal=_safe_str(lunar.getYearShengXiao()),
         ming_gong=_safe_str(eight_char.getMingGong()),
         shen_gong=_safe_str(eight_char.getShenGong()),
         tai_yuan=_safe_str(eight_char.getTaiYuan()),
@@ -381,8 +455,9 @@ def get_day_almanac(solar_date: Optional[str] = None) -> AlmanacDay:
         lunar_year_cn=_safe_str(lunar.getYearInChinese()),
         lunar_month_cn=_safe_str(lunar.getMonthInChinese()),
         lunar_day_cn=_safe_str(lunar.getDayInChinese()),
+        year_gan_zhi=_safe_str(lunar.getYearInGanZhi()),
         day_gan_zhi=_safe_str(lunar.getDayInGanZhi()),
-        animal=_safe_str(lunar.getAnimal()),
+        animal=_safe_str(lunar.getYearShengXiao()),
         yi=yi_list,
         ji=ji_list,
         ji_shen=_to_list(ji_shen_raw) if ji_shen_raw else [],
@@ -420,9 +495,594 @@ def convert_solar_to_lunar(solar_date: str) -> dict:
         "year_gan_zhi": luna.getYearInGanZhi(),
         "month_gan_zhi": luna.getMonthInGanZhi(),
         "day_gan_zhi": luna.getDayInGanZhi(),
-        "animal": luna.getAnimal(),
+        "animal": luna.getYearShengXiao(),
         "week_cn": solar.getWeekInChinese(),
         "jie_qi": luna.getCurrentJieQi() or "",
         "day_yi": luna.getDayYi() if callable(getattr(luna, "getDayYi", None)) else [],
         "day_ji": luna.getDayJi() if callable(getattr(luna, "getDayJi", None)) else [],
     }
+
+
+# ---------------------------------------------------------------------------
+# 大运 / 流年计算
+# ---------------------------------------------------------------------------
+
+def _gender_to_int(gender: str) -> int:
+    """
+    将性别字符串映射为 lunar-python 所需的整数。
+
+    Args:
+        gender: 自由文本，如前端的 "男"/"女"。
+
+    Returns:
+        1 表示男性，0 表示女性。默认返回 1。
+    """
+    if not gender:
+        return 1
+    g = gender.strip()
+    if "女" in g or g.lower() in ("f", "female", "0"):
+        return 0
+    return 1
+
+
+def calculate_dayun(
+    birth_date: str,
+    birth_time: str,
+    gender: str,
+    is_solar_time: bool = True,
+    sect: int = 1,
+) -> YunResult:
+    """
+    计算大运排盘（起运信息 + 八步大运 + 每步大运下的全部流年）。
+
+    基于 lunar-python 的 EightChar.getYun() → Yun.getDaYun() → DaYun.getLiuNian()
+    调用链，完整输出命主从起运到第八步大运的干支时间线。
+
+    Args:
+        birth_date: 出生日期。公历 'YYYY-MM-DD'，农历 'YYYY-M-D'。
+        birth_time: 出生时间 'HH:MM'。
+        gender: 性别字符串（"男"/"女" 或 "male"/"female"）。
+        is_solar_time: True=公历，False=农历。
+        sect: 流派。1=按天数和时辰数计算（传统），2=按分钟数计算。
+
+    Returns:
+        YunResult 包含起运信息与八步大运详情。
+
+    Raises:
+        ValueError: 日期格式无效。
+    """
+    # 解析日期
+    date_match = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})$", birth_date)
+    if not date_match:
+        raise ValueError(f"Invalid birth_date format: {birth_date}, expected YYYY-MM-DD")
+    year, month, day = int(date_match.group(1)), int(date_match.group(2)), int(date_match.group(3))
+
+    # 解析时间
+    hour, minute = _parse_birth_time(birth_time)
+
+    # 性别映射
+    gender_int = _gender_to_int(gender)
+
+    logger.info(
+        "Calculating DaYun: date=%s (is_solar=%s), time=%02d:%02d, gender=%s→%d, sect=%d",
+        birth_date, is_solar_time, hour, minute, gender, gender_int, sect,
+    )
+
+    # 构建 Solar → Lunar → EightChar
+    if is_solar_time:
+        solar = Solar.fromYmdHms(year, month, day, hour, minute, 0)
+        lunar = solar.getLunar()
+    else:
+        lunar = Lunar.fromYmdHms(year, month, day, hour, minute, 0)
+        solar = lunar.getSolar()
+
+    eight_char = lunar.getEightChar()
+
+    # 获取运对象
+    yun = eight_char.getYun(gender=gender_int, sect=sect)
+
+    # 起运信息
+    start_solar = yun.getStartSolar()
+    start_solar_str = f"{start_solar.getYear()}-{start_solar.getMonth():02d}-{start_solar.getDay():02d}"
+
+    # 遍历八步大运
+    da_yun_list: list[DayunInfo] = []
+    for da_yun_obj in yun.getDaYun(8):
+        index = da_yun_obj.getIndex()
+        # index=0 是出生前（小运），跳过
+        if index == 0:
+            continue
+
+        # 遍历流年（默认 10 个，即该大运内的每一年）
+        liu_nian_list: list[LiunianInfo] = []
+        for liu_nian_obj in da_yun_obj.getLiuNian():
+            ln = LiunianInfo(
+                year=liu_nian_obj.getYear(),
+                age=liu_nian_obj.getAge(),
+                gan_zhi=_safe_str(liu_nian_obj.getGanZhi()),
+                xun=_safe_str(liu_nian_obj.getXun()),
+                xun_kong=_safe_str(liu_nian_obj.getXunKong()),
+            )
+            liu_nian_list.append(ln)
+
+        dy = DayunInfo(
+            index=index,
+            gan_zhi=_safe_str(da_yun_obj.getGanZhi()),
+            start_age=da_yun_obj.getStartAge(),
+            end_age=da_yun_obj.getEndAge(),
+            start_year=da_yun_obj.getStartYear(),
+            end_year=da_yun_obj.getEndYear(),
+            xun=_safe_str(da_yun_obj.getXun()),
+            xun_kong=_safe_str(da_yun_obj.getXunKong()),
+            liu_nian=liu_nian_list,
+        )
+        da_yun_list.append(dy)
+
+    result = YunResult(
+        gender_int=gender_int,
+        start_year_num=yun.getStartYear(),
+        start_month_num=yun.getStartMonth(),
+        start_day_num=yun.getStartDay(),
+        is_forward=yun.isForward(),
+        start_solar_date=start_solar_str,
+        da_yun=da_yun_list,
+    )
+
+    logger.info(
+        "DaYun result: %d pillars, start at age %d, is_forward=%s",
+        len(da_yun_list),
+        yun.getStartYear(),
+        yun.isForward(),
+    )
+    return result
+
+
+def format_bazi_data_text(bazi_result: BaziResult) -> str:
+    """
+    将 BaziResult 格式化为可注入 AI prompt 的详细八字排盘文本。
+
+    包含四柱的干支、天干、地支、纳音、五行、十神、地势、藏干、旬、旬空，
+    以及命宫、身宫、胎元、五行分布统计。Token 预算约 1-1.5K 字符。
+
+    Returns:
+        格式化文本，形如：
+
+        【八字排盘】
+        年柱：庚午 | 天干:庚(金) | 地支:午(火) | 纳音:路旁土 | 十神(干):比肩 | ...
+        月柱：...
+        ...
+    """
+    lines = ["【八字排盘】", ""]
+
+    pillar_names = [
+        ("年柱", bazi_result.year),
+        ("月柱", bazi_result.month),
+        ("日柱", bazi_result.day),
+        ("时柱", bazi_result.hour),
+    ]
+
+    for name, p in pillar_names:
+        parts = [f"{name}：{p.gan_zhi}"]
+        if p.gan:
+            parts.append(f"天干:{p.gan}")
+        if p.zhi:
+            parts.append(f"地支:{p.zhi}")
+        if p.na_yin:
+            parts.append(f"纳音:{p.na_yin}")
+        if p.wu_xing:
+            parts.append(f"五行:{p.wu_xing}")
+        if p.shi_shen_gan:
+            parts.append(f"十神(干):{p.shi_shen_gan}")
+        if p.shi_shen_zhi:
+            parts.append(f"十神(支):{p.shi_shen_zhi}")
+        if p.di_shi:
+            parts.append(f"地势:{p.di_shi}")
+        if p.hide_gan:
+            parts.append(f"藏干:{p.hide_gan}")
+        if p.xun:
+            parts.append(f"旬:{p.xun}")
+        if p.xun_kong:
+            parts.append(f"旬空:{p.xun_kong}")
+        lines.append(" | ".join(parts))
+        lines.append("")
+
+    # 辅助信息
+    aux_lines = []
+    if bazi_result.ming_gong:
+        aux_lines.append(f"命宫:{bazi_result.ming_gong}")
+    if bazi_result.shen_gong:
+        aux_lines.append(f"身宫:{bazi_result.shen_gong}")
+    if bazi_result.tai_yuan:
+        aux_lines.append(f"胎元:{bazi_result.tai_yuan}")
+    if aux_lines:
+        lines.append("【辅助宫位】")
+        lines.append(" | ".join(aux_lines))
+        lines.append("")
+
+    # 五行分布
+    wu_xing = bazi_result.wu_xing_summary
+    if wu_xing:
+        wx_parts = []
+        for wx, count in sorted(wu_xing.items()):
+            if count > 0:
+                wx_parts.append(f"{wx}×{count}")
+        if wx_parts:
+            lines.append("【五行分布】" + "  ".join(wx_parts))
+            lines.append("")
+
+    # 日主信息（五行 + 天干五行阴阳属性）
+    day_gan = bazi_result.day.gan
+    day_wu_xing = bazi_result.day.wu_xing
+    if day_gan and day_wu_xing:
+        lines.append(f"【日主】{day_gan}{day_wu_xing}（{bazi_result.day.shi_shen_gan or '-'} / 地势:{bazi_result.day.di_shi or '-'}）")
+
+    return "\n".join(lines)
+
+
+def format_yun_data_text(yun_result: YunResult) -> str:
+    """
+    将 YunResult 格式化为可注入 AI prompt 的紧凑文本。
+
+    Token 预算：~2-3K 字符，包含起运信息 + 八步大运 + 每个大运的全部流年。
+
+    Returns:
+        格式化文本，形如：
+
+        【起运信息】顺推，7岁起运（6年2月后），起运日期：1996-09-03
+
+        【大运排盘】
+        第1步大运：甲子 | 7-16岁 | 1996-2005年 | 旬:甲子 | 空亡:戌亥
+          流年: 1996(7岁)丙子 | 1997(8岁)丁丑 | ... | 2005(16岁)乙酉
+        ...
+    """
+    if not yun_result or not yun_result.da_yun:
+        return ""
+
+    direction = "顺推" if yun_result.is_forward else "逆推"
+    start_info_parts = [
+        f"{direction}，{yun_result.start_year_num}岁起运",
+    ]
+    if yun_result.start_month_num or yun_result.start_day_num:
+        extra_parts = []
+        if yun_result.start_month_num:
+            extra_parts.append(f"{yun_result.start_month_num}月")
+        if yun_result.start_day_num:
+            extra_parts.append(f"{yun_result.start_day_num}天")
+        start_info_parts.append(f"（约{yun_result.start_year_num}年{''.join(extra_parts)}后起运）")
+    if yun_result.start_solar_date:
+        start_info_parts.append(f"，起运日期：{yun_result.start_solar_date}")
+
+    lines = [
+        "【起运信息】" + "".join(start_info_parts),
+        "",
+        "【大运排盘】",
+    ]
+
+    for dy in yun_result.da_yun:
+        header = (
+            f"第{dy.index}步大运：{dy.gan_zhi} | "
+            f"{dy.start_age}-{dy.end_age}岁 | "
+            f"{dy.start_year}-{dy.end_year}年"
+        )
+        if dy.xun:
+            header += f" | 旬:{dy.xun}"
+        if dy.xun_kong:
+            header += f" | 空亡:{dy.xun_kong}"
+        lines.append(header)
+
+        # 流年行
+        if dy.liu_nian:
+            liu_nian_parts = []
+            for ln in dy.liu_nian:
+                liu_nian_parts.append(f"{ln.year}({ln.age}岁){ln.gan_zhi}")
+            lines.append("  流年: " + " | ".join(liu_nian_parts))
+
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# 每日运势（流日）计算
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class DailyFortuneData:
+    """
+    每日运势计算原始数据。
+
+    由用户的八字 + 今天的天象计算得出，后续注入 AI prompt 生成
+    白话运势解读。
+    """
+    # 今日天象
+    day_gan_zhi: str = ""          # 今日日柱干支，如 壬寅
+    day_gan: str = ""              # 今日天干
+    day_zhi: str = ""              # 今日地支
+    month_gan_zhi: str = ""        # 本月干支（流月）
+    year_gan_zhi: str = ""         # 今年干支（流年）
+
+    # 日主相关信息
+    day_master: str = ""           # 用户日主天干，如 甲
+    day_master_wu_xing: str = ""   # 用户日主五行，如 木
+
+    # 十神关系（今日天干 vs 日主）
+    day_relation: str = ""         # 如 偏印 / 正财 / 比肩
+
+    # 冲合关系（今日地支 vs 日支）
+    clash_info: str = ""           # 如 子午冲 / 寅亥合 / 无冲合
+
+    # 当前运势周期
+    current_dayun_gan_zhi: str = ""   # 当前大运干支
+    current_dayun_age: str = ""       # 当前大运年龄段，如 24-33岁
+    current_liunian_gan_zhi: str = "" # 当前流年干支（等于 year_gan_zhi）
+
+    # 用户八字摘要
+    bazi_summary: str = ""         # 四柱 + 五行摘要，供 prompt 使用
+    yun_summary: str = ""          # 大运 + 流年摘要
+
+    def to_prompt_context(self) -> str:
+        """格式化为 AI prompt 可用的 compact 文本。"""
+        lines = [
+            f"【今日天象】",
+            f"公历日期：今天",
+            f"流年：{self.year_gan_zhi}",
+            f"流月：{self.month_gan_zhi}",
+            f"流日：{self.day_gan_zhi}（天干{self.day_gan}，地支{self.day_zhi}）",
+            f"",
+            f"【用户命盘】",
+            f"日主：{self.day_master}{self.day_master_wu_xing}",
+            f"八字四柱：{self.bazi_summary}",
+            f"",
+            f"【今日干支关系】",
+            f"日干{self.day_gan} vs 日主{self.day_master} → {self.day_relation}",
+        ]
+        if self.clash_info and self.clash_info != "无冲合":
+            lines.append(f"日支{self.day_zhi} vs 日支 → {self.clash_info}")
+
+        if self.current_dayun_gan_zhi:
+            lines.append(f"")
+            lines.append(f"【当前运势周期】")
+            lines.append(f"大运：{self.current_dayun_gan_zhi}（{self.current_dayun_age}）")
+            lines.append(f"流年：{self.current_liunian_gan_zhi}")
+
+        return "\n".join(lines)
+
+
+# ── 天干 / 地支基础映射 ──────────────────────────────────────────────
+
+_GAN_WU_XING = {
+    "甲": "木", "乙": "木",
+    "丙": "火", "丁": "火",
+    "戊": "土", "己": "土",
+    "庚": "金", "辛": "金",
+    "壬": "水", "癸": "水",
+}
+
+_GAN_YIN_YANG = {
+    "甲": "阳", "乙": "阴",
+    "丙": "阳", "丁": "阴",
+    "戊": "阳", "己": "阴",
+    "庚": "阳", "辛": "阴",
+    "壬": "阳", "癸": "阴",
+}
+
+# 五行生克
+_WU_XING_SHENG = {  # 生 → 被生者
+    "木": "火",
+    "火": "土",
+    "土": "金",
+    "金": "水",
+    "水": "木",
+}
+
+_WU_XING_KE = {  # 克 → 被克者
+    "木": "土",
+    "土": "水",
+    "水": "火",
+    "火": "金",
+    "金": "木",
+}
+
+# 地支六冲
+_DI_ZHI_CHONG: dict[str, str] = {
+    "子": "午", "午": "子",
+    "丑": "未", "未": "丑",
+    "寅": "申", "申": "寅",
+    "卯": "酉", "酉": "卯",
+    "辰": "戌", "戌": "辰",
+    "巳": "亥", "亥": "巳",
+}
+
+# 地支六合
+_DI_ZHI_HE: dict[str, str] = {
+    "子": "丑", "丑": "子",
+    "寅": "亥", "亥": "寅",
+    "卯": "戌", "戌": "卯",
+    "辰": "酉", "酉": "辰",
+    "巳": "申", "申": "巳",
+    "午": "未", "未": "午",
+}
+
+
+def _calculate_shishen(day_master_gan: str, target_gan: str) -> str:
+    """
+    计算目标天干相对于日主的十神关系。
+
+    十神判定逻辑（以日主为"我"）：
+      - 同五行 + 同阴阳 → 比肩
+      - 同五行 + 异阴阳 → 劫财
+      - 我生 + 同阴阳 → 食神
+      - 我生 + 异阴阳 → 伤官
+      - 我克 + 同阴阳 → 偏财
+      - 我克 + 异阴阳 → 正财
+      - 克我 + 同阴阳 → 偏官（七杀）
+      - 克我 + 异阴阳 → 正官
+      - 生我 + 同阴阳 → 偏印
+      - 生我 + 异阴阳 → 正印
+
+    Args:
+        day_master_gan: 日主天干，如 "甲"。
+        target_gan: 目标天干，如 "壬"。
+
+    Returns:
+        十神名称，如 "偏印"。
+    """
+    if not day_master_gan or not target_gan:
+        return ""
+
+    dm_wx = _GAN_WU_XING.get(day_master_gan, "")
+    tg_wx = _GAN_WU_XING.get(target_gan, "")
+    dm_yy = _GAN_YIN_YANG.get(day_master_gan, "")
+    tg_yy = _GAN_YIN_YANG.get(target_gan, "")
+
+    if not dm_wx or not tg_wx:
+        return ""
+
+    same_yy = (dm_yy == tg_yy)
+
+    if dm_wx == tg_wx:
+        return "比肩" if same_yy else "劫财"
+
+    # 我生 → 食神/伤官
+    if _WU_XING_SHENG.get(dm_wx) == tg_wx:
+        return "食神" if same_yy else "伤官"
+
+    # 我克 → 偏财/正财
+    if _WU_XING_KE.get(dm_wx) == tg_wx:
+        return "偏财" if same_yy else "正财"
+
+    # 克我 → 偏官(七杀)/正官
+    if _WU_XING_KE.get(tg_wx) == dm_wx:
+        return "偏官" if same_yy else "正官"
+
+    # 生我 → 偏印/正印
+    if _WU_XING_SHENG.get(tg_wx) == dm_wx:
+        return "偏印" if same_yy else "正印"
+
+    return ""
+
+
+def _calculate_chong_he(user_zhi: str, today_zhi: str) -> str:
+    """
+    计算两个地支的冲/合关系。
+
+    Args:
+        user_zhi: 用户日支。
+        today_zhi: 今日日支。
+
+    Returns:
+        描述字符串，如 "子午冲" / "寅亥合" / "无冲合"。
+    """
+    if not user_zhi or not today_zhi:
+        return ""
+
+    # 先检查六冲
+    chong = _DI_ZHI_CHONG.get(user_zhi, "")
+    if chong == today_zhi:
+        return f"{user_zhi}{today_zhi}冲 · 宜静不宜动"
+
+    # 再检查六合
+    he = _DI_ZHI_HE.get(user_zhi, "")
+    if he == today_zhi:
+        return f"{user_zhi}{today_zhi}合 · 诸事顺遂"
+
+    return "无冲合"
+
+
+def calculate_daily_fortune_data(
+    bazi_result: BaziResult,
+    yun_result: YunResult,
+    today_date: Optional[str] = None,
+) -> DailyFortuneData:
+    """
+    计算今日运势所需的全部原始数据。
+
+    结合用户八字、大运排盘与今日天象，输出结构化数据供
+    AI 生成白话运势解读。
+
+    Args:
+        bazi_result: 用户八字四柱。
+        yun_result: 用户大运排盘。
+        today_date: 今天公历日期 'YYYY-MM-DD'，默认系统时间。
+
+    Returns:
+        DailyFortuneData 包含十神、冲合、运势周期等全部信息。
+    """
+    # 解析今天日期
+    if today_date is None:
+        now = datetime.now()
+        today_date = f"{now.year}-{now.month:02d}-{now.day:02d}"
+
+    date_match = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})$", today_date)
+    if not date_match:
+        raise ValueError(f"Invalid today_date format: {today_date}")
+    ty, tm, td = int(date_match.group(1)), int(date_match.group(2)), int(date_match.group(3))
+
+    # 用 noon 避免时辰边界问题
+    today_solar = Solar.fromYmdHms(ty, tm, td, 12, 0, 0)
+    today_lunar = today_solar.getLunar()
+    today_eight_char = today_lunar.getEightChar()
+
+    # ── 今日天象 ──
+    day_gan_zhi = _safe_str(today_eight_char.getDay())
+    day_gan = _safe_str(today_eight_char.getDayGan())
+    day_zhi = _safe_str(today_eight_char.getDayZhi())
+    month_gan_zhi = _safe_str(today_eight_char.getMonth())
+    year_gan_zhi = _safe_str(today_lunar.getYearInGanZhi())
+
+    # ── 用户信息 ──
+    day_master = bazi_result.day.gan
+    day_master_wx = bazi_result.day.wu_xing
+    user_day_zhi = bazi_result.day.zhi
+
+    # ── 十神关系 ──
+    day_relation = _calculate_shishen(day_master, day_gan)
+
+    # ── 冲合关系 ──
+    clash_info = _calculate_chong_he(user_day_zhi, day_zhi)
+
+    # ── 当前运势周期 ──
+    current_year = ty
+    current_dayun_gan_zhi = ""
+    current_dayun_age = ""
+    for dy in yun_result.da_yun:
+        if dy.start_year <= current_year <= dy.end_year:
+            current_dayun_gan_zhi = dy.gan_zhi
+            current_dayun_age = f"{dy.start_age}-{dy.end_age}岁"
+            break
+
+    # 如果没匹配到当前大运（比如还没起运），取第一步
+    if not current_dayun_gan_zhi and yun_result.da_yun:
+        first = yun_result.da_yun[0]
+        current_dayun_gan_zhi = first.gan_zhi
+        current_dayun_age = f"{first.start_age}-{first.end_age}岁"
+
+    # ── 用户八字摘要 ──
+    bazi_summary = bazi_result.full_bazi
+    wxs = bazi_result.wu_xing_summary
+    wxs_parts = [f"{k}{v}" for k, v in wxs.items() if v > 0]
+    wxs_str = "、".join(wxs_parts)
+
+    # ── 大运摘要 ──
+    yun_summary_parts = []
+    for dy in yun_result.da_yun:
+        yun_summary_parts.append(f"{dy.gan_zhi}({dy.start_age}-{dy.end_age}岁)")
+    yun_summary = " / ".join(yun_summary_parts)
+
+    return DailyFortuneData(
+        day_gan_zhi=day_gan_zhi,
+        day_gan=day_gan,
+        day_zhi=day_zhi,
+        month_gan_zhi=month_gan_zhi,
+        year_gan_zhi=year_gan_zhi,
+        day_master=day_master,
+        day_master_wu_xing=day_master_wx,
+        day_relation=day_relation,
+        clash_info=clash_info,
+        current_dayun_gan_zhi=current_dayun_gan_zhi,
+        current_dayun_age=current_dayun_age,
+        current_liunian_gan_zhi=year_gan_zhi,
+        bazi_summary=f"{bazi_summary}（{wxs_str}）",
+        yun_summary=yun_summary,
+    )

@@ -1,0 +1,197 @@
+// 全局公共样式 — 原生 App 打磨版
+@use './variables.scss';
+
+// ═══ 卡片 ═══
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin: var(--spacing-sm) var(--spacing-md);
+  box-shadow: var(--shadow-card);
+}
+
+// ═══ 主按钮 ═══
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: #fff;
+  font-size: var(--font-lg);
+  font-weight: 600;
+  border-radius: 44rpx;
+  border: none;
+  margin-top: var(--spacing-md);
+  transition: opacity 0.15s, transform 0.15s;
+
+  &:active {
+    opacity: 0.85;
+    transform: scale(0.98);
+  }
+
+  &[disabled] {
+    opacity: 0.45;
+  }
+}
+
+// ═══ 表单 ═══
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.form-input {
+  width: 100%;
+  height: 88rpx;
+  background: var(--color-bg);
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--spacing-md);
+  font-size: var(--font-md);
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+}
+
+.form-error {
+  font-size: var(--font-xs);
+  color: var(--color-error);
+  margin-top: var(--spacing-xs);
+}
+
+// ═══ 标签 ═══
+.tag-yi {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  background: #e8f5e9;
+  color: var(--color-tag-yi);
+  font-size: var(--font-sm);
+  border-radius: var(--radius-sm);
+  margin: 4rpx;
+}
+
+.tag-ji {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  background: #ffebee;
+  color: var(--color-tag-ji);
+  font-size: var(--font-sm);
+  border-radius: var(--radius-sm);
+  margin: 4rpx;
+}
+
+.tag-ji-shen {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  background: #e3f2fd;
+  color: var(--color-tag-ji-shen);
+  font-size: var(--font-sm);
+  border-radius: var(--radius-sm);
+  margin: 4rpx;
+}
+
+// ═══ 骨架屏 ═══
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// ═══ 分隔线 ═══
+.divider {
+  height: 1rpx;
+  background: var(--color-border);
+  margin: var(--spacing-sm) 0;
+}
+
+// ═══ 文字省略 ═══
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+// ═══ 原生 App 增强 ═══
+
+// 点击反馈 (替代 hover)
+.tap-active {
+  transition: opacity 0.1s;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+// 安全区底部占位
+.safe-bottom {
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
+// 列表项 (常用)
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--color-bg-white);
+  border-bottom: 1rpx solid var(--color-border-light);
+
+  &:active {
+    background: var(--color-bg);
+  }
+}
+
+// 空状态通用
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0;
+
+  &-icon {
+    font-size: 80rpx;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.6;
+  }
+
+  &-text {
+    font-size: var(--font-md);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  &-hint {
+    font-size: var(--font-sm);
+    color: var(--color-text-placeholder);
+  }
+}
+
+// 原生下拉刷新主题色 (统一绿色)
+page {
+  --refresher-background: #f7f5f0;
+  --refresher-foreground: #2c5f2d;
+}

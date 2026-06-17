@@ -168,7 +168,9 @@ class TestWorkflowPipelineExecutorInjection:
             "location": "北京",
             "is_solar_time": True,
             "bazi_full": "庚午 辛巳 乙酉 丙子",
+            "bazi_data_text": "【八字排盘】\n年柱：庚午 | 天干:庚(金) | ...",
             "kb_context": "",
+            "yun_data_text": "",
         })
         assert result.status == "success"
 

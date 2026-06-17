@@ -25,7 +25,14 @@
       "PowerShell(Get-ChildItem -Path \"D:\\\\Oasis_Project\\\\.claude\\\\skills\\\\\" -Directory -ErrorAction SilentlyContinue | ForEach-Object { $_.Name })",
       "Bash(node \"D:\\\\Oasis_Project\\\\frontend\\\\scripts\\\\generate-icons.js\")",
       "Bash(python -m pytest tests/test_api_integration.py -v --tb=short -x)",
-      "WebFetch(domain:developers.weixin.qq.com)"
+      "WebFetch(domain:developers.weixin.qq.com)",
+      "Bash(python -c \"import json; f=open\\('project.config.json','r',encoding='utf-8'\\); d=json.load\\(f\\); print\\('Valid JSON'\\); print\\('es6:', d['setting']['es6']\\); print\\('enhance:', d['setting']['enhance']\\); print\\('libVersion:', d['libVersion']\\)\")",
+      "Bash(python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload)",
+      "Bash(Select-Object -Last 20)",
+      "PowerShell(netsh interface portproxy show all 2>$null)",
+      "PowerShell(netsh http show urlacl url=http://+:8000/ 2>$null)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/health)",
+      "Bash(start \"\" \"D:\\\\HBuilderX\\\\HBuilderX\\\\HBuilderX.exe\")"
     ]
   }
 }

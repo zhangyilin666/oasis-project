@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from sqlalchemy import String, Text, JSON, ForeignKey, DateTime, func
+from sqlalchemy import String, Text, JSON, ForeignKey, DateTime, Enum as SQLEnum, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+from app.models.report_status import ReportStatus
 
 
 class Report(Base):
@@ -22,15 +23,27 @@ class Report(Base):
         nullable=False,
         comment="用户输入出生时间字符串"
     )
-    calendar_data: Mapped[dict] = mapped_column(
+    calendar_data: Mapped[dict | None] = mapped_column(
         JSON,
-        nullable=False,
-        comment="lunar-python 排盘结果"
+        nullable=True,
+        comment="lunar-python 排盘结果（pending/processing 时为 NULL）"
     )
-    ai_analysis: Mapped[str] = mapped_column(
+    ai_analysis: Mapped[str | None] = mapped_column(
         Text,
+        nullable=True,
+        comment="AI生成运势分析（pending/processing 时为 NULL）"
+    )
+    status: Mapped[ReportStatus] = mapped_column(
+        SQLEnum(ReportStatus),
         nullable=False,
-        comment="AI生成运势分析"
+        default=ReportStatus.PENDING,
+        index=True,
+        comment="报告状态: PENDING / PROCESSING / COMPLETED / FAILED"
+    )
+    error_message: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+        comment="失败原因（仅 status=FAILED 时有值）"
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

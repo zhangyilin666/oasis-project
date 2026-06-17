@@ -1,0 +1,75 @@
+{
+    "name" : "Oasis 绿洲",
+    "appid" : "__UNI__A19A979",
+    "versionName" : "1.0.0",
+    "versionCode" : "100",
+    "description" : "AI 驱动的传统文化生活辅助平台 — 八字命理 · 黄历宜忌 · 每日运势",
+    "vueVersion" : "3",
+    "transformPx" : false,
+    "app-plus" : {
+        "usingComponents" : true,
+        "nvueStyleCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0,
+            "androidStyle" : "common",
+            "androidSrc" : "static/images/app-icon.png"
+        },
+        "statusbar" : {
+            "immersed" : false,
+            "style" : "dark",
+            "background" : "#2c5f2d"
+        },
+        "modules" : {
+            "Clipboard" : {},
+            "OAuth" : {}
+        },
+        "distribute" : {
+            "android" : {
+                "packagename" : "com.zhangyilin.oasis",
+                "minSdkVersion" : 21,
+                "targetSdkVersion" : 34,
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ],
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>"
+                ]
+            },
+            "ios" : {
+                "bundleIdentifier" : "com.zhangyilin.oasis",
+                "dSYMs" : false,
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "用于保存分析报告图片到相册",
+                    "NSPhotoLibraryAddUsageDescription" : "用于保存分析报告图片到相册"
+                },
+                "UIApplicationExitsOnSuspend" : false,
+                "UIRequiresFullScreen" : true,
+                "UISupportedInterfaceOrientations" : [ "UIInterfaceOrientationPortrait" ]
+            },
+            "sdkConfigs" : {}
+        },
+        "nativePlugins" : {}
+    },
+    "h5" : {
+        "title" : "Oasis 绿洲",
+        "router" : {
+            "mode" : "hash"
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        }
+    },
+    "mp-weixin" : {
+        "appid" : "",
+        "setting" : {
+            "urlCheck" : false
+        },
+        "usingComponents" : true
+    }
+}

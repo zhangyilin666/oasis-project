@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import asyncio
 from datetime import date
 from typing import Optional
 
@@ -7,14 +8,19 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.logger import logger
+from app.core.rate_limit import check_daily_analyze_limit
 from app.core.security_deps import get_current_user
 from app.db.database import get_db
 from app.models.log_model import AnalysisLog
 from app.models.report_model import Report
+from app.models.report_status import ReportStatus
 from app.models.user_model import User
 from app.schemas.oasis_schema import OasisResponse, UserInput
-from app.services.analysis_service import analyze_user_input
+from app.services.analysis_service import _format_birth_info
+from app.services.background_analysis import process_report_in_background
 from app.services.calendar_service import get_day_almanac
+from app.services.daily_fortune_service import get_daily_fortune
+from app.services.yun_service import get_yun_fortune
 
 router = APIRouter()
 
@@ -30,54 +36,80 @@ async def health():
 
 
 # ---------------------------------------------------------------------------
-# 受保护端点（需 JWT）
+# 受保护端点（需 JWT）— WeChat + App 双路径
 # ---------------------------------------------------------------------------
 
 @router.post(
     "/api/v1/wechat/oasis/analyze",
     response_model=OasisResponse,
-    summary="八字命理分析（核心接口）",
+    summary="八字命理分析（WeChat）",
+)
+@router.post(
+    "/api/v1/app/oasis/analyze",
+    response_model=OasisResponse,
+    summary="八字命理分析（App）",
 )
 async def analyze(
     user_input: UserInput,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
+    _rate_ok: None = Depends(check_daily_analyze_limit),
 ):
     """
-    提交出生信息，执行八字命理分析并持久化结果。
+    提交出生信息，立即返回 report_id，分析在后台执行。
 
     流程：
-    1. JWT 鉴权 → 获取 current_user
-    2. analysis_service 编排完整分析管线
-       - calendar_service 计算八字四柱
-       - workflow_service 编排 AI 分析
-       - Report + AnalysisLog 入库
-    3. 返回八字数据 + AI 分析文本 + report_id
+    1. 创建 pending Report → 立即返回 report_id
+    2. 后台线程执行完整分析管线（排盘→AI分析→入库）
+    3. 前端轮询 GET /report/{id} 获取结果
+       - status="pending"/"processing" → 继续轮询
+       - status="completed" → 展示分析结果
+       - status="failed" → 展示错误信息
     """
     logger.info(
-        "Analyze request: user_id=%s, birth_date=%s",
+        "Analyze submitted: user_id=%s",
         current_user.id,
-        user_input.birth_date,
     )
 
-    try:
-        result = analyze_user_input(
-            user_id=current_user.id,
-            user_input=user_input,
-            db=db,
-        )
-    except ValueError as exc:
-        logger.warning("Analysis failed on invalid input: %s", exc)
-        return OasisResponse(
-            code=422,
-            message=f"Invalid input: {exc}",
-            data=None,
-        )
+    # 1. 创建 pending Report（仅占位，无分析数据）
+    report = Report(
+        user_id=current_user.id,
+        birth_info=_format_birth_info(user_input),
+        status=ReportStatus.PENDING,
+        calendar_data=None,
+        ai_analysis=None,
+    )
+    db.add(report)
+    db.commit()
+    db.refresh(report)
 
+    # 2. 序列化 UserInput 为 plain dict（跨线程安全）
+    user_input_dict = {
+        "name": user_input.name,
+        "birth_date": user_input.birth_date,
+        "birth_time": user_input.birth_time,
+        "gender": user_input.gender,
+        "location": user_input.location,
+        "is_solar_time": user_input.is_solar_time,
+    }
+
+    # 3. 提交后台线程处理（避开 FastAPI 事件循环，避免阻塞）
+    loop = asyncio.get_event_loop()
+    loop.run_in_executor(
+        None,
+        process_report_in_background,
+        report.id,
+        user_input_dict,
+    )
+
+    # 4. 立即返回 report_id
     return OasisResponse(
         code=200,
-        message="ok",
-        data=result,
+        message="Analysis submitted, processing in background",
+        data={
+            "report_id": report.id,
+            "status": ReportStatus.PENDING.value,
+        },
     )
 
 
@@ -88,7 +120,12 @@ async def analyze(
 @router.get(
     "/api/v1/wechat/oasis/reports",
     response_model=OasisResponse,
-    summary="用户报告列表",
+    summary="用户报告列表（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/reports",
+    response_model=OasisResponse,
+    summary="用户报告列表（App）",
 )
 async def list_reports(
     skip: int = Query(0, ge=0, description="跳过条数"),
@@ -116,6 +153,7 @@ async def list_reports(
         .limit(limit)
     ).scalars().all()
 
+    # 新模型：AI 分析对所有人免费开放，不再按会员过滤预览
     return OasisResponse(
         code=200,
         message="ok",
@@ -124,6 +162,7 @@ async def list_reports(
                 {
                     "id": r.id,
                     "birth_info": r.birth_info,
+                    "status": r.status.value if hasattr(r.status, 'value') else r.status,
                     "ai_analysis_preview": r.ai_analysis[:200] if r.ai_analysis else "",
                     "created_at": r.created_at.isoformat() if r.created_at else None,
                     "updated_at": r.updated_at.isoformat() if r.updated_at else None,
@@ -140,7 +179,12 @@ async def list_reports(
 @router.get(
     "/api/v1/wechat/oasis/report/{report_id}",
     response_model=OasisResponse,
-    summary="报告详情",
+    summary="报告详情（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/report/{report_id}",
+    response_model=OasisResponse,
+    summary="报告详情（App）",
 )
 async def get_report(
     report_id: int,
@@ -168,6 +212,8 @@ async def get_report(
             detail={"code": 404, "message": f"Report {report_id} not found"},
         )
 
+    # 新模型：AI 分析对大运评语对所有人免费开放
+
     # 关联日志（含详细信息）
     logs = (
         db.execute(
@@ -181,15 +227,20 @@ async def get_report(
 
     log_count = len(logs)
 
+    # calendar_data 原样返回（不再裁剪 yun_summary）
+    calendar_data = report.calendar_data or {}
+
     return OasisResponse(
         code=200,
         message="ok",
         data={
             "id": report.id,
             "user_id": report.user_id,
+            "status": report.status.value if hasattr(report.status, "value") else report.status,
+            "error_message": report.error_message,
             "birth_info": report.birth_info,
-            "calendar_data": report.calendar_data,
-            "ai_analysis": report.ai_analysis,
+            "calendar_data": calendar_data,
+            "ai_analysis": report.ai_analysis or "",
             "analysis_logs_count": log_count,
             "analysis_logs": [
                 {
@@ -199,6 +250,7 @@ async def get_report(
                     "prompt_tokens": lg.prompt_tokens,
                     "completion_tokens": lg.completion_tokens,
                     "total_tokens": lg.total_tokens,
+                    "trace_id": lg.trace_id,
                     "created_at": lg.created_at.isoformat() if lg.created_at else None,
                 }
                 for lg in logs
@@ -216,7 +268,12 @@ async def get_report(
 @router.get(
     "/api/v1/wechat/oasis/knowledge",
     response_model=OasisResponse,
-    summary="古籍知识库文档列表",
+    summary="古籍知识库文档列表（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/knowledge",
+    response_model=OasisResponse,
+    summary="古籍知识库文档列表（App）",
 )
 async def list_knowledge(
     current_user: User = Depends(get_current_user),
@@ -247,7 +304,12 @@ async def list_knowledge(
 @router.get(
     "/api/v1/wechat/oasis/knowledge/{doc_id}",
     response_model=OasisResponse,
-    summary="古籍文档详情",
+    summary="古籍文档详情（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/knowledge/{doc_id}",
+    response_model=OasisResponse,
+    summary="古籍文档详情（App）",
 )
 async def get_knowledge_document(
     doc_id: str,
@@ -289,7 +351,12 @@ async def get_knowledge_document(
 @router.get(
     "/api/v1/wechat/oasis/almanac",
     response_model=OasisResponse,
-    summary="黄历宜忌查询",
+    summary="黄历宜忌查询（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/almanac",
+    response_model=OasisResponse,
+    summary="黄历宜忌查询（App）",
 )
 async def almanac(
     solar_date: Optional[str] = Query(
@@ -318,4 +385,101 @@ async def almanac(
         code=200,
         message="ok",
         data=almanac_day.to_dict(),
+    )
+
+
+# ---------------------------------------------------------------------------
+# 每日运势端点
+# ---------------------------------------------------------------------------
+
+@router.get(
+    "/api/v1/wechat/oasis/daily-fortune",
+    response_model=OasisResponse,
+    summary="今日运势（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/daily-fortune",
+    response_model=OasisResponse,
+    summary="今日运势（App）",
+)
+async def daily_fortune(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    获取针对当前用户的今日运势。
+
+    首次访问当天会自动调用 AI 生成（约 5-8 秒），
+    后续访问直接返回缓存（毫秒级）。
+
+    若用户还没有八字报告，返回 400 提示先完成分析。
+    """
+    try:
+        fortune = get_daily_fortune(
+            user_id=current_user.id,
+            db=db,
+        )
+    except ValueError as exc:
+        return OasisResponse(
+            code=400,
+            message=str(exc),
+            data=None,
+        )
+    except RuntimeError as exc:
+        logger.error("Daily fortune generation failed for user %s: %s", current_user.id, exc)
+        return OasisResponse(
+            code=500,
+            message="运势生成失败，请稍后再试",
+            data=None,
+        )
+
+    return OasisResponse(
+        code=200,
+        message="ok",
+        data=fortune,
+    )
+
+
+# ---------------------------------------------------------------------------
+# 大运流年端点
+# ---------------------------------------------------------------------------
+
+@router.get(
+    "/api/v1/wechat/oasis/yun",
+    response_model=OasisResponse,
+    summary="大运流年（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/yun",
+    response_model=OasisResponse,
+    summary="大运流年（App）",
+)
+async def get_yun(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    获取用户的大运流年排盘数据。
+
+    返回全部 8 步大运 × 10 流年（已对所有人免费开放）。
+
+    若用户还没有八字报告，返回 400。
+    """
+    data = get_yun_fortune(
+        db=db,
+        user_id=current_user.id,
+        is_premium=True,  # 全部免费开放
+    )
+
+    if data is None:
+        return OasisResponse(
+            code=400,
+            message="请先完成八字分析",
+            data=None,
+        )
+
+    return OasisResponse(
+        code=200,
+        message="ok",
+        data=data,
     )

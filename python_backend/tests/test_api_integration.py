@@ -102,13 +102,13 @@ class TestAnalyze:
         # AI 分析不为空
         assert data["ai_analysis_text"], "ai_analysis_text should not be empty"
 
-        # workflow 状态
-        assert data["workflow_status"] == "success"
+        # workflow 状态（异步模式：status 为 "completed"）
+        assert data["workflow_status"] == "completed"
         assert len(data["workflow_steps"]) > 0, "Expected at least one workflow step"
         for step in data["workflow_steps"]:
-            assert "step" in step
+            assert "model_name" in step
             assert "status" in step
-            assert "duration_ms" in step
+            assert "latency_ms" in step
 
         # trace_id 是 16 位 hex
         assert len(data["trace_id"]) == 16
@@ -563,6 +563,8 @@ class TestFullWorkflow:
 
     def test_full_user_journey(self, client):
         """模拟用户完整使用路径。"""
+        import time
+
         # 1. 登录
         login_res = client.post(
             "/api/v1/wechat/login",
@@ -577,7 +579,7 @@ class TestFullWorkflow:
         from tests.conftest import _TEST_USER_IDS
         _TEST_USER_IDS.append(user_id)
 
-        # 2. 分析
+        # 2. 分析（异步提交）
         analyze_res = client.post(
             "/api/v1/wechat/oasis/analyze",
             json={
@@ -593,8 +595,27 @@ class TestFullWorkflow:
         assert analyze_res.status_code == 200
         analysis = analyze_res.json()["data"]
         report_id = analysis["report_id"]
+        assert analysis["status"] == "pending"
         from tests.conftest import _TEST_REPORT_IDS
         _TEST_REPORT_IDS.append(report_id)
+
+        # 2b. 轮询等待分析完成
+        for _ in range(50):
+            detail_res = client.get(
+                f"/api/v1/wechat/oasis/report/{report_id}",
+                headers=headers,
+            )
+            assert detail_res.status_code == 200
+            detail = detail_res.json()["data"]
+            if detail.get("status") == "completed":
+                break
+            if detail.get("status") == "failed":
+                raise AssertionError(
+                    f"Analysis failed: {detail.get('error_message')}"
+                )
+            time.sleep(0.1)
+        else:
+            raise AssertionError("Analysis timed out")
 
         # 3. 报告列表中有这条
         list_res = client.get("/api/v1/wechat/oasis/reports", headers=headers)
@@ -602,15 +623,9 @@ class TestFullWorkflow:
         report_ids = [r["id"] for r in list_res.json()["data"]["reports"]]
         assert report_id in report_ids
 
-        # 4. 报告详情与列表摘要一致
-        detail_res = client.get(
-            f"/api/v1/wechat/oasis/report/{report_id}",
-            headers=headers,
-        )
-        assert detail_res.status_code == 200
-        detail = detail_res.json()["data"]
-        assert detail["ai_analysis"] == analysis["ai_analysis_text"]
-        assert detail["calendar_data"]["full_bazi"] == analysis["calendar_data"]["full_bazi"]
+        # 4. 报告详情数据完整
+        assert detail["ai_analysis"]
+        assert detail["calendar_data"]["full_bazi"]
 
         # 5. 黄历查询正常
         almanac_res = client.get("/api/v1/wechat/oasis/almanac", headers=headers)

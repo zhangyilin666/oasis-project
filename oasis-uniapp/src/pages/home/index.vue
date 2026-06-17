@@ -1,7 +1,7 @@
 <template>
   <view class="home-page">
     <view class="home-header">
-      <text class="header-title">Oasis 绿洲</text>
+      <text class="header-title">小易</text>
       <text class="header-date">{{ todayStr }}</text>
     </view>
 
@@ -114,7 +114,7 @@
 
     <!-- 简介卡片 -->
     <view class="card intro-card">
-      <text class="intro-title">关于 Oasis 绿洲</text>
+      <text class="intro-title">关于小易</text>
       <text class="intro-text">
         基于传统历法（lunar-python）和 AI 大模型，为您提供专业的八字命理分析、
         五行生克解读、运势建议及每日黄历宜忌查询。

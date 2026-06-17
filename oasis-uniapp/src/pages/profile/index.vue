@@ -35,7 +35,7 @@
 
     <!-- 版本信息 -->
     <view class="version-footer">
-      <text class="version-text">Oasis 绿洲 v1.0.0</text>
+      <text class="version-text">小易 v1.0.0</text>
     </view>
   </view>
 </template>

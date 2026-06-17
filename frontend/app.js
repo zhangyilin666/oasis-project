@@ -1,4 +1,4 @@
-// Oasis（绿洲）微信小程序
+// 小易 微信小程序
 // 入口文件 — App() 生命周期、全局数据、Token 检查
 const storage = require('./utils/storage')
 

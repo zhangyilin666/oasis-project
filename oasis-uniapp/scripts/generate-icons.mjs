@@ -36,8 +36,8 @@ function svgIcon(shape, color) {
         </defs>
         <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
         <circle cx="512" cy="400" r="140" fill="none" stroke="#ffffff" stroke-width="36" opacity="0.9"/>
-        <text x="512" y="700" text-anchor="middle" font-family="sans-serif" font-size="200" font-weight="bold" fill="#ffffff" opacity="0.9">绿洲</text>
-        <text x="512" y="870" text-anchor="middle" font-family="sans-serif" font-size="64" fill="#ffffff" opacity="0.5">OASIS</text>
+        <text x="512" y="700" text-anchor="middle" font-family="sans-serif" font-size="200" font-weight="bold" fill="#ffffff" opacity="0.9">小易</text>
+        <text x="512" y="870" text-anchor="middle" font-family="sans-serif" font-size="64" fill="#ffffff" opacity="0.5">XIAOYI</text>
       </svg>`
     default:
       return ''

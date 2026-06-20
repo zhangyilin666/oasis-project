@@ -7,7 +7,7 @@
  * uni-app 中通过 VITE_ 前缀环境变量区分环境。
  */
 // #ifdef APP-PLUS
-const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://192.168.2.12:8000'
+const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://120.26.21.7'
 // #endif
 // #ifdef H5
 const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'

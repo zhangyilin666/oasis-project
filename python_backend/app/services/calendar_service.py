@@ -432,8 +432,11 @@ def calculate_bazi(
         lunar_year_cn=_safe_str(lunar.getYearInChinese()),
         lunar_month_cn=_safe_str(lunar.getMonthInChinese()),
         lunar_day_cn=_safe_str(lunar.getDayInChinese()),
-        animal=_safe_str(lunar.getAnimal()),
-        ming_gong="",
+        animal=_call_safe(lunar, "getYearShengXiao", "") or {
+            "子": "鼠", "丑": "牛", "寅": "虎", "卯": "兔",
+            "辰": "龙", "巳": "蛇", "午": "马", "未": "羊",
+            "申": "猴", "酉": "鸡", "戌": "狗", "亥": "猪",
+        }.get(_safe_str(lunar.getYearZhi()), ""),
         shen_gong="",
         tai_yuan="",
     )

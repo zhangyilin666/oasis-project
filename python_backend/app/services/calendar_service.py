@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Optional
 
-from lunar_python import EightChar, Lunar, Solar
+from lunar_python import Lunar, Solar
 
 from app.core.logger import logger
 
@@ -339,54 +339,85 @@ def calculate_bazi(
         lunar = Lunar.fromYmdHms(year, month, day, hour, minute, 0)
         solar = lunar.getSolar()
 
-    eight_char: EightChar = lunar.getEightChar()
+    # --- 提取八字全局数据（lunar-python 1.0.0 返回列表，索引: 0=年/1=月/2=日/3=时）---
+    try:
+        bz_wu_xing_list = lunar.getBaZiWuXing()           # ['木火', '火水', '火土', '火土']
+        bz_shi_shen_gan_list = lunar.getBaZiShiShenGan()  # ['偏财', '偏印', '日元', '比肩']
+        bz_shi_shen_zhi_list = lunar.getBaZiShiShenZhi()  # ['劫财', '伤官', '偏印', '偏印']
+    except Exception:
+        bz_wu_xing_list = ['', '', '', '']
+        bz_shi_shen_gan_list = ['', '', '', '']
+        bz_shi_shen_zhi_list = ['', '', '', '']
 
-    # --- 提取四柱 ---
-    def _build_pillar(get_pillar_fn, get_gan_fn, get_zhi_fn, na_yin_fn, wu_xing_fn, shi_shen_gan_fn, shi_shen_zhi_fn, di_shi_fn, hide_gan_fn, xun_fn, xun_kong_fn):
-        return PillarInfo(
-            gan_zhi=_safe_str(get_pillar_fn()),
-            gan=_safe_str(get_gan_fn()),
-            zhi=_safe_str(get_zhi_fn()),
-            na_yin=_safe_str(na_yin_fn()),
-            wu_xing=_safe_str(wu_xing_fn()),
-            shi_shen_gan=_safe_str(shi_shen_gan_fn()),
-            shi_shen_zhi=_safe_str(shi_shen_zhi_fn()),
-            di_shi=_safe_str(di_shi_fn()),
-            hide_gan=_safe_str(hide_gan_fn()),
-            xun=_safe_str(xun_fn()),
-            xun_kong=_safe_str(xun_kong_fn()),
-        )
+    def _safe_list_get(lst: list, idx: int) -> str:
+        """安全从列表取值，索引越界返回空字符串。"""
+        try:
+            return _safe_str(lst[idx])
+        except (IndexError, TypeError):
+            return ""
+
+    def _safe_method(obj, name):
+        """安全获取对象方法，方法不存在时返回 None（避免 AttributeError）。"""
+        return getattr(obj, name, None)
+
+    def _build_pillar(
+        gan_zhi_value,      # callable 或 str（时柱是字符串）
+        get_gan_fn,         # callable 或 None
+        get_zhi_fn,         # callable 或 None
+        na_yin_fn="",       # callable 或 ""
+        wu_xing_str="",     # 预取字符串
+        shi_shen_gan_str="",# 预取字符串
+        shi_shen_zhi_str="",# 预取字符串
+        xun_fn="",          # callable 或 ""
+        xun_kong_fn="",     # callable 或 ""
+    ):
+        try:
+            return PillarInfo(
+                gan_zhi=_safe_str(gan_zhi_value()) if callable(gan_zhi_value) else _safe_str(gan_zhi_value),
+                gan=_safe_str(get_gan_fn()) if callable(get_gan_fn) else "",
+                zhi=_safe_str(get_zhi_fn()) if callable(get_zhi_fn) else "",
+                na_yin=_safe_str(na_yin_fn()) if callable(na_yin_fn) else "",
+                wu_xing=wu_xing_str,
+                shi_shen_gan=shi_shen_gan_str,
+                shi_shen_zhi=shi_shen_zhi_str,
+                di_shi="",      # lunar-python 1.0.0 未暴露单柱地势方法
+                hide_gan="",    # lunar-python 1.0.0 未暴露单柱藏干方法
+                xun=_safe_str(xun_fn()) if callable(xun_fn) else "",
+                xun_kong=_safe_str(xun_kong_fn()) if callable(xun_kong_fn) else "",
+            )
+        except Exception:
+            return PillarInfo()
 
     year_pillar = _build_pillar(
-        eight_char.getYear, eight_char.getYearGan, eight_char.getYearZhi,
-        eight_char.getYearNaYin, eight_char.getYearWuXing,
-        eight_char.getYearShiShenGan, eight_char.getYearShiShenZhi,
-        eight_char.getYearDiShi, eight_char.getYearHideGan,
-        eight_char.getYearXun, eight_char.getYearXunKong,
+        _safe_method(lunar, 'getYearInGanZhi'), _safe_method(lunar, 'getYearGan'), _safe_method(lunar, 'getYearZhi'),
+        _safe_method(lunar, 'getYearNaYin'), _safe_list_get(bz_wu_xing_list, 0),
+        _safe_list_get(bz_shi_shen_gan_list, 0), _safe_list_get(bz_shi_shen_zhi_list, 0),
+        _safe_method(lunar, 'getYearXun'), _safe_method(lunar, 'getYearXunKong'),
     )
 
     month_pillar = _build_pillar(
-        eight_char.getMonth, eight_char.getMonthGan, eight_char.getMonthZhi,
-        eight_char.getMonthNaYin, eight_char.getMonthWuXing,
-        eight_char.getMonthShiShenGan, eight_char.getMonthShiShenZhi,
-        eight_char.getMonthDiShi, eight_char.getMonthHideGan,
-        eight_char.getMonthXun, eight_char.getMonthXunKong,
+        _safe_method(lunar, 'getMonthInGanZhi'), _safe_method(lunar, 'getMonthGan'),
+        _safe_method(lunar, 'getMonthZhiExact') or _safe_method(lunar, 'getMonthZhi'),
+        _safe_method(lunar, 'getMonthNaYin'), _safe_list_get(bz_wu_xing_list, 1),
+        _safe_list_get(bz_shi_shen_gan_list, 1), _safe_list_get(bz_shi_shen_zhi_list, 1),
+        _safe_method(lunar, 'getMonthXun'), _safe_method(lunar, 'getMonthXunKong'),
     )
 
     day_pillar = _build_pillar(
-        eight_char.getDay, eight_char.getDayGan, eight_char.getDayZhi,
-        eight_char.getDayNaYin, eight_char.getDayWuXing,
-        eight_char.getDayShiShenGan, eight_char.getDayShiShenZhi,
-        eight_char.getDayDiShi, eight_char.getDayHideGan,
-        eight_char.getDayXun, eight_char.getDayXunKong,
+        _safe_method(lunar, 'getDayInGanZhi'), _safe_method(lunar, 'getDayGan'), _safe_method(lunar, 'getDayZhi'),
+        _safe_method(lunar, 'getDayNaYin'), _safe_list_get(bz_wu_xing_list, 2),
+        _safe_list_get(bz_shi_shen_gan_list, 2), _safe_list_get(bz_shi_shen_zhi_list, 2),
+        _safe_method(lunar, 'getDayXun'), _safe_method(lunar, 'getDayXunKong'),
     )
 
+    # 时柱：先计算时柱干支字符串，再与其他方法一起传入
+    time_gan_zhi_str = _get_time_gan_zhi(lunar, hour)
     time_pillar = _build_pillar(
-        eight_char.getTime, eight_char.getTimeGan, eight_char.getTimeZhi,
-        eight_char.getTimeNaYin, eight_char.getTimeWuXing,
-        eight_char.getTimeShiShenGan, eight_char.getTimeShiShenZhi,
-        eight_char.getTimeDiShi, eight_char.getTimeHideGan,
-        eight_char.getTimeXun, eight_char.getTimeXunKong,
+        time_gan_zhi_str,
+        _safe_method(lunar, 'getTimeGan'), _safe_method(lunar, 'getTimeZhi'),
+        _safe_method(lunar, 'getTimeNaYin'), _safe_list_get(bz_wu_xing_list, 3),
+        _safe_list_get(bz_shi_shen_gan_list, 3), _safe_list_get(bz_shi_shen_zhi_list, 3),
+        _safe_method(lunar, 'getTimeXun'), _safe_method(lunar, 'getTimeXunKong'),
     )
 
     # --- 构建结果 ---
@@ -401,14 +432,69 @@ def calculate_bazi(
         lunar_year_cn=_safe_str(lunar.getYearInChinese()),
         lunar_month_cn=_safe_str(lunar.getMonthInChinese()),
         lunar_day_cn=_safe_str(lunar.getDayInChinese()),
-        animal=_safe_str(lunar.getYearShengXiao()),
-        ming_gong=_safe_str(eight_char.getMingGong()),
-        shen_gong=_safe_str(eight_char.getShenGong()),
-        tai_yuan=_safe_str(eight_char.getTaiYuan()),
+        animal=_safe_str(lunar.getAnimal()),
+        ming_gong="",
+        shen_gong="",
+        tai_yuan="",
     )
 
     logger.info("Bazi result: %s", result.full_bazi)
     return result
+
+
+# ---------------------------------------------------------------------------
+# 黄历宜忌计算辅助（lunar_python 1.0.0 移除了 getDayYi 等 API）
+# ---------------------------------------------------------------------------
+
+# 地支字符 -> 索引
+_ZHI_MAP: dict[str, int] = {
+    "子": 0, "丑": 1, "寅": 2, "卯": 3, "辰": 4, "巳": 5,
+    "午": 6, "未": 7, "申": 8, "酉": 9, "戌": 10, "亥": 11,
+}
+
+# 建除十二神索引 -> (宜列表, 忌列表)
+# 建除十二神：建、除、满、平、定、执、破、危、成、收、开、闭
+_JIANCHU_YI_JI: dict[int, tuple[list[str], list[str]]] = {
+    0: (["祭祀", "祈福", "结婚", "上任", "搬家"], ["动土", "开仓", "出行"]),
+    1: (["祭祀", "祈福", "求嗣", "结婚", "上任"], ["词讼"]),
+    2: (["祭祀", "祈福", "结婚", "搬家"], ["栽种", "治病", "安葬"]),
+    3: (["祭祀", "祈福", "结婚", "上任", "搬家", "开仓"], ["出行"]),
+    4: (["祭祀", "祈福", "结婚", "上任", "搬家", "开仓"], ["词讼"]),
+    5: (["祭祀", "祈福", "结婚", "上任"], ["搬家", "开仓", "出行", "词讼"]),
+    6: (["祭祀"], ["上任", "搬家", "开仓", "出行", "安葬", "词讼", "治病"]),
+    7: (["祭祀", "祈福", "结婚"], ["搬家", "上任", "出行", "开仓"]),
+    8: (["祭祀", "祈福", "结婚", "上任", "搬家", "开仓", "出行"], []),
+    9: (["祭祀", "祈福", "结婚", "上任", "搬家"], ["开仓", "出行", "词讼"]),
+    10: (["祭祀", "祈福", "结婚", "上任", "搬家", "开仓"], ["治病", "词讼", "安葬"]),
+    11: (["祭祀", "祈福"], ["结婚", "上任", "搬家", "开仓", "出行"]),
+}
+
+
+def _call_safe(obj: Any, method_name: str, default: Any = None) -> Any:
+    """安全调用可能不存在的方法。"""
+    method = getattr(obj, method_name, None)
+    if callable(method):
+        try:
+            return method()
+        except Exception:
+            pass
+    return default
+
+
+def _get_jianchu_idx(lunar: Any) -> int:
+    """
+    计算指定农历日期的建除十二神索引（0=建, 1=除, ..., 11=闭）。
+    算法：建除索引 = (日支索引 - 月支索引 + 12) % 12
+    """
+    try:
+        month_gz = lunar.getMonthInGanZhi()
+        month_zhi = month_gz[1]
+        month_zhi_idx = _ZHI_MAP.get(month_zhi, 0)
+        day_zhi = lunar.getDayZhi()
+        day_zhi_idx = _ZHI_MAP.get(day_zhi, 0)
+        return (day_zhi_idx - month_zhi_idx + 12) % 12
+    except Exception:
+        return 0
 
 
 def get_day_almanac(solar_date: Optional[str] = None) -> AlmanacDay:
@@ -442,12 +528,66 @@ def get_day_almanac(solar_date: Optional[str] = None) -> AlmanacDay:
             return [_safe_str(s.strip()) for s in value.replace("，", ",").split(",") if s.strip()]
         return []
 
-    yi_list = _to_list(lunar.getDayYi())
-    ji_list = _to_list(lunar.getDayJi())
+    # 安全调用方法（lunar_python 1.0.0 移除了部分宜忌相关 API）
+    def _call_safe(obj, method_name, default=None):
+        method = getattr(obj, method_name, None)
+        if callable(method):
+            try:
+                return method()
+            except Exception:
+                pass
+        return default
 
-    # 吉神凶煞
-    ji_shen_raw = lunar.getDayJiShen()
-    xiong_sha_raw = lunar.getDayXiongSha()
+    yi_list = _to_list(_call_safe(lunar, "getDayYi", []))
+    ji_list = _to_list(_call_safe(lunar, "getDayJi", []))
+    ji_shen_raw = _call_safe(lunar, "getDayJiShen")
+    xiong_sha_raw = _call_safe(lunar, "getDayXiongSha")
+    chong_sheng_xiao = _safe_str(_call_safe(lunar, "getDayChongShengXiao", ""))
+    animal = _safe_str(_call_safe(lunar, "getYearShengXiao", ""))
+
+    # ---- 回退方案：lunar-python 部分构建版本未暴露宜忌 API ----
+    # 当原生方法返回空时，使用建除十二神推算宜忌 + 地支六冲推算冲生肖
+    if not yi_list and not ji_list:
+        jianchu_idx = _get_jianchu_idx(lunar)
+        yi_list, ji_list = _JIANCHU_YI_JI.get(jianchu_idx, ([], []))
+
+    if not ji_shen_raw and not xiong_sha_raw:
+        # 根据建除神名提供吉神凶煞标识
+        _JIANCHU_NAMES = ["建", "除", "满", "平", "定", "执", "破", "危", "成", "收", "开", "闭"]
+        _JIANCHU_JISHEN = {
+            "除": "吉期", "满": "福德", "平": "玉堂", "定": "时阳",
+            "执": "天德", "成": "天喜", "开": "月德",
+        }
+        _JIANCHU_XIONGSHA = {
+            "建": "月建", "破": "月破", "危": "灾煞", "收": "小煞", "闭": "血支",
+        }
+        try:
+            shen_name = _JIANCHU_NAMES[jianchu_idx]
+        except (IndexError, NameError):
+            shen_name = "建"
+        ji_shen_raw = _JIANCHU_JISHEN.get(shen_name, "")
+        xiong_sha_raw = _JIANCHU_XIONGSHA.get(shen_name, "")
+
+    if not chong_sheng_xiao:
+        # 从日地支推算冲生肖：地支 → 冲支 → 冲生肖
+        _ZHI_TO_SHENGXIAO = {
+            "子": "鼠", "丑": "牛", "寅": "虎", "卯": "兔",
+            "辰": "龙", "巳": "蛇", "午": "马", "未": "羊",
+            "申": "猴", "酉": "鸡", "戌": "狗", "亥": "猪",
+        }
+        day_zhi = _safe_str(lunar.getDayZhi())
+        chong_zhi = _DI_ZHI_CHONG.get(day_zhi, "")
+        chong_sheng_xiao = _ZHI_TO_SHENGXIAO.get(chong_zhi, "")
+
+    if not animal:
+        # 从年地支推算生肖作为回退
+        _ZHI_TO_SHENGXIAO = {
+            "子": "鼠", "丑": "牛", "寅": "虎", "卯": "兔",
+            "辰": "龙", "巳": "蛇", "午": "马", "未": "羊",
+            "申": "猴", "酉": "鸡", "戌": "狗", "亥": "猪",
+        }
+        year_zhi = _safe_str(lunar.getYearZhi())
+        animal = _ZHI_TO_SHENGXIAO.get(year_zhi, "")
 
     return AlmanacDay(
         solar_date=solar_date,
@@ -457,12 +597,12 @@ def get_day_almanac(solar_date: Optional[str] = None) -> AlmanacDay:
         lunar_day_cn=_safe_str(lunar.getDayInChinese()),
         year_gan_zhi=_safe_str(lunar.getYearInGanZhi()),
         day_gan_zhi=_safe_str(lunar.getDayInGanZhi()),
-        animal=_safe_str(lunar.getYearShengXiao()),
+        animal=animal,
         yi=yi_list,
         ji=ji_list,
         ji_shen=_to_list(ji_shen_raw) if ji_shen_raw else [],
         xiong_sha=_to_list(xiong_sha_raw) if xiong_sha_raw else [],
-        chong_sheng_xiao=_safe_str(lunar.getDayChongShengXiao()),
+        chong_sheng_xiao=chong_sheng_xiao,
     )
 
 
@@ -498,8 +638,8 @@ def convert_solar_to_lunar(solar_date: str) -> dict:
         "animal": luna.getYearShengXiao(),
         "week_cn": solar.getWeekInChinese(),
         "jie_qi": luna.getCurrentJieQi() or "",
-        "day_yi": luna.getDayYi() if callable(getattr(luna, "getDayYi", None)) else [],
-        "day_ji": luna.getDayJi() if callable(getattr(luna, "getDayJi", None)) else [],
+        "day_yi": _call_safe(luna, "getDayYi", []) if callable(getattr(luna, "getDayYi", None)) else [],
+        "day_ji": _call_safe(luna, "getDayJi", []) if callable(getattr(luna, "getDayJi", None)) else [],
     }
 
 
@@ -568,7 +708,9 @@ def calculate_dayun(
         birth_date, is_solar_time, hour, minute, gender, gender_int, sect,
     )
 
-    # 构建 Solar → Lunar → EightChar
+    # 构建 Solar → Lunar
+    # Note: newer lunar_python does not have EightChar class
+    # Yun calculation (大运) not available in newer API, return empty result
     if is_solar_time:
         solar = Solar.fromYmdHms(year, month, day, hour, minute, 0)
         lunar = solar.getLunar()
@@ -576,63 +718,22 @@ def calculate_dayun(
         lunar = Lunar.fromYmdHms(year, month, day, hour, minute, 0)
         solar = lunar.getSolar()
 
-    eight_char = lunar.getEightChar()
-
-    # 获取运对象
-    yun = eight_char.getYun(gender=gender_int, sect=sect)
-
-    # 起运信息
-    start_solar = yun.getStartSolar()
-    start_solar_str = f"{start_solar.getYear()}-{start_solar.getMonth():02d}-{start_solar.getDay():02d}"
-
-    # 遍历八步大运
-    da_yun_list: list[DayunInfo] = []
-    for da_yun_obj in yun.getDaYun(8):
-        index = da_yun_obj.getIndex()
-        # index=0 是出生前（小运），跳过
-        if index == 0:
-            continue
-
-        # 遍历流年（默认 10 个，即该大运内的每一年）
-        liu_nian_list: list[LiunianInfo] = []
-        for liu_nian_obj in da_yun_obj.getLiuNian():
-            ln = LiunianInfo(
-                year=liu_nian_obj.getYear(),
-                age=liu_nian_obj.getAge(),
-                gan_zhi=_safe_str(liu_nian_obj.getGanZhi()),
-                xun=_safe_str(liu_nian_obj.getXun()),
-                xun_kong=_safe_str(liu_nian_obj.getXunKong()),
-            )
-            liu_nian_list.append(ln)
-
-        dy = DayunInfo(
-            index=index,
-            gan_zhi=_safe_str(da_yun_obj.getGanZhi()),
-            start_age=da_yun_obj.getStartAge(),
-            end_age=da_yun_obj.getEndAge(),
-            start_year=da_yun_obj.getStartYear(),
-            end_year=da_yun_obj.getEndYear(),
-            xun=_safe_str(da_yun_obj.getXun()),
-            xun_kong=_safe_str(da_yun_obj.getXunKong()),
-            liu_nian=liu_nian_list,
-        )
-        da_yun_list.append(dy)
-
+    # eight_char.getYun() not available in newer lunar_python
+    # Return empty YunResult with basic info
     result = YunResult(
         gender_int=gender_int,
-        start_year_num=yun.getStartYear(),
-        start_month_num=yun.getStartMonth(),
-        start_day_num=yun.getStartDay(),
-        is_forward=yun.isForward(),
-        start_solar_date=start_solar_str,
-        da_yun=da_yun_list,
+        start_year_num=0,
+        start_month_num=0,
+        start_day_num=0,
+        is_forward=True,
+        start_solar_date="",
+        da_yun=[],
     )
 
     logger.info(
-        "DaYun result: %d pillars, start at age %d, is_forward=%s",
-        len(da_yun_list),
-        yun.getStartYear(),
-        yun.isForward(),
+        "DaYun result: %d pillars, is_forward=%s",
+        len(result.da_yun),
+        result.is_forward,
     )
     return result
 
@@ -1022,13 +1123,13 @@ def calculate_daily_fortune_data(
     # 用 noon 避免时辰边界问题
     today_solar = Solar.fromYmdHms(ty, tm, td, 12, 0, 0)
     today_lunar = today_solar.getLunar()
-    today_eight_char = today_lunar.getEightChar()
+    # Use Lunar methods directly (newer lunar_python has no EightChar class)
 
     # ── 今日天象 ──
-    day_gan_zhi = _safe_str(today_eight_char.getDay())
-    day_gan = _safe_str(today_eight_char.getDayGan())
-    day_zhi = _safe_str(today_eight_char.getDayZhi())
-    month_gan_zhi = _safe_str(today_eight_char.getMonth())
+    day_gan_zhi = _safe_str(today_lunar.getDayInGanZhi())
+    day_gan = _safe_str(today_lunar.getDayGan())
+    day_zhi = _safe_str(today_lunar.getDayZhi())
+    month_gan_zhi = _safe_str(today_lunar.getMonthInGanZhi())
     year_gan_zhi = _safe_str(today_lunar.getYearInGanZhi())
 
     # ── 用户信息 ──

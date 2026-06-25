@@ -86,6 +86,8 @@ if [ -z "${MYSQL_ROOT_PASSWORD:-}" ]; then
 else
     echo "  ✓ MYSQL_ROOT_PASSWORD 已配置"
 fi
+
+if [ -z "${MYSQL_PASSWORD:-}" ]; then
     NEW_MYSQL=$(openssl rand -hex 16)
     echo "  → 自动生成 MYSQL_PASSWORD..."
     if [[ "$OSTYPE" == "darwin"* ]]; then

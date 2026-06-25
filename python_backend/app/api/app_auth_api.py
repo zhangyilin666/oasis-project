@@ -66,23 +66,33 @@ async def anonymous_login(
         db.refresh(user)
         logger.info("Existing device user logged in: user_id=%s", user.id)
     else:
-        user = User(
-            device_id=request.device_id,
-            last_login_at=datetime.now(timezone.utc),
-        )
-        db.add(user)
+        # 用 merge 方式避免 race condition 导致的 session 异常
         try:
+            user = User(
+                device_id=request.device_id,
+                last_login_at=datetime.now(timezone.utc),
+            )
+            db.add(user)
             db.commit()
             db.refresh(user)
             logger.info("New anonymous user created: user_id=%s", user.id)
-        except IntegrityError:
+        except IntegrityError as e:
+            # 最可能原因：并发插入同 device_id，另一请求已创建用户
+            logger.warning(
+                "IntegrityError (race condition?) for device_id=%s: %s",
+                request.device_id[:8], str(e),
+            )
             db.rollback()
+            db.expire_all()
+            # 用新事务重新查询
             stmt = select(User).where(User.device_id == request.device_id)
             user = db.scalars(stmt).first()
             if user is None:
+                # 不应发生：记录详细信息便于排查
                 logger.error(
-                    "Unexpected: device_id=%s... not found after IntegrityError",
-                    request.device_id[:8],
+                    "CRITICAL: user not found after IntegrityError. "
+                    "device_id=%s, error=%s",
+                    request.device_id, str(e),
                 )
                 return AnonymousLoginResponse(
                     code=500,
@@ -93,10 +103,11 @@ async def anonymous_login(
             db.commit()
             db.refresh(user)
             logger.info("Race condition resolved: user_id=%s", user.id)
-        except Exception:
+        except Exception as e:
             db.rollback()
             logger.exception(
-                "Failed to create user for device_id=%s...", request.device_id[:8]
+                "Failed to create user for device_id=%s: %s",
+                request.device_id[:8], str(e),
             )
             return AnonymousLoginResponse(
                 code=500,

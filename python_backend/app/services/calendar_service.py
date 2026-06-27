@@ -294,6 +294,101 @@ def _get_time_gan_zhi(lunar_obj: Lunar, hour: int) -> str:
 
 
 # ---------------------------------------------------------------------------
+# 八字查表数据（lunar-python Docker 版缺失 per-pillar 方法，用纯 Python 推算）
+# ---------------------------------------------------------------------------
+
+# 地支 → 藏干
+_ZHI_TO_HIDE_GAN: dict[str, str] = {
+    "子": "癸",
+    "丑": "己癸辛",
+    "寅": "甲丙戊",
+    "卯": "乙",
+    "辰": "戊乙癸",
+    "巳": "丙戊庚",
+    "午": "丁己",
+    "未": "己丁乙",
+    "申": "庚戊壬",
+    "酉": "辛",
+    "戌": "戊辛丁",
+    "亥": "壬甲",
+}
+
+# 十二运名称（按顺行顺序）
+_DI_SHI_NAMES: list[str] = [
+    "长生", "沐浴", "冠带", "临官", "帝旺",
+    "衰", "病", "死", "墓", "绝", "胎", "养",
+]
+
+# 天干 → 长生起始地支（阳干顺行，阴干逆行）
+_GAN_CHANG_SHENG_START: dict[str, str] = {
+    "甲": "亥", "丙": "寅", "戊": "寅", "庚": "巳", "壬": "申",
+    "乙": "午", "丁": "酉", "己": "酉", "辛": "子", "癸": "卯",
+}
+
+# 天干阴阳（阳顺阴逆）
+_YANG_GAN: set[str] = {"甲", "丙", "戊", "庚", "壬"}
+
+# 地支顺序
+_ZHI_ORDER: list[str] = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
+
+# 天干顺序
+_GAN_ORDER: list[str] = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
+
+
+def _compute_di_shi(gan: str, zhi: str) -> str:
+    """从 天干 + 地支 计算 地势（十二运）。"""
+    if not gan or not zhi or gan not in _GAN_CHANG_SHENG_START or zhi not in _ZHI_ORDER:
+        return ""
+    start_zhi = _GAN_CHANG_SHENG_START[gan]
+    start_idx = _ZHI_ORDER.index(start_zhi)
+    zhi_idx = _ZHI_ORDER.index(zhi)
+    if gan in _YANG_GAN:
+        # 顺行
+        offset = (zhi_idx - start_idx) % 12
+    else:
+        # 逆行
+        offset = (start_idx - zhi_idx) % 12
+    return _DI_SHI_NAMES[offset]
+
+
+def _compute_hide_gan(zhi: str) -> str:
+    """从 地支 查表获取 藏干。"""
+    return _ZHI_TO_HIDE_GAN.get(zhi, "")
+
+
+def _compute_xun_and_kong(gan_zhi: str) -> tuple[str, str]:
+    """从 干支 计算 (旬, 旬空)。"""
+    if not gan_zhi or len(gan_zhi) < 2:
+        return "", ""
+    gan = gan_zhi[0]
+    zhi = gan_zhi[1]
+    if gan not in _GAN_ORDER or zhi not in _ZHI_ORDER:
+        return "", ""
+    gan_idx = _GAN_ORDER.index(gan)
+    zhi_idx = _ZHI_ORDER.index(zhi)
+    # 在 60 甲子中的位置
+    if (gan_idx % 2) != (zhi_idx % 2):
+        return "", ""  # 奇偶不同不可能出现（但防御）
+    pos = -1
+    for p in range(60):
+        if p % 10 == gan_idx and p % 12 == zhi_idx:
+            pos = p
+            break
+    if pos < 0:
+        return "", ""
+    # 旬首
+    xun_start = (pos // 10) * 10
+    xun_gan = _GAN_ORDER[xun_start % 10]  # 总是 甲
+    xun_zhi = _ZHI_ORDER[xun_start % 12]
+    xun = f"{xun_gan}{xun_zhi}"
+    # 旬空（旬首地支的前两个地支）
+    kong1_idx = (xun_start % 12 - 1) % 12
+    kong2_idx = (xun_start % 12 - 2) % 12
+    xun_kong = f"{_ZHI_ORDER[kong2_idx]}{_ZHI_ORDER[kong1_idx]}"
+    return xun, xun_kong
+
+
+# ---------------------------------------------------------------------------
 # 核心计算函数
 # ---------------------------------------------------------------------------
 
@@ -372,18 +467,32 @@ def calculate_bazi(
         xun_kong_fn="",     # callable 或 ""
     ):
         try:
+            gan_zhi = _safe_str(gan_zhi_value()) if callable(gan_zhi_value) else _safe_str(gan_zhi_value)
+            gan = _safe_str(get_gan_fn()) if callable(get_gan_fn) else ""
+            zhi = _safe_str(get_zhi_fn()) if callable(get_zhi_fn) else ""
+
+            # 旬 & 旬空：优先原生方法，否则查表从干支推算
+            xun = _safe_str(xun_fn()) if callable(xun_fn) else ""
+            xun_kong = _safe_str(xun_kong_fn()) if callable(xun_kong_fn) else ""
+            if not xun or not xun_kong:
+                fxun, fxun_kong = _compute_xun_and_kong(gan_zhi)
+                if not xun:
+                    xun = fxun
+                if not xun_kong:
+                    xun_kong = fxun_kong
+
             return PillarInfo(
-                gan_zhi=_safe_str(gan_zhi_value()) if callable(gan_zhi_value) else _safe_str(gan_zhi_value),
-                gan=_safe_str(get_gan_fn()) if callable(get_gan_fn) else "",
-                zhi=_safe_str(get_zhi_fn()) if callable(get_zhi_fn) else "",
+                gan_zhi=gan_zhi,
+                gan=gan,
+                zhi=zhi,
                 na_yin=_safe_str(na_yin_fn()) if callable(na_yin_fn) else "",
                 wu_xing=wu_xing_str,
                 shi_shen_gan=shi_shen_gan_str,
                 shi_shen_zhi=shi_shen_zhi_str,
-                di_shi="",      # lunar-python 1.0.0 未暴露单柱地势方法
-                hide_gan="",    # lunar-python 1.0.0 未暴露单柱藏干方法
-                xun=_safe_str(xun_fn()) if callable(xun_fn) else "",
-                xun_kong=_safe_str(xun_kong_fn()) if callable(xun_kong_fn) else "",
+                di_shi=_compute_di_shi(gan, zhi),
+                hide_gan=_compute_hide_gan(zhi),
+                xun=xun,
+                xun_kong=xun_kong,
             )
         except Exception:
             return PillarInfo()

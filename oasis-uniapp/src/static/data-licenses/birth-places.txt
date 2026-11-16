@@ -1,0 +1,18 @@
+出生地区数据说明（2026-10-03）
+
+省市区名称：@vant/area-data 2.2.0，MIT 许可。
+Copyright (c) Youzan
+Copyright (c) Chen Jiahan and other contributors
+来源：https://github.com/vant-ui/vant/tree/main/packages/vant-area-data
+本项目将原包的省、市、县区三张名称表提取为本地 JSON，保留 34 个省级分组、369 个市级分组和 3478 个县区条目。分组中含直辖市、直辖县及开发区等选择项；不是逐项审定的历史行政区划。
+原 MIT 许可：/static/data-licenses/vant-area-data-MIT.txt
+
+城市参考坐标：GeoNames，Creative Commons Attribution 4.0 International（CC BY 4.0）。
+来源：https://www.geonames.org/
+许可：https://creativecommons.org/licenses/by/4.0/
+本项目从 2026-10-03 的 cities15000 快照提取 246 个城市行政中心地名参考点，采用精确中文名称或别名匹配，核对地区、省级归属及大陆非直辖市的地级编码；歧义或缺失不补猜。经纬度保留原 WGS84 坐标系，未作坐标转换。
+原数据格式与许可声明：/static/data-licenses/geonames-readme.txt
+CC BY 4.0 原文：/static/data-licenses/CC-BY-4.0-legalcode.txt
+
+坐标仅为城市中心近似值，不是所选区县中心、具体地址或已核实的实际出生位置；选择区县只细化地点名称。无可靠匹配时仅提供名称和时区，可另行手动填写坐标。
+大陆默认按北京时间 Asia/Shanghai；香港、澳门、台湾分别使用 Asia/Hong_Kong、Asia/Macau、Asia/Taipei。地区选择不能推断历史出生记录采用哪一种时钟，仍可手动核对时区及经纬度。

@@ -1,0 +1,78 @@
+{
+  "retrieved": "2026-10-03",
+  "edition": "御制历象考成·四库全书本·表卷十四·恒星黄道经纬度表",
+  "tableSource": "https://www.shidianguji.com/book/SK1530/chapter/1la1v7gbjjbjm",
+  "textSource": "https://zh.wikisource.org/zh-hans/御製厯象考成_(四庫全書本)/表卷14",
+  "methodSource": "https://www.shidianguji.com/book/SK1530/chapter/1la1uvjpyqx3d",
+  "epochYearLabel": 1684,
+  "epochName": "康熙二十三年甲子",
+  "annualShiftArcseconds": 51,
+  "circleDegrees": 360,
+  "palaceOrigin": "初宫初度为冬至点，对应以春分点为零的270°；一宫30°，六十进位分秒",
+  "transcription": "Individually read all 11 public-domain original table figures SK1530_figure_02415 through 02425. Only each mansion's first star defines a boundary; other stars in the table are not substituted. No modern translation, website images or code bundled.",
+  "rows": [
+    { "mansion": "斗", "palace": 0, "degree": 5, "minute": 50, "figure": "02415" },
+    { "mansion": "牛", "palace": 0, "degree": 29, "minute": 37, "figure": "02416" },
+    { "mansion": "女", "palace": 1, "degree": 7, "minute": 23, "figure": "02416" },
+    { "mansion": "虚", "palace": 1, "degree": 19, "minute": 1, "figure": "02416" },
+    { "mansion": "危", "palace": 1, "degree": 29, "minute": 0, "figure": "02417" },
+    { "mansion": "室", "palace": 2, "degree": 19, "minute": 7, "figure": "02417" },
+    { "mansion": "壁", "palace": 3, "degree": 4, "minute": 48, "figure": "02418" },
+    { "mansion": "奎", "palace": 3, "degree": 17, "minute": 54, "figure": "02418" },
+    { "mansion": "娄", "palace": 3, "degree": 29, "minute": 33, "figure": "02418" },
+    { "mansion": "胃", "palace": 4, "degree": 12, "minute": 33, "figure": "02419" },
+    { "mansion": "昴", "palace": 4, "degree": 24, "minute": 48, "figure": "02419" },
+    { "mansion": "毕", "palace": 5, "degree": 4, "minute": 3, "figure": "02419" },
+    { "mansion": "参", "palace": 5, "degree": 18, "minute": 1, "figure": "02420" },
+    { "mansion": "觜", "palace": 5, "degree": 19, "minute": 22, "figure": "02420" },
+    { "mansion": "井", "palace": 6, "degree": 0, "minute": 55, "figure": "02421" },
+    { "mansion": "鬼", "palace": 7, "degree": 1, "minute": 20, "figure": "02421" },
+    { "mansion": "柳", "palace": 7, "degree": 5, "minute": 56, "figure": "02422" },
+    { "mansion": "星", "palace": 7, "degree": 22, "minute": 56, "figure": "02422" },
+    { "mansion": "张", "palace": 8, "degree": 1, "minute": 19, "figure": "02422" },
+    { "mansion": "翼", "palace": 8, "degree": 19, "minute": 23, "figure": "02423" },
+    { "mansion": "轸", "palace": 9, "degree": 6, "minute": 23, "figure": "02423" },
+    { "mansion": "角", "palace": 9, "degree": 19, "minute": 26, "figure": "02423" },
+    { "mansion": "亢", "palace": 10, "degree": 0, "minute": 3, "figure": "02423" },
+    { "mansion": "氐", "palace": 10, "degree": 10, "minute": 41, "figure": "02424" },
+    { "mansion": "房", "palace": 10, "degree": 28, "minute": 31, "figure": "02424" },
+    { "mansion": "心", "palace": 11, "degree": 3, "minute": 21, "figure": "02425" },
+    { "mansion": "尾", "palace": 11, "degree": 10, "minute": 54, "figure": "02425" },
+    { "mansion": "箕", "palace": 11, "degree": 26, "minute": 50, "figure": "02425" }
+  ],
+  "originalWorkedExample": {
+    "source": "https://www.shidianguji.com/book/SK1530/chapter/1la1v7gbjjbjm",
+    "yearLabel": 1684, "palace": 0, "degree": 8, "minute": 0, "second": 0,
+    "mansion": "斗", "withinDegree": 2, "withinMinute": 10, "withinSecond": 0
+  },
+  "independentPalaceStarts": {
+    "source": "https://www.shidianguji.com/book/LS0025/chapter/1kt95doojkysp",
+    "edition": "清史稿·天文志三·黄赤道十二次值宿·康熙甲子年黄道十二次初度",
+    "yearLabel": 1684,
+    "matchedCases": [
+      { "palace": 0, "mansion": "箕", "withinDegree": 3, "withinMinute": 10 },
+      { "palace": 1, "mansion": "牛", "withinDegree": 0, "withinMinute": 23 },
+      { "palace": 2, "mansion": "危", "withinDegree": 1, "withinMinute": 0 },
+      { "palace": 4, "mansion": "娄", "withinDegree": 0, "withinMinute": 27 },
+      { "palace": 5, "mansion": "昴", "withinDegree": 5, "withinMinute": 12 },
+      { "palace": 6, "mansion": "觜", "withinDegree": 10, "withinMinute": 38 },
+      { "palace": 7, "mansion": "井", "withinDegree": 29, "withinMinute": 5 },
+      { "palace": 8, "mansion": "星", "withinDegree": 7, "withinMinute": 4 },
+      { "palace": 9, "mansion": "翼", "withinDegree": 10, "withinMinute": 37 },
+      { "palace": 10, "mansion": "角", "withinDegree": 10, "withinMinute": 34 }
+    ],
+    "documentedDisagreements": [
+      { "palace": 3, "mansion": "室", "printedWithinDegree": 10, "printedWithinMinute": 57, "selectedEditionWithinDegree": 10, "selectedEditionWithinMinute": 53, "differenceArcminutes": 4 },
+      { "palace": 11, "mansion": "房", "printedWithinDegree": 1, "printedWithinMinute": 39, "selectedEditionWithinDegree": 1, "selectedEditionWithinMinute": 29, "differenceArcminutes": 10 }
+    ],
+    "note": "All twelve were compared. Ten agree exactly; two disagreements remain explicit and are not counted as passing independent examples. Never alter the selected original table to force agreement with a later printed source."
+  },
+  "secondaryTranscriptionDifferences": {
+    "source": "https://www.shidianguji.com/book/SK0367/chapter/1lcuu30rfqpsj",
+    "rows": [
+      { "mansion": "牛", "selectedEdition": "初宫29度37分", "secondaryText": "初宫29度27分" },
+      { "mansion": "柳", "selectedEdition": "七宫5度56分", "secondaryText": "七宫5度52分" }
+    ],
+    "note": "Secondary electronic text only. These discrepancies may be edition or transcription issues; no claim about their historical cause is made. The production table always follows the inspected Lixiang Kaocheng figures."
+  }
+}

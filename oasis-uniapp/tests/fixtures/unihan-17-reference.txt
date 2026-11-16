@@ -1,0 +1,47 @@
+# Unicode 17.0.0 raw reference lines. Unicode-3.0 license.
+# Source: https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip
+# Archive SHA-256: f7a48b2b545acfaa77b2d607ae28747404ce02baefee16396c5d2d7a8ef34b5e
+# Extracted directly from the official archive, not generated from the runtime JSON.
+U+20BB7	kTotalStrokes	6
+U+4E50	kDefinition	happy, glad; enjoyable; music
+U+4E50	kMandarin	lè
+U+4E50	kSimplifiedVariant	U+4E50
+U+4E50	kTotalStrokes	5
+U+4E50	kTraditionalVariant	U+4E50 U+6A02
+U+5B81	kDefinition	calm, peaceful, serene; healthy
+U+5B81	kMandarin	níng
+U+5B81	kSimplifiedVariant	U+5B81
+U+5B81	kTotalStrokes	5
+U+5B81	kTraditionalVariant	U+5B81 U+5BE7
+U+5BE7	kDefinition	repose, serenity, peace; peaceful
+U+5BE7	kMandarin	níng
+U+5BE7	kSimplifiedVariant	U+5B81
+U+5BE7	kTotalStrokes	14
+U+5F20	kDefinition	stretch, extend, expand; sheet
+U+5F20	kMandarin	zhāng
+U+5F20	kTotalStrokes	7
+U+5F20	kTraditionalVariant	U+5F35
+U+5F35	kDefinition	stretch, extend, expand; sheet; 26th lunar mansion, determinative star υ¹ Hydrae
+U+5F35	kMandarin	zhāng
+U+5F35	kSimplifiedVariant	U+5F20
+U+5F35	kTotalStrokes	11
+U+660E	kDefinition	bright, light, brilliant; clear
+U+660E	kMandarin	míng
+U+660E	kTotalStrokes	8
+U+6A02	kDefinition	happy, glad; enjoyable; music
+U+6A02	kMandarin	lè
+U+6A02	kSimplifiedVariant	U+4E50
+U+6A02	kTotalStrokes	15
+U+6E05	kDefinition	clear, pure, clean; peaceful
+U+6E05	kMandarin	qīng
+U+6E05	kTotalStrokes	11
+U+884C	kDefinition	go; walk; move, travel; circulate; Kangxi radical 144
+U+884C	kMandarin	xíng
+U+884C	kTotalStrokes	6
+U+91CD	kDefinition	heavy, weighty; double
+U+91CD	kMandarin	zhòng
+U+91CD	kTotalStrokes	9
+U+9F98	kDefinition	the appearance of a dragon walking
+U+9F98	kMandarin	dá
+U+9F98	kSimplifiedVariant	U+2EE5D
+U+9F98	kTotalStrokes	48

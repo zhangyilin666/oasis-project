@@ -60,6 +60,7 @@ def get_yun_fortune(
         .where(
             Report.user_id == user_id,
             Report.status == ReportStatus.COMPLETED,
+            Report.deleted_at.is_(None),
         )
         .order_by(Report.created_at.desc())
         .limit(1)

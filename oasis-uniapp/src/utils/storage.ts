@@ -19,7 +19,10 @@ export function setToken(token: string): void {
 
 export function getUserId(): number | null {
   const raw = uni.getStorageSync(KEYS.USER_ID)
-  return raw ? Number(raw) : null
+  if (typeof raw !== 'number' && typeof raw !== 'string') return null
+  if (typeof raw === 'string' && !raw.trim()) return null
+  const userId = Number(raw)
+  return Number.isInteger(userId) && userId >= 0 ? userId : null
 }
 
 export function setUserId(userId: number): void {
@@ -47,4 +50,14 @@ export function clearAll(): void {
   uni.removeStorageSync(KEYS.USER_ID)
   uni.removeStorageSync(KEYS.LOGIN_TIME)
   // 保留 DEVICE_ID — 重新安装前不变
+}
+
+export function getSelectedReport(): number | undefined {
+  return Number(uni.getStorageSync(`__xiaoyi_report_${getUserId()}`)) || undefined
+}
+export function setSelectedReport(id: number): void {
+  uni.setStorageSync(`__xiaoyi_report_${getUserId()}`, id)
+}
+export function clearSelectedReport(id: number): void {
+  if (getSelectedReport() === id) uni.removeStorageSync(`__xiaoyi_report_${getUserId()}`)
 }

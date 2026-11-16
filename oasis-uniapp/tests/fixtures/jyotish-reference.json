@@ -1,0 +1,24 @@
+{
+  "source": "https://www.astro.com/cgi/swetest.cgi",
+  "version": "Swiss Ephemeris 2.10.03 public calculator; retrieved 2026-10-03",
+  "query": "b=D.M.Y&n=1&s=1&p=0123456b&f=Pl&arg=-ut12:00 -sid1; Gregorian UT; apparent geocentric; Lahiri 1",
+  "bodyOrder": ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"],
+  "longitudeToleranceDegrees": 0.02,
+  "ayanamsaToleranceArcseconds": 1,
+  "cases": [
+    {"date":"1900-01-01","ayanamsa":22.4654160,"longitudes":[258.1978722,257.1509689,237.1739346,284.5307365,261.7876196,218.7681977,245.3095387]},
+    {"date":"1950-01-01","ayanamsa":23.1578427,"longitudes":[257.3565447,44.3866839,276.8141719,293.9946615,159.2366235,283.4602126,146.2777002]},
+    {"date":"1990-01-01","ayanamsa":23.7207139,"longitudes":[257.0935469,309.5469408,271.9521114,282.5012468,226.2793714,71.4280801,261.9367844]},
+    {"date":"2000-01-01","ayanamsa":23.8532225,"longitudes":[256.5156962,199.4705290,248.0360546,217.7125659,304.1100800,1.3998647,16.5424410]},
+    {"date":"2024-03-20","ayanamsa":24.1941684,"longitudes":[336.1739279,104.0939801,353.7798456,316.4358676,303.8677192,20.7660453,318.0751488]},
+    {"date":"2026-10-03","ayanamsa":24.2332134,"longitudes":[166.0642349,75.2860092,189.6903656,194.2571841,98.9060261,115.8014514,347.1490478]}
+  ],
+  "houses": [
+    {"date":"2000-01-01","place":{"name":"Delhi","longitude":77.209,"latitude":28.6139},"ascendant":76.3380905,"midheaven":333.6032329,"firstCusp":60},
+    {"date":"1950-01-01","place":{"name":"London","longitude":-0.1278,"latitude":51.5074},"ascendant":1.1140390,"midheaven":256.4366900,"firstCusp":0},
+    {"date":"1990-01-01","place":{"name":"Sydney","longitude":151.2093,"latitude":-33.8688},"ascendant":129.3709175,"midheaven":49.7625971,"firstCusp":120},
+    {"date":"2024-03-20","place":{"name":"Shanghai","longitude":121.4737,"latitude":31.2304},"ascendant":181.5608683,"midheaven":93.7013601,"firstCusp":180}
+  ],
+  "houseQuery": "Same UT and -sid1; append -houseLONG,LAT,W; tolerance 0.03 degrees",
+  "textbook": {"source":"https://vedicastrologer.org/articles/vedic_astro_textbook.pdf","d9Example16":[{"longitude":71,"d9Sign":"摩羯","d9Longitude":279},{"longitude":229,"d9Sign":"射手","d9Longitude":261}],"dashaExample50":{"birthUtc":"2000-04-28T09:50:00.000Z","moonLongitude":302.3833333333333,"nakshatra":"Dhanishtha","pada":3,"lord":"Mars","remainingFraction":0.32125,"remainingYears":2.24875,"firstEndJulianYearUtc":"2002-07-28T18:22:33.000Z","note":"Moon and balance are textbook inputs; firstEnd independently computed as birth + (257/800)*7*365.25 days. Textbook civil end uses a different convention and is NOT used as a date oracle."}}
+}

@@ -15,12 +15,12 @@ JWT 鉴权依赖注入。
 """
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.logger import logger
 from app.db.database import get_db
 from app.models.user_model import User
+from app.services.user_identity import resolve_user_by_id
 from app.utils.security import verify_token
 
 # Bearer Token 提取器（自动从 Authorization header 解析）
@@ -71,8 +71,7 @@ async def get_current_user(
         )
 
     # 查询用户
-    stmt = select(User).where(User.id == int(user_id))
-    user = db.scalars(stmt).first()
+    user = resolve_user_by_id(db, user_id)
 
     if user is None:
         logger.warning("User not found: id=%s (valid token but user deleted?)", user_id)

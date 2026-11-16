@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { onLaunch, onShow, onHide, onError } from '@dcloudio/uni-app'
+import { onLaunch, onShow, onHide, onError, onPageNotFound } from '@dcloudio/uni-app'
 import { useAuthStore } from '@/stores/auth'
 import { resetLoading } from '@/utils/ui'
+import { CLOSED_PAGE_PATHS } from '@/domain/metaphysics/navigation'
+
+onPageNotFound(({ path }) => {
+  const normalizedPath = path.replace(/^\/+/, '').split(/[?#]/, 1)[0]
+  const closed = CLOSED_PAGE_PATHS.some(page => page === normalizedPath)
+  uni.reLaunch({
+    url: '/pages/home/index',
+    success: () => { if (closed) uni.showToast({ title: '此板块已关闭', icon: 'none' }) },
+  })
+})
 
 onLaunch(() => {
   console.log('[Oasis] App 启动 —', new Date().toISOString())
 
   // 认证状态检查
   const auth = useAuthStore()
-  auth.checkAuth()
+  auth.checkAuth().catch(() => { /* 页面请求提供可重试的错误状态。 */ })
 
   // #ifdef APP-PLUS
   // 原生状态栏配置
@@ -35,6 +45,9 @@ onError((err: string) => {
 
 <style lang="scss">
 @use '@/styles/global.scss';
+/* #ifdef H5 */
+@use '@/styles/feedback.scss';
+/* #endif */
 
 /* #ifdef APP-PLUS */
 /* 原生 App 全局磨砂导航栏适配 */

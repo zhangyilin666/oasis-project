@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "kind": "oasis-divination-records",
+  "records": [
+    {
+      "id": "question-1791028561271-1",
+      "savedAt": "2026-10-03T11:56:01.271Z",
+      "input": {
+        "question": "公开验收问题：我怎样安排下一周的阅读和复盘？",
+        "date": "2026-10-03",
+        "time": "19:55",
+        "utcOffset": 8,
+        "method": "liuyao-coins",
+        "lines": [
+          8,
+          7,
+          7,
+          8,
+          7,
+          8
+        ],
+        "coins": [
+          [
+            3,
+            2,
+            3
+          ],
+          [
+            3,
+            2,
+            2
+          ],
+          [
+            3,
+            2,
+            2
+          ],
+          [
+            3,
+            3,
+            2
+          ],
+          [
+            3,
+            2,
+            2
+          ],
+          [
+            3,
+            2,
+            3
+          ]
+        ]
+      },
+      "ruleVersion": "liuyao-coins-v1",
+      "result": {
+        "ruleVersion": "liuyao-coins-v1",
+        "input": {
+          "question": "公开验收问题：我怎样安排下一周的阅读和复盘？",
+          "date": "2026-10-03",
+          "time": "19:55",
+          "utcOffset": 8,
+          "method": "liuyao-coins",
+          "lines": [
+            8,
+            7,
+            7,
+            8,
+            7,
+            8
+          ],
+          "coins": [
+            [
+              3,
+              2,
+              3
+            ],
+            [
+              3,
+              2,
+              2
+            ],
+            [
+              3,
+              2,
+              2
+            ],
+            [
+              3,
+              3,
+              2
+            ],
+            [
+              3,
+              2,
+              2
+            ],
+            [
+              3,
+              2,
+              3
+            ]
+          ]
+        },
+        "questionInstant": "2026-10-03T11:55:00.000Z",
+        "original": {
+          "number": 48,
+          "name": "井",
+          "symbol": "䷯",
+          "lower": {
+            "number": 5,
+            "name": "巽",
+            "image": "风",
+            "element": "木",
+            "lines": [
+              0,
+              1,
+              1
+            ]
+          },
+          "upper": {
+            "number": 6,
+            "name": "坎",
+            "image": "水",
+            "element": "水",
+            "lines": [
+              0,
+              1,
+              0
+            ]
+          },
+          "lines": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0
+          ]
+        },
+        "changed": {
+          "number": 48,
+          "name": "井",
+          "symbol": "䷯",
+          "lower": {
+            "number": 5,
+            "name": "巽",
+            "image": "风",
+            "element": "木",
+            "lines": [
+              0,
+              1,
+              1
+            ]
+          },
+          "upper": {
+            "number": 6,
+            "name": "坎",
+            "image": "水",
+            "element": "水",
+            "lines": [
+              0,
+              1,
+              0
+            ]
+          },
+          "lines": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0
+          ]
+        },
+        "movingLines": [],
+        "calculation": [
+          "数字三钱模拟：每次三枚、共六次，字面计2、背面计3；保存后的钱面保持不变，回看不重新随机。",
+          "第1次（自下而上）：背3 + 字2 + 背3 = 8。",
+          "第2次（自下而上）：背3 + 字2 + 字2 = 7。",
+          "第3次（自下而上）：背3 + 字2 + 字2 = 7。",
+          "第4次（自下而上）：背3 + 背3 + 字2 = 8。",
+          "第5次（自下而上）：背3 + 字2 + 字2 = 7。",
+          "第6次（自下而上）：背3 + 字2 + 背3 = 8。",
+          "自下而上爻值：8、7、7、8、7、8",
+          "6 老阴变阳；7 少阳不变；8 少阴不变；9 老阳变阴。",
+          "UTC 瞬间：2026-10-03T11:55:00.000Z；演算时间：2026-10-03 19:55 UTC+08:00。",
+          "本卦属震宫木，五世卦；世在第 5 爻，应在第 2 爻。",
+          "月建酉金，以白露（2026-09-07 22:41:16 UTC+08:00）起算；日辰庚戌。",
+          "甲辰旬，旬空寅、卯；六神从初爻白虎起，逐爻向上循环。",
+          "各爻按内外经卦纳甲，地支取五行；六亲以本卦宫木为基准，动爻变出沿用此基准。",
+          "本卦缺兄弟、子孙；从本宫纯卦列出同位伏神候选，未自动选用神。"
+        ],
+        "najia": {
+          "palace": {
+            "name": "震",
+            "element": "木",
+            "stage": "五世",
+            "shiPosition": 5,
+            "yingPosition": 2
+          },
+          "lines": [
+            {
+              "stem": "辛",
+              "branch": "丑",
+              "ganzhi": "辛丑",
+              "element": "土",
+              "kin": "妻财",
+              "isVoid": false,
+              "position": 1,
+              "value": 0,
+              "isMoving": false,
+              "spirit": "白虎"
+            },
+            {
+              "stem": "辛",
+              "branch": "亥",
+              "ganzhi": "辛亥",
+              "element": "水",
+              "kin": "父母",
+              "isVoid": false,
+              "position": 2,
+              "value": 1,
+              "isMoving": false,
+              "spirit": "玄武",
+              "role": "应",
+              "hidden": {
+                "stem": "庚",
+                "branch": "寅",
+                "ganzhi": "庚寅",
+                "element": "木",
+                "kin": "兄弟",
+                "isVoid": true
+              }
+            },
+            {
+              "stem": "辛",
+              "branch": "酉",
+              "ganzhi": "辛酉",
+              "element": "金",
+              "kin": "官鬼",
+              "isVoid": false,
+              "position": 3,
+              "value": 1,
+              "isMoving": false,
+              "spirit": "青龙"
+            },
+            {
+              "stem": "戊",
+              "branch": "申",
+              "ganzhi": "戊申",
+              "element": "金",
+              "kin": "官鬼",
+              "isVoid": false,
+              "position": 4,
+              "value": 0,
+              "isMoving": false,
+              "spirit": "朱雀",
+              "hidden": {
+                "stem": "庚",
+                "branch": "午",
+                "ganzhi": "庚午",
+                "element": "火",
+                "kin": "子孙",
+                "isVoid": false
+              }
+            },
+            {
+              "stem": "戊",
+              "branch": "戌",
+              "ganzhi": "戊戌",
+              "element": "土",
+              "kin": "妻财",
+              "isVoid": false,
+              "position": 5,
+              "value": 1,
+              "isMoving": false,
+              "spirit": "勾陈",
+              "role": "世"
+            },
+            {
+              "stem": "戊",
+              "branch": "子",
+              "ganzhi": "戊子",
+              "element": "水",
+              "kin": "父母",
+              "isVoid": false,
+              "position": 6,
+              "value": 0,
+              "isMoving": false,
+              "spirit": "腾蛇"
+            }
+          ],
+          "missingKin": [
+            "兄弟",
+            "子孙"
+          ],
+          "xun": "甲辰",
+          "voidBranches": [
+            "寅",
+            "卯"
+          ],
+          "calendar": {
+            "engine": {
+              "name": "lunar-typescript",
+              "version": "1.8.6"
+            },
+            "beijingTime": "2026-10-03 19:55 UTC+08:00",
+            "monthBranch": "酉",
+            "monthElement": "金",
+            "dayGanzhi": "庚戌",
+            "dayStem": "庚",
+            "dayBranch": "戌",
+            "monthStart": {
+              "name": "白露",
+              "beijingTime": "2026-09-07 22:41:16 UTC+08:00"
+            },
+            "nextMonthStart": {
+              "name": "寒露",
+              "beijingTime": "2026-10-08 14:29:17 UTC+08:00"
+            }
+          },
+          "rules": {
+            "timeBasis": "fixed-utc8",
+            "monthBoundary": "exact-jie",
+            "dayBoundary": "midnight",
+            "kinBasis": "original-palace-element",
+            "changedKinBasis": "original-palace-element",
+            "hiddenPolicy": "all-missing-kin-from-pure-palace",
+            "changedPolicy": "moving-lines-only"
+          },
+          "conventions": [
+            "原问事时间按填写的 UTC 偏移换成瞬间，再按固定 UTC+08:00 装卦；不校正真太阳时。",
+            "月建按十二“节”的准确交接时刻切换；日辰以演算时间 00:00 换日，23:00 不提前换日。",
+            "六神与旬空均从同一日干支导出；旬空只标地支关系，不代表事情必然无效或不利。",
+            "六亲以本卦所属宫五行为基准，动爻变出仍沿用本卦宫；静爻不显示为动爻变出。",
+            "本卦缺少某六亲时，列出本宫纯卦同位的全部伏神候选；尚未选择用神，也不判断出伏、旺衰或应期。",
+            "固定 UTC+8、午夜日界及缺亲候选展示是本版本的明确约定，不代表所有流派采用同一规则。"
+          ],
+          "sources": [
+            {
+              "title": "《增删卜易》· 八宫全图与世应六亲",
+              "url": "https://zh.wikisource.org/wiki/增刪卜易/3/八卦各宮全圖"
+            },
+            {
+              "title": "《增删卜易》· 浑天甲子章",
+              "url": "https://zh.wikisource.org/wiki/增刪卜易/4"
+            },
+            {
+              "title": "《增删卜易》· 六神章",
+              "url": "https://zh.wikisource.org/zh-hant/增刪卜易/18"
+            },
+            {
+              "title": "《增删卜易》· 旬空章",
+              "url": "https://zh.wikisource.org/zh-hant/增刪卜易/26"
+            },
+            {
+              "title": "《增删卜易》· 飞伏神章（识典古籍原文）",
+              "url": "https://www.shidianguji.com/book/XYXZSBY/chapter/1lzxsny7d9s7d"
+            },
+            {
+              "title": "lunar 作者文档 · 交节月柱与午夜日柱",
+              "url": "https://6tail.cn/calendar/lunar.ganzhi.html"
+            },
+            {
+              "title": "国立天文台 · 2026 节气时刻独立核验表（日本标准时）",
+              "url": "https://eco.mtk.nao.ac.jp/koyomi/yoko/2026/rekiyou262.html"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

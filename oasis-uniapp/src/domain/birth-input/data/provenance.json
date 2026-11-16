@@ -1,0 +1,853 @@
+{
+  "version": "birth-places-2026-10-03-v1",
+  "retrievedAt": "2026-10-03T13:58:47.349306+00:00",
+  "administrativeNames": {
+    "package": "@vant/area-data",
+    "version": "2.2.0",
+    "license": "MIT",
+    "source": {
+      "url": "https://registry.npmjs.org/@vant/area-data/-/area-data-2.2.0.tgz",
+      "sha256": "7bdfe07db7167b36fc142534a1d435701e9c22a4b665e9f56e998a88f30ce582",
+      "bytes": 65691
+    },
+    "counts": {
+      "province_list": 34,
+      "city_list": 369,
+      "county_list": 3478
+    },
+    "output": {
+      "path": "china-areas.json",
+      "sha256": "8a57b07275575d2191e93b358858780c523149fdec655ccb1c8bf9c9434f3087",
+      "bytes": 86792,
+      "gzipBytes": 28916
+    },
+    "licenseFile": "/static/data-licenses/vant-area-data-MIT.txt",
+    "coverageNote": "Current selector names include 34 province-level groups, municipality/county grouping labels, development zones and the package Hong Kong/Macau/Taiwan entries; not a verified historical or official administrative boundary inventory."
+  },
+  "cityCoordinates": {
+    "provider": "GeoNames",
+    "license": "CC-BY-4.0",
+    "attribution": "GeoNames (https://www.geonames.org/); extracted and filtered by this project.",
+    "coordinateSystem": "WGS84",
+    "coordinateLevel": "city",
+    "pointMeaning": "Approximate populated-place administrative-seat reference point; not a district centroid or precise birth address.",
+    "source": {
+      "url": "https://download.geonames.org/export/dump/cities15000.zip",
+      "sha256": "c2fc384e708978317413a86d36886f226a1203dcbf54796416443691f8bba897",
+      "bytes": 3359956,
+      "lastModified": "Sat, 03 Oct 2026 02:09:53 GMT"
+    },
+    "admin1Source": {
+      "sha256": "1da92a6323a5fec3176f3f743bf4cf4040fd56a876da55e46fbca23c863aa60a",
+      "bytes": 151583,
+      "url": "https://download.geonames.org/export/dump/admin1CodesASCII.txt"
+    },
+    "provinceFipsCrosswalk": {
+      "11": {
+        "name": "北京市",
+        "geonamesCode": "22",
+        "sourceLabel": "Beijing"
+      },
+      "12": {
+        "name": "天津市",
+        "geonamesCode": "28",
+        "sourceLabel": "Tianjin"
+      },
+      "13": {
+        "name": "河北省",
+        "geonamesCode": "10",
+        "sourceLabel": "Hebei"
+      },
+      "14": {
+        "name": "山西省",
+        "geonamesCode": "24",
+        "sourceLabel": "Shanxi"
+      },
+      "15": {
+        "name": "内蒙古自治区",
+        "geonamesCode": "20",
+        "sourceLabel": "Inner Mongolia"
+      },
+      "21": {
+        "name": "辽宁省",
+        "geonamesCode": "19",
+        "sourceLabel": "Liaoning"
+      },
+      "22": {
+        "name": "吉林省",
+        "geonamesCode": "05",
+        "sourceLabel": "Jilin"
+      },
+      "23": {
+        "name": "黑龙江省",
+        "geonamesCode": "08",
+        "sourceLabel": "Heilongjiang"
+      },
+      "31": {
+        "name": "上海市",
+        "geonamesCode": "23",
+        "sourceLabel": "Shanghai"
+      },
+      "32": {
+        "name": "江苏省",
+        "geonamesCode": "04",
+        "sourceLabel": "Jiangsu"
+      },
+      "33": {
+        "name": "浙江省",
+        "geonamesCode": "02",
+        "sourceLabel": "Zhejiang"
+      },
+      "34": {
+        "name": "安徽省",
+        "geonamesCode": "01",
+        "sourceLabel": "Anhui"
+      },
+      "35": {
+        "name": "福建省",
+        "geonamesCode": "07",
+        "sourceLabel": "Fujian"
+      },
+      "36": {
+        "name": "江西省",
+        "geonamesCode": "03",
+        "sourceLabel": "Jiangxi"
+      },
+      "37": {
+        "name": "山东省",
+        "geonamesCode": "25",
+        "sourceLabel": "Shandong"
+      },
+      "41": {
+        "name": "河南省",
+        "geonamesCode": "09",
+        "sourceLabel": "Henan"
+      },
+      "42": {
+        "name": "湖北省",
+        "geonamesCode": "12",
+        "sourceLabel": "Hubei"
+      },
+      "43": {
+        "name": "湖南省",
+        "geonamesCode": "11",
+        "sourceLabel": "Hunan"
+      },
+      "44": {
+        "name": "广东省",
+        "geonamesCode": "30",
+        "sourceLabel": "Guangdong"
+      },
+      "45": {
+        "name": "广西壮族自治区",
+        "geonamesCode": "16",
+        "sourceLabel": "Guangxi"
+      },
+      "46": {
+        "name": "海南省",
+        "geonamesCode": "31",
+        "sourceLabel": "Hainan"
+      },
+      "50": {
+        "name": "重庆市",
+        "geonamesCode": "33",
+        "sourceLabel": "Chongqing"
+      },
+      "51": {
+        "name": "四川省",
+        "geonamesCode": "32",
+        "sourceLabel": "Sichuan"
+      },
+      "52": {
+        "name": "贵州省",
+        "geonamesCode": "18",
+        "sourceLabel": "Guizhou"
+      },
+      "53": {
+        "name": "云南省",
+        "geonamesCode": "29",
+        "sourceLabel": "Yunnan"
+      },
+      "54": {
+        "name": "西藏自治区",
+        "geonamesCode": "14",
+        "sourceLabel": "Tibet"
+      },
+      "61": {
+        "name": "陕西省",
+        "geonamesCode": "26",
+        "sourceLabel": "Shaanxi"
+      },
+      "62": {
+        "name": "甘肃省",
+        "geonamesCode": "15",
+        "sourceLabel": "Gansu"
+      },
+      "63": {
+        "name": "青海省",
+        "geonamesCode": "06",
+        "sourceLabel": "Qinghai"
+      },
+      "64": {
+        "name": "宁夏回族自治区",
+        "geonamesCode": "21",
+        "sourceLabel": "Ningxia"
+      },
+      "65": {
+        "name": "新疆维吾尔自治区",
+        "geonamesCode": "13",
+        "sourceLabel": "Xinjiang"
+      }
+    },
+    "matchRules": [
+      "Country/region code must match CN/HK/MO/TW selected group.",
+      "Feature class P and feature code PPLC/PPLA/PPLA2 only.",
+      "Exact Chinese city name or exact city name with trailing 市 removed must occur among name/aliases. No fuzzy or traditional/simplified conversion.",
+      "For mainland: exact province FIPS crosswalk; non-municipality admin2 must equal the first four digits of the selected city code.",
+      "Finite WGS84 coordinates inside broad region sanity bounds. No polygon containment guarantee.",
+      "Exactly one eligible candidate; otherwise omit coordinates. Never infer a province capital or district center."
+    ],
+    "included": 246,
+    "omitted": [
+      {
+        "code": "130800",
+        "name": "承德市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "140200",
+        "name": "大同市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "141000",
+        "name": "临汾市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "150200",
+        "name": "包头市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "150600",
+        "name": "鄂尔多斯市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "150800",
+        "name": "巴彦淖尔市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "152200",
+        "name": "兴安盟",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "152500",
+        "name": "锡林郭勒盟",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "152900",
+        "name": "阿拉善盟",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "210200",
+        "name": "大连市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "210300",
+        "name": "鞍山市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "210500",
+        "name": "本溪市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "210600",
+        "name": "丹东市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "210700",
+        "name": "锦州市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "210900",
+        "name": "阜新市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "211000",
+        "name": "辽阳市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "211200",
+        "name": "铁岭市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "220300",
+        "name": "四平市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "222400",
+        "name": "延边朝鲜族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "230700",
+        "name": "伊春市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "232700",
+        "name": "大兴安岭地区",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "320800",
+        "name": "淮安市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "321000",
+        "name": "扬州市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "321200",
+        "name": "泰州市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "330300",
+        "name": "温州市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "330600",
+        "name": "绍兴市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "330800",
+        "name": "衢州市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "330900",
+        "name": "舟山市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "340300",
+        "name": "蚌埠市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "340400",
+        "name": "淮南市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "340700",
+        "name": "铜陵市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "341000",
+        "name": "黄山市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "350200",
+        "name": "厦门市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "370300",
+        "name": "淄博市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "370400",
+        "name": "枣庄市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "370600",
+        "name": "烟台市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "370700",
+        "name": "潍坊市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "370800",
+        "name": "济宁市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "410200",
+        "name": "开封市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "411200",
+        "name": "三门峡市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "411500",
+        "name": "信阳市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "419000",
+        "name": "省直辖县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "420700",
+        "name": "鄂州市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "422800",
+        "name": "恩施土家族苗族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "429000",
+        "name": "省直辖县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "430400",
+        "name": "衡阳市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "430600",
+        "name": "岳阳市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "430700",
+        "name": "常德市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "433100",
+        "name": "湘西土家族苗族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "450900",
+        "name": "玉林市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "460300",
+        "name": "三沙市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "460400",
+        "name": "儋州市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "469000",
+        "name": "省直辖县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "500200",
+        "name": "县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "510300",
+        "name": "自贡市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "510700",
+        "name": "绵阳市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "510900",
+        "name": "遂宁市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "511000",
+        "name": "内江市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "511100",
+        "name": "乐山市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "511500",
+        "name": "宜宾市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "513200",
+        "name": "阿坝藏族羌族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "513300",
+        "name": "甘孜藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "513400",
+        "name": "凉山彝族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "520200",
+        "name": "六盘水市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "522300",
+        "name": "黔西南布依族苗族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "522600",
+        "name": "黔东南苗族侗族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "522700",
+        "name": "黔南布依族苗族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "530300",
+        "name": "曲靖市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "530400",
+        "name": "玉溪市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "530600",
+        "name": "昭通市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "530800",
+        "name": "普洱市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "532300",
+        "name": "楚雄彝族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "532500",
+        "name": "红河哈尼族彝族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "532600",
+        "name": "文山壮族苗族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "532800",
+        "name": "西双版纳傣族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "532900",
+        "name": "大理白族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "533100",
+        "name": "德宏傣族景颇族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "533300",
+        "name": "怒江傈僳族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "533400",
+        "name": "迪庆藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "540400",
+        "name": "林芝市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "610400",
+        "name": "咸阳市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "620500",
+        "name": "天水市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "622900",
+        "name": "临夏回族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "623000",
+        "name": "甘南藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "630200",
+        "name": "海东市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "632200",
+        "name": "海北藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "632300",
+        "name": "黄南藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "632500",
+        "name": "海南藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "632600",
+        "name": "果洛藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "632700",
+        "name": "玉树藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "632800",
+        "name": "海西蒙古族藏族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "650500",
+        "name": "哈密市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "652300",
+        "name": "昌吉回族自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "652700",
+        "name": "博尔塔拉蒙古自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "652800",
+        "name": "巴音郭楞蒙古自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "652900",
+        "name": "阿克苏地区",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "653000",
+        "name": "克孜勒苏柯尔克孜自治州",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "653100",
+        "name": "喀什地区",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "653200",
+        "name": "和田地区",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "654200",
+        "name": "塔城地区",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "654300",
+        "name": "阿勒泰地区",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "659000",
+        "name": "自治区直辖县级行政区划",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "710500",
+        "name": "金门县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "710600",
+        "name": "南投县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "710900",
+        "name": "嘉义市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "711100",
+        "name": "新北市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "711200",
+        "name": "宜兰县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "711300",
+        "name": "新竹县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "711400",
+        "name": "桃园市",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "711500",
+        "name": "苗栗县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "711700",
+        "name": "彰化县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "711900",
+        "name": "嘉义县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "712100",
+        "name": "云林县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "712400",
+        "name": "屏东县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "712500",
+        "name": "台东县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "712600",
+        "name": "花莲县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "712700",
+        "name": "澎湖县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "712800",
+        "name": "连江县",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "810100",
+        "name": "香港岛",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "810200",
+        "name": "九龙",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "810300",
+        "name": "新界",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "820100",
+        "name": "澳门半岛",
+        "reason": "not-verified-under-selection-rules"
+      },
+      {
+        "code": "820200",
+        "name": "离岛",
+        "reason": "not-verified-under-selection-rules"
+      }
+    ],
+    "output": {
+      "path": "city-centers.json",
+      "sha256": "60d992304fc60c3c5dea653d07469f7b1f1af249e7976dc8ed6a5e20c9e436ec",
+      "bytes": 57433,
+      "gzipBytes": 7417
+    },
+    "readmeSource": {
+      "sha256": "b1957379b6c1242c700c98ac9a8aa0a09f56c3c0a50ee72175527005f48ef2c5",
+      "bytes": 8843,
+      "url": "https://download.geonames.org/export/dump/readme.txt"
+    },
+    "licenseSource": {
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "bytes": 18657,
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode.txt"
+    },
+    "licenseFile": "/static/data-licenses/CC-BY-4.0-legalcode.txt"
+  },
+  "timeZoneDefaults": {
+    "mainland": "Asia/Shanghai",
+    "71": "Asia/Taipei",
+    "81": "Asia/Hong_Kong",
+    "82": "Asia/Macau",
+    "note": "Product defaults for the recorded clock; do not apply GeoNames Asia/Urumqi automatically. Historical UTC offset remains resolved by the existing IANA/manual-timezone flow."
+  }
+}

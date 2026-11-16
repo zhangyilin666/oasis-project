@@ -1,0 +1,73 @@
+{
+  "format": "oasis-space-records",
+  "formatVersion": 1,
+  "exportedAt": "2026-10-03T08:00:00.000Z",
+  "records": [
+    {
+      "id": "synthetic-space-2",
+      "savedAt": "2026-10-03T08:00:00.000Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "space-record-v1",
+        "scope": "facts-only",
+        "recordedAt": "2026-10-03T08:00:00.000Z",
+        "facts": {
+          "name": "合成验收：磁北零度",
+          "locationNote": "",
+          "layoutDescription": "",
+          "directionTarget": "",
+          "bearingDegrees": 0,
+          "northReference": "magnetic",
+          "measurementTool": "验收指南针",
+          "measuredAt": "",
+          "measurementBasis": "",
+          "buildingPeriod": "",
+          "moveInPeriod": "",
+          "notes": ""
+        },
+        "directionStatus": "magnetic-only",
+        "directionNote": "仅记录磁北读数。磁偏角随地点与日期变化，本版不换算真北，不据此生成风水盘。",
+        "sources": [
+          {
+            "title": "NOAA / NCEI：磁偏角与真北、磁北",
+            "url": "https://www.ngdc.noaa.gov/geomag/declination.shtml",
+            "usage": "仅链接参考，说明为本项目自写；未引入 NOAA 模型、磁偏角数据或地图，也不使用其标志。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "synthetic-space-1",
+      "savedAt": "2026-10-03T08:00:00.000Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "space-record-v1",
+        "scope": "facts-only",
+        "recordedAt": "2026-10-03T08:00:00.000Z",
+        "facts": {
+          "name": "合成验收：未测量方向",
+          "locationNote": "",
+          "layoutDescription": "",
+          "directionTarget": "",
+          "bearingDegrees": null,
+          "northReference": "unknown",
+          "measurementTool": "",
+          "measuredAt": "",
+          "measurementBasis": "",
+          "buildingPeriod": "",
+          "moveInPeriod": "",
+          "notes": ""
+        },
+        "directionStatus": "unmeasured",
+        "directionNote": "尚未记录方向度数；保留现有资料，不补出朝向或盘法。",
+        "sources": [
+          {
+            "title": "NOAA / NCEI：磁偏角与真北、磁北",
+            "url": "https://www.ngdc.noaa.gov/geomag/declination.shtml",
+            "usage": "仅链接参考，说明为本项目自写；未引入 NOAA 模型、磁偏角数据或地图，也不使用其标志。"
+          }
+        ]
+      }
+    }
+  ]
+}

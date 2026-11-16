@@ -1,0 +1,618 @@
+{
+  "source": "https://www.astro.com/cgi/swetest.cgi",
+  "serviceVersion": "2.10.03",
+  "retrieved": "2026-10-03",
+  "convention": "Gregorian UT; default apparent geocentric tropical of-date. No Swiss code or ephemeris files integrated.",
+  "houseMethod": "A = equal from ASC; first cusp is Ascendant, confirmed official programmer documentation A/E",
+  "houseQuery": "b=D.M.Y&n=1&s=1&p=b&f=Pl&arg=-ut12:00 -houseLONG,LAT,A",
+  "houseToleranceDegrees": 0.002,
+  "houses": [
+    {
+      "id": "delhi-2000",
+      "instant": "2000-01-01T12:00:00.000Z",
+      "place": {
+        "name": "Delhi",
+        "longitude": 77.209,
+        "latitude": 28.6139
+      },
+      "ascendant": 100.191313,
+      "midheaven": 357.4564554,
+      "cusps": [
+        100.191313,
+        130.191313,
+        160.191313,
+        190.191313,
+        220.191313,
+        250.191313,
+        280.191313,
+        310.191313,
+        340.191313,
+        10.191313,
+        40.191313,
+        70.191313
+      ]
+    },
+    {
+      "id": "london-1950",
+      "instant": "1950-01-01T12:00:00.000Z",
+      "place": {
+        "name": "London",
+        "longitude": -0.1278,
+        "latitude": 51.5074
+      },
+      "ascendant": 24.2718817,
+      "midheaven": 279.5945327,
+      "cusps": [
+        24.2718817,
+        54.2718817,
+        84.2718817,
+        114.2718817,
+        144.2718817,
+        174.2718817,
+        204.2718817,
+        234.2718817,
+        264.2718817,
+        294.2718817,
+        324.2718817,
+        354.2718817
+      ]
+    },
+    {
+      "id": "sydney-1990",
+      "instant": "1990-01-01T12:00:00.000Z",
+      "place": {
+        "name": "Sydney",
+        "longitude": 151.2093,
+        "latitude": -33.8688
+      },
+      "ascendant": 153.0916314,
+      "midheaven": 73.483311,
+      "cusps": [
+        153.0916314,
+        183.0916314,
+        213.0916314,
+        243.0916314,
+        273.0916314,
+        303.0916314,
+        333.0916314,
+        3.0916314,
+        33.0916314,
+        63.0916314,
+        93.0916314,
+        123.0916314
+      ]
+    },
+    {
+      "id": "shanghai-2024",
+      "instant": "2024-03-20T12:00:00.000Z",
+      "place": {
+        "name": "Shanghai",
+        "longitude": 121.4737,
+        "latitude": 31.2304
+      },
+      "ascendant": 205.7550367,
+      "midheaven": 117.8955285,
+      "cusps": [
+        205.7550367,
+        235.7550367,
+        265.7550367,
+        295.7550367,
+        325.7550367,
+        355.7550367,
+        25.7550367,
+        55.7550367,
+        85.7550367,
+        115.7550367,
+        145.7550367,
+        175.7550367
+      ]
+    }
+  ],
+  "bodyOrder": [
+    "Sun",
+    "Moon",
+    "Mercury",
+    "Venus",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune",
+    "Pluto"
+  ],
+  "positionToleranceDegrees": 0.02,
+  "aspectOrbDegrees": 6,
+  "aspectToleranceDegrees": 0.04,
+  "aspectOracle": "Cross-chart separations and aspect membership computed independently using Python Decimal on the fixed Swiss longitude decimals, before testing the TypeScript implementation. These are arithmetic expectations from independent ephemeris data, not a third-party full synastry report.",
+  "charts": [
+    {
+      "id": "a2000",
+      "instant": "2000-01-01T04:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=1.1.2000&n=1&s=1&p=0123456789&f=Pl&arg=-ut04%3A00",
+      "profile": {
+        "date": "1999-12-31",
+        "time": "23:00",
+        "gender": "女",
+        "utcOffset": -5,
+        "timePrecision": "minute",
+        "place": {
+          "name": "New York",
+          "latitude": 40.7128,
+          "longitude": -74.006
+        }
+      },
+      "longitudes": [
+        280.029113,
+        219.3080352,
+        271.3708178,
+        241.1628379,
+        327.7047463,
+        25.2396879,
+        40.4024134,
+        314.7924313,
+        303.1811686,
+        251.4430478
+      ]
+    },
+    {
+      "id": "b2000",
+      "instant": "2000-08-16T04:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=16.8.2000&n=1&s=1&p=0123456789&f=Pl&arg=-ut04%3A00",
+      "profile": {
+        "date": "2000-08-16",
+        "time": "12:00",
+        "gender": "男",
+        "utcOffset": 8,
+        "timePrecision": "minute",
+        "place": {
+          "name": "Shanghai",
+          "latitude": 31.2304,
+          "longitude": 121.4737
+        }
+      },
+      "longitudes": [
+        143.5931056,
+        334.2307816,
+        137.3785603,
+        161.5986301,
+        129.7397336,
+        68.1685932,
+        60.3172836,
+        318.6493626,
+        304.6687257,
+        250.1583466
+      ]
+    },
+    {
+      "id": "a1950",
+      "instant": "1950-01-01T12:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=1.1.1950&n=1&s=1&p=0123456789&f=Pl&arg=-ut12%3A00",
+      "profile": {
+        "date": "1950-01-01",
+        "time": "12:00",
+        "gender": "女",
+        "utcOffset": 0,
+        "timePrecision": "minute",
+        "place": {
+          "name": "London",
+          "latitude": 51.5074,
+          "longitude": -0.1278
+        }
+      },
+      "longitudes": [
+        280.5143874,
+        67.5445266,
+        299.9720146,
+        317.1525041,
+        182.3944662,
+        306.6180553,
+        169.4355429,
+        92.6615348,
+        197.2710836,
+        137.7894329
+      ]
+    },
+    {
+      "id": "b1990",
+      "instant": "1990-01-01T12:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=1.1.1990&n=1&s=1&p=0123456789&f=Pl&arg=-ut12%3A00",
+      "profile": {
+        "date": "1990-01-01",
+        "time": "23:00",
+        "gender": "男",
+        "utcOffset": 11,
+        "timePrecision": "minute",
+        "place": {
+          "name": "Sydney",
+          "latitude": -33.8688,
+          "longitude": 151.2093
+        }
+      },
+      "longitudes": [
+        280.8142608,
+        333.2676547,
+        295.6728253,
+        306.2219607,
+        250.0000853,
+        95.1487939,
+        285.6574982,
+        275.7854403,
+        282.0381065,
+        227.0931178
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "a": "a2000",
+      "b": "b2000",
+      "expectedAspects": [
+        {
+          "aBody": "Sun",
+          "bBody": "Moon",
+          "angle": 60,
+          "separation": 54.2016686,
+          "orb": 5.7983314
+        },
+        {
+          "aBody": "Sun",
+          "bBody": "Venus",
+          "angle": 120,
+          "separation": 118.4304829,
+          "orb": 1.5695171
+        },
+        {
+          "aBody": "Moon",
+          "bBody": "Moon",
+          "angle": 120,
+          "separation": 114.9227464,
+          "orb": 5.0772536
+        },
+        {
+          "aBody": "Moon",
+          "bBody": "Venus",
+          "angle": 60,
+          "separation": 57.7094051,
+          "orb": 2.2905949
+        },
+        {
+          "aBody": "Moon",
+          "bBody": "Mars",
+          "angle": 90,
+          "separation": 89.5683016,
+          "orb": 0.4316984
+        },
+        {
+          "aBody": "Moon",
+          "bBody": "Neptune",
+          "angle": 90,
+          "separation": 85.3606905,
+          "orb": 4.6393095
+        },
+        {
+          "aBody": "Mercury",
+          "bBody": "Moon",
+          "angle": 60,
+          "separation": 62.8599638,
+          "orb": 2.8599638
+        },
+        {
+          "aBody": "Venus",
+          "bBody": "Moon",
+          "angle": 90,
+          "separation": 93.0679437,
+          "orb": 3.0679437
+        },
+        {
+          "aBody": "Venus",
+          "bBody": "Saturn",
+          "angle": 180,
+          "separation": 179.1544457,
+          "orb": 0.8455543
+        },
+        {
+          "aBody": "Venus",
+          "bBody": "Neptune",
+          "angle": 60,
+          "separation": 63.5058878,
+          "orb": 3.5058878
+        },
+        {
+          "aBody": "Mars",
+          "bBody": "Sun",
+          "angle": 180,
+          "separation": 175.8883593,
+          "orb": 4.1116407
+        },
+        {
+          "aBody": "Mars",
+          "bBody": "Saturn",
+          "angle": 90,
+          "separation": 92.6125373,
+          "orb": 2.6125373
+        },
+        {
+          "aBody": "Jupiter",
+          "bBody": "Sun",
+          "angle": 120,
+          "separation": 118.3534177,
+          "orb": 1.6465823
+        },
+        {
+          "aBody": "Saturn",
+          "bBody": "Venus",
+          "angle": 120,
+          "separation": 121.1962167,
+          "orb": 1.1962167
+        },
+        {
+          "aBody": "Saturn",
+          "bBody": "Mars",
+          "angle": 90,
+          "separation": 89.3373202,
+          "orb": 0.6626798
+        },
+        {
+          "aBody": "Saturn",
+          "bBody": "Neptune",
+          "angle": 90,
+          "separation": 95.7336877,
+          "orb": 5.7336877
+        },
+        {
+          "aBody": "Uranus",
+          "bBody": "Mercury",
+          "angle": 180,
+          "separation": 177.413871,
+          "orb": 2.586129
+        },
+        {
+          "aBody": "Uranus",
+          "bBody": "Mars",
+          "angle": 180,
+          "separation": 174.9473023,
+          "orb": 5.0526977
+        },
+        {
+          "aBody": "Uranus",
+          "bBody": "Uranus",
+          "angle": 0,
+          "separation": 3.8569313,
+          "orb": 3.8569313
+        },
+        {
+          "aBody": "Uranus",
+          "bBody": "Pluto",
+          "angle": 60,
+          "separation": 64.6340847,
+          "orb": 4.6340847
+        },
+        {
+          "aBody": "Neptune",
+          "bBody": "Jupiter",
+          "angle": 120,
+          "separation": 124.9874246,
+          "orb": 4.9874246
+        },
+        {
+          "aBody": "Neptune",
+          "bBody": "Saturn",
+          "angle": 120,
+          "separation": 117.136115,
+          "orb": 2.863885
+        },
+        {
+          "aBody": "Neptune",
+          "bBody": "Neptune",
+          "angle": 0,
+          "separation": 1.4875571,
+          "orb": 1.4875571
+        },
+        {
+          "aBody": "Pluto",
+          "bBody": "Mercury",
+          "angle": 120,
+          "separation": 114.0644875,
+          "orb": 5.9355125
+        },
+        {
+          "aBody": "Pluto",
+          "bBody": "Venus",
+          "angle": 90,
+          "separation": 89.8444177,
+          "orb": 0.1555823
+        },
+        {
+          "aBody": "Pluto",
+          "bBody": "Mars",
+          "angle": 120,
+          "separation": 121.7033142,
+          "orb": 1.7033142
+        },
+        {
+          "aBody": "Pluto",
+          "bBody": "Jupiter",
+          "angle": 180,
+          "separation": 176.7255454,
+          "orb": 3.2744546
+        },
+        {
+          "aBody": "Pluto",
+          "bBody": "Pluto",
+          "angle": 0,
+          "separation": 1.2847012,
+          "orb": 1.2847012
+        }
+      ],
+      "nearestOrbThresholdMarginDegrees": 0.0644875
+    },
+    {
+      "a": "a1950",
+      "b": "b1990",
+      "expectedAspects": [
+        {
+          "aBody": "Sun",
+          "bBody": "Sun",
+          "angle": 0,
+          "separation": 0.2998734,
+          "orb": 0.2998734
+        },
+        {
+          "aBody": "Sun",
+          "bBody": "Jupiter",
+          "angle": 180,
+          "separation": 174.6344065,
+          "orb": 5.3655935
+        },
+        {
+          "aBody": "Sun",
+          "bBody": "Saturn",
+          "angle": 0,
+          "separation": 5.1431108,
+          "orb": 5.1431108
+        },
+        {
+          "aBody": "Sun",
+          "bBody": "Uranus",
+          "angle": 0,
+          "separation": 4.7289471,
+          "orb": 4.7289471
+        },
+        {
+          "aBody": "Sun",
+          "bBody": "Neptune",
+          "angle": 0,
+          "separation": 1.5237191,
+          "orb": 1.5237191
+        },
+        {
+          "aBody": "Moon",
+          "bBody": "Moon",
+          "angle": 90,
+          "separation": 94.2768719,
+          "orb": 4.2768719
+        },
+        {
+          "aBody": "Moon",
+          "bBody": "Venus",
+          "angle": 120,
+          "separation": 121.3225659,
+          "orb": 1.3225659
+        },
+        {
+          "aBody": "Moon",
+          "bBody": "Mars",
+          "angle": 180,
+          "separation": 177.5444413,
+          "orb": 2.4555587
+        },
+        {
+          "aBody": "Mercury",
+          "bBody": "Mercury",
+          "angle": 0,
+          "separation": 4.2991893,
+          "orb": 4.2991893
+        },
+        {
+          "aBody": "Venus",
+          "bBody": "Pluto",
+          "angle": 90,
+          "separation": 90.0593863,
+          "orb": 0.0593863
+        },
+        {
+          "aBody": "Mars",
+          "bBody": "Venus",
+          "angle": 120,
+          "separation": 123.8274945,
+          "orb": 3.8274945
+        },
+        {
+          "aBody": "Mars",
+          "bBody": "Jupiter",
+          "angle": 90,
+          "separation": 87.2456723,
+          "orb": 2.7543277
+        },
+        {
+          "aBody": "Mars",
+          "bBody": "Uranus",
+          "angle": 90,
+          "separation": 93.3909741,
+          "orb": 3.3909741
+        },
+        {
+          "aBody": "Jupiter",
+          "bBody": "Venus",
+          "angle": 0,
+          "separation": 0.3960946,
+          "orb": 0.3960946
+        },
+        {
+          "aBody": "Jupiter",
+          "bBody": "Mars",
+          "angle": 60,
+          "separation": 56.61797,
+          "orb": 3.38203
+        },
+        {
+          "aBody": "Saturn",
+          "bBody": "Saturn",
+          "angle": 120,
+          "separation": 116.2219553,
+          "orb": 3.7780447
+        },
+        {
+          "aBody": "Saturn",
+          "bBody": "Pluto",
+          "angle": 60,
+          "separation": 57.6575749,
+          "orb": 2.3424251
+        },
+        {
+          "aBody": "Uranus",
+          "bBody": "Moon",
+          "angle": 120,
+          "separation": 119.3938801,
+          "orb": 0.6061199
+        },
+        {
+          "aBody": "Uranus",
+          "bBody": "Jupiter",
+          "angle": 0,
+          "separation": 2.4872591,
+          "orb": 2.4872591
+        },
+        {
+          "aBody": "Uranus",
+          "bBody": "Uranus",
+          "angle": 180,
+          "separation": 176.8760945,
+          "orb": 3.1239055
+        },
+        {
+          "aBody": "Neptune",
+          "bBody": "Saturn",
+          "angle": 90,
+          "separation": 88.3864146,
+          "orb": 1.6135854
+        },
+        {
+          "aBody": "Neptune",
+          "bBody": "Neptune",
+          "angle": 90,
+          "separation": 84.7670229,
+          "orb": 5.2329771
+        },
+        {
+          "aBody": "Pluto",
+          "bBody": "Pluto",
+          "angle": 90,
+          "separation": 89.3036849,
+          "orb": 0.6963151
+        }
+      ],
+      "nearestOrbThresholdMarginDegrees": 0.2372824
+    }
+  ]
+}

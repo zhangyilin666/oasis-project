@@ -1,4 +1,4 @@
-# 小易 — 上线前检查清单
+# 猫来运转 — 上线前检查清单
 
 ## A. 必须由你填写/操作（无法自动化）
 
@@ -25,7 +25,7 @@
 在服务器上创建 `python_backend/.env`：
 
 ```env
-APP_NAME=小易
+APP_NAME=猫来运转
 APP_VERSION=0.1.0
 DEBUG=False
 DATABASE_URL=mysql+pymysql://oasis_user:强密码@db:3306/oasis_db?charset=utf8mb4
@@ -57,7 +57,7 @@ RATE_LIMIT_ANALYZE_PER_DAY=5
 
 ### C1. 小程序信息
 
-- [ ] **小程序名称**：小易（确认无侵权）
+- [ ] **小程序名称**：猫来运转（确认无侵权）
 - [ ] **小程序简介**：AI 驱动的八字命理分析，黄历宜忌查询，每日运势
 - [ ] **服务类目**：工具 > 信息服务（或咨询微信客服确认最匹配类目）
   - ⚠️ 命理/占卜类可能被拒，建议强调「传统文化」「历法查询」「AI 辅助写作」，避免封建迷信表述
@@ -114,7 +114,7 @@ nginx -t && systemctl reload nginx
 
 ```ini
 [Unit]
-Description=小易 Backend
+Description=猫来运转 Backend
 After=network.target
 
 [Service]

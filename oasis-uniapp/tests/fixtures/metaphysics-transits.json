@@ -1,0 +1,43 @@
+{
+  "source": {
+    "title": "Official Swiss Ephemeris public swetest output",
+    "service": "https://www.astro.com/swisseph/swetest.htm",
+    "retrieved": "2026-10-03",
+    "reportedVersion": "2.10.03",
+    "coordinateConvention": "Default apparent geocentric tropical ecliptic longitude in degrees; Gregorian date; UT 04:00",
+    "ephemerisFileVersion": "Not printed in the response; not inferred from the website description",
+    "note": "Numerical reference output only. No Swiss Ephemeris code, binaries or ephemeris files are included or required."
+  },
+  "toleranceDegrees": 0.02,
+  "bodyOrder": ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"],
+  "cases": [
+    {
+      "date": "2000-01-01",
+      "instant": "2000-01-01T04:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=1.1.2000&n=1&s=1&p=0123456789&f=Pl&arg=-ut04%3A00",
+      "command": "swetest -b1.1.2000 -n1 -s1 -fPl -p0123456789 -ut04:00",
+      "longitudes": [280.0291130, 219.3080352, 271.3708178, 241.1628379, 327.7047463, 25.2396879, 40.4024134, 314.7924313, 303.1811686, 251.4430478]
+    },
+    {
+      "date": "2000-08-16",
+      "instant": "2000-08-16T04:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=16.8.2000&n=1&s=1&p=0123456789&f=Pl&arg=-ut04%3A00",
+      "command": "swetest -b16.8.2000 -n1 -s1 -fPl -p0123456789 -ut04:00",
+      "longitudes": [143.5931056, 334.2307816, 137.3785603, 161.5986301, 129.7397336, 68.1685932, 60.3172836, 318.6493626, 304.6687257, 250.1583466]
+    },
+    {
+      "date": "2024-03-20",
+      "instant": "2024-03-20T04:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=20.3.2024&n=1&s=1&p=0123456789&f=Pl&arg=-ut04%3A00",
+      "command": "swetest -b20.3.2024 -n1 -s1 -fPl -p0123456789 -ut04:00",
+      "longitudes": [0.0369765, 124.2685281, 17.4953667, 340.2176857, 327.8025812, 44.8931698, 342.2298846, 50.2553320, 357.4617187, 301.6614304]
+    },
+    {
+      "date": "2026-10-03",
+      "instant": "2026-10-03T04:00:00.000Z",
+      "request": "https://www.astro.com/cgi/swetest.cgi?b=3.10.2026&n=1&s=1&p=0123456789&f=Pl&arg=-ut04%3A00",
+      "command": "swetest -b3.10.2026 -n1 -s1 -fPl -p0123456789 -ut04:00",
+      "longitudes": [189.9693880, 94.7936884, 213.4990846, 218.4907937, 122.9465107, 139.9760715, 11.4084547, 65.4879794, 2.8024231, 303.1083415]
+    }
+  ]
+}

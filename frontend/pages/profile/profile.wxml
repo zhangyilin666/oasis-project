@@ -42,7 +42,7 @@
 
   <!-- 版本号 -->
   <view class="version-footer">
-    <text class="version-text">小易 v{{appVersion}}</text>
+    <text class="version-text">猫来运转 v{{appVersion}}</text>
   </view>
 
 </view>

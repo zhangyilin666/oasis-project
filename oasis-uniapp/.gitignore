@@ -4,6 +4,7 @@ dist/
 !.keystore.example
 .env.local
 .env.*.local
+.env.production
 *.log
 .hbuilderx
 unpackage/

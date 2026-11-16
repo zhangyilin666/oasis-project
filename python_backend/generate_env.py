@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-小易 项目 .env 交互式生成工具。
+猫来运转 项目 .env 交互式生成工具。
 
 在当前目录（python_backend/）生成 .env 文件，
 交互式提示输入各项配置，最终写入带注释的 .env。
@@ -48,13 +48,13 @@ def main():
             return
 
     print("=" * 60)
-    print("  小易 项目 .env 生成器")
+    print("  猫来运转 项目 .env 生成器")
     print("  按提示输入，直接回车使用默认值")
     print("=" * 60)
     print()
 
     # ── 基础配置 ──
-    app_name = _prompt("应用名称", "小易")
+    app_name = _prompt("应用名称", "猫来运转")
     debug = _prompt("调试模式 (True/False)", "False")
 
     # ── 数据库 ──
@@ -106,7 +106,7 @@ def main():
     rate_limit = _prompt("  每用户每天最大分析次数（0=无限制）", "5")
 
     # ── 组装 .env 文件 ──
-    env_content = f"""# 小易 项目环境配置 — 由 generate_env.py 生成
+    env_content = f"""# 猫来运转 项目环境配置 — 由 generate_env.py 生成
 # 生成时间: {__import__('datetime').datetime.now().isoformat()}
 
 # ── 基础配置 ──

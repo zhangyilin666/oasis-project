@@ -7,6 +7,7 @@ App 认证 API。
 端点：
     POST /api/v1/app/anonymous-login — 设备匿名登录
     POST /api/v1/app/refresh         — JWT Token 刷新
+    GET  /api/v1/app/me              — 当前账号身份
 """
 
 from datetime import datetime, timezone
@@ -18,6 +19,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.core.logger import logger
+from app.core.security_deps import get_current_user
 from app.db.database import get_db
 from app.models.user_model import User
 from app.schemas.app_auth_schema import (
@@ -25,11 +27,18 @@ from app.schemas.app_auth_schema import (
     AnonymousLoginResponse,
     AppRefreshResponse,
 )
+from app.schemas.oasis_schema import OasisResponse
+from app.services.user_identity import resolve_user_by_id
 from app.utils.security import create_access_token, verify_token_with_grace
 
 router = APIRouter(prefix="/api/v1/app", tags=["App Auth"])
 
 _bearer_scheme = HTTPBearer(auto_error=False)
+
+
+@router.get("/me", response_model=OasisResponse, summary="当前账号身份")
+def current_account(current_user: User = Depends(get_current_user)):
+    return OasisResponse(code=200, data={"user_id": current_user.id, "is_admin": current_user.is_admin})
 
 
 # ---------------------------------------------------------------------------
@@ -132,6 +141,14 @@ async def anonymous_login(
 # ---------------------------------------------------------------------------
 
 
+@router.post("/restore", response_model=AnonymousLoginResponse)
+def restore_account(request: AnonymousLoginRequest, db: Session = Depends(get_db)):
+    user = db.scalar(select(User).where(User.device_id == request.device_id))
+    if user is None:
+        raise HTTPException(404, detail={"code": 404, "message": "恢复码不存在，请检查是否完整"})
+    return AnonymousLoginResponse(data={"token": create_access_token({"sub": str(user.id)}), "user_id": user.id})
+
+
 @router.post(
     "/refresh",
     response_model=AppRefreshResponse,
@@ -170,8 +187,7 @@ async def app_refresh_token(
             detail={"code": 401, "message": "Invalid token payload"},
         )
 
-    stmt = select(User).where(User.id == int(user_id))
-    user = db.scalars(stmt).first()
+    user = resolve_user_by_id(db, user_id)
     if user is None:
         logger.warning("App refresh: user not found: id=%s", user_id)
         raise HTTPException(

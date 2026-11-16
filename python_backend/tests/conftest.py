@@ -3,12 +3,29 @@
 from __future__ import annotations
 
 import uuid
+import os
+import tempfile
 from pathlib import Path
+
+# 测试固定使用独立数据库，不读取开发/生产数据库或外部服务凭证。
+_test_dir = tempfile.TemporaryDirectory(prefix="oasis-tests-")
+os.environ["DATABASE_URL"] = "sqlite:///" + str(Path(_test_dir.name) / "test.db").replace("\\", "/")
+os.environ["JWT_SECRET_KEY"] = "isolated-test-key-never-use-in-production"
+os.environ["WECHAT_APPID"] = ""
+os.environ["WECHAT_SECRET"] = ""
+os.environ["ALLOW_MOCK_AI"] = "true"
+os.environ["AI_PROVIDER"] = ""
 
 import pytest
 from fastapi.testclient import TestClient
 
 from app.services.rag_service import Document, KeywordRetriever, KnowledgeBase
+
+
+def pytest_configure(config):
+    # 不复用系统中可能由其他权限账户创建的 pytest 临时目录。
+    if not config.option.basetemp:
+        config.option.basetemp = str(Path(_test_dir.name) / "pytest")
 
 
 # ---------------------------------------------------------------------------
@@ -145,12 +162,17 @@ def _cleanup_test_data():
 def client():
     """FastAPI TestClient（session 级，复用）。"""
     from app.main import app
+    from app.db.database import engine
+    from app.db.base import Base
+    import app.models as _models
+    Base.metadata.create_all(engine)
 
     with TestClient(app) as c:
         yield c
 
     # session 结束后清理所有测试数据
     _cleanup_test_data()
+    engine.dispose()
 
 
 @pytest.fixture

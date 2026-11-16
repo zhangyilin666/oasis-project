@@ -1,114 +1,37 @@
-# 小易 — 手机安装指南
+# 猫来运转：Android APK 安装指南
 
-## 一、Android 手机安装（推荐，免费）
+这份工程是 uni-app Vue 3 CLI 工程。有效的 App 配置位于 `src/manifest.json`；当前体验版 Android 包名为 `com.zhangyilin.oasis.demo`，正式版计划使用 `com.zhangyilin.oasis`。`npm run build:app` 只编译 App 资源，不直接生成 APK。APK 由 Windows 上的 HBuilderX 打包，云服务器只运行 API 和数据库。
 
-### 步骤 1：下载 HBuilderX
+## 离线界面体验版
 
-下载地址：https://www.dcloud.io/hbuilderx.html
+当前 `.env.production` 已在本机设为 `VITE_DEMO_MODE=true`。体验版不连接服务器：首页、黄历、示例报告、表单和“我的”页面都可浏览。示例报告与输入的信息无关，也不会上传或保存输入。若以后要生成真实报告，须把 `.env.production` 改回真实 HTTPS API 地址并关闭体验模式，重新打包。
 
-选 **APP 开发版**（约 300MB），下载后解压即可使用，无需安装。
+本机先运行 `npm run build:app`，然后使用 HBuilderX 登录自己的 DCloud 账号，选择项目 `D:\Oasis_Project\oasis-uniapp`，执行 **发行 → 原生 App → 云打包**。本次体验包使用 DCloud 云端证书；该新 AppID 无法使用公共测试证书。包名为 `com.zhangyilin.oasis.demo`，与未来正式版区分。打包完成后把新 APK 文件通过文件传输发到 Android 手机，在手机上打开安装。**不要误用 `dist/release/apk/` 中 2026 年 6 月的旧包。**
 
-### 步骤 2：打开项目
+## 先准备可用的 API
 
-1. 启动 HBuilderX
-2. 文件 → 导入 → 从本地目录导入
-3. 选择 `d:\Oasis_Project\oasis-uniapp` 文件夹
+先按 [API 部署指南](../deploy/API_GUIDE.md)部署后端，确认手机可以通过可信的 HTTPS 地址访问 `/health`。正式 APK 中的接口地址不能是 `localhost`、局域网 IP、示例域名或无效的自签名 HTTPS 地址。
 
-### 步骤 3：云打包生成 APK
+## 配置 App 接口地址
 
-1. 在 HBuilderX 左侧项目树中右键点击项目根目录
-2. 选择 **发行 → 原生App-云打包**
-3. 弹出配置窗口：
-   - **Android 包名**：`com.zhangyilin.xiaoyi`（已配置）
-   - **证书**：选择「使用自有证书」
-     - 证书文件：`oasis-release.keystore`（项目根目录下）
-     - 别名：`oasis`
-     - 密码：`oasis123`
-   - 勾选「打自定义基座」或「正式包」
-4. 点击 **打包**，等待云端编译（约 2-5 分钟）
-5. 编译完成后，扫描二维码或下载 APK 文件
+在 `oasis-uniapp` 目录复制 `.env.production.example` 为 `.env.production`，将 `VITE_API_BASE_URL` 改成实际 API 的 HTTPS **源地址**。这台服务器当前用 `https://162.211.181.253`，前提是先按 API 部署指南取得该 IP 的可信证书并完成公网 HTTPS 检查。不要在末尾添加 `/api`，也不要将 API Key 写进 App 环境变量。`.env.production` 已被 Git 忽略。
 
-### 步骤 4：安装到手机
-
-1. 将 APK 文件传到手机（微信/QQ 发送、USB 传输均可）
-2. 在手机上打开 APK 文件
-3. 允许「未知来源」安装（系统会引导你）
-4. 安装完成，打开「小易」
-
----
-
-## 二、iOS 手机安装（需要证书）
-
-iOS 不通过 App Store 安装有以下方案：
-
-### 方案 A：TestFlight（推荐，需 Apple Developer）
-
-1. 注册 Apple Developer：https://developer.apple.com（$99/年）
-2. 在 HBuilderX 中配置 iOS 证书和描述文件
-3. 云打包 → 上传 TestFlight
-4. 通过 TestFlight App 安装
-
-### 方案 B：爱思助手 / 3uTools（免费，7 天签名）
-
-1. 电脑安装爱思助手：https://www.i4.cn
-2. 手机连接电脑 → 爱思助手 → 工具箱 → IPA 签名
-3. 使用免费 Apple ID 签名（有效期 7 天）
-4. 签名后自动安装到手机
-5. 每 7 天需要重新签名一次
-
-### 方案 C：AltStore（免费，需电脑在局域网内）
-
-1. 电脑安装 AltServer：https://altstore.io
-2. 手机安装 AltStore
-3. 在 AltStore 中安装 IPA（7 天自动续签）
-
-> **推荐**：先用 Android 体验，确认功能没问题后再搞 iOS 分发。
-
----
-
-## 三、后端部署
-
-APP 安装到手机后，需要后端提供 API。两种方式：
-
-### 本地开发测试
-
-```bash
-cd d:\Oasis_Project\python_backend
-.\.venv\Scripts\activate
-uvicorn app.main:app --host 0.0.0.0 --port 8000
+```powershell
+Copy-Item .env.production.example .env.production
 ```
 
-手机和电脑在同一局域网时，`manifest.json` 中的 API 地址改为电脑的局域网 IP。
+每次更改接口地址后都要重新打包并安装 APK，因为它会编入安装包。
 
-### 部署到云服务器（推荐）
+## 检查并打包
 
-参考 `deploy/` 目录下的部署文档，将后端部署到有公网 IP 的服务器。
+1. 在 Windows 上安装 HBuilderX App 开发版并登录自己的 DCloud 账号；从本地目录导入 `D:\Oasis_Project\oasis-uniapp`。
+2. 打开 `src/manifest.json`，确认应用名称、DCloud AppID、Android 包名和版本号。以后发布更新时递增 `versionCode`。
+3. 在项目目录运行 `npm ci`、`npm run typecheck`、`npm test` 和 `npm run build:app`。最后一条只验证 App 资源能够编译。
+4. 在 HBuilderX 中选择 **发行 → 原生 App → 云打包**，选择 Android 正式包，按界面提示完成打包。打包产物通常位于 `unpackage/release/apk/`。参见 [uni-app 官方云打包说明](https://uniapp.dcloud.net.cn/dev/app/cloud-build.html)。
+5. 首次给朋友分发前使用自己新建的发布签名证书，并离线备份证书和口令。旧指南曾公开写出本地旧证书的口令，**不要把该旧证书用于正式分发**。后续更新必须使用与首次分发相同的包名和签名。
 
----
+## 真机验收
 
-## 四、配置 API 地址
+将 APK 传到 Android 手机并允许安装来源。打开 App 后检查：匿名账号能建立、姓名和出生信息能提交、真实报告能生成并再次打开、首页每日内容能显示、恢复码能在另一台设备恢复账号。恢复码相当于密码，不要发给朋友；朋友安装后会建立自己的账号。
 
-在 `src/config/env.ts` 中修改 `API_BASE_URL`：
-
-```ts
-// 本地开发（手机连同一 WiFi）
-export const API_BASE_URL = 'http://192.168.x.x:8000'
-
-// 生产环境（公网服务器）
-export const API_BASE_URL = 'https://api.your-domain.com'
-```
-
-修改后重新执行云打包生成新的 APK。
-
----
-
-## 快速测试清单
-
-```
-□ 后端运行中（161 tests ✓）
-□ HBuilderX 导入项目成功
-□ 云打包生成 APK 成功
-□ 手机上安装 APK 成功
-□ 打开 App → 输手机号 → 获取验证码（DEBUG 模式用 123456）
-□ 八字分析 → 报告查看 → 报告列表 → 个人中心 → 退出登录
-```
+如果手机提示网络连接失败，先在手机浏览器访问 `https://实际API地址/health`，再核对 `.env.production` 中的地址并重新打包。不要用关闭证书校验或明文 HTTP 作为正式分享方案。

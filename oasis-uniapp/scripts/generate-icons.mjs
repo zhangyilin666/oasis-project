@@ -1,5 +1,6 @@
 // 生成 TabBar 图标 + App Icon
 // 用法: node scripts/generate-icons.mjs
+// 仅更新应用图标: node scripts/generate-icons.mjs --app-only
 import sharp from 'sharp'
 
 const ICON_DIR = 'src/static/images'
@@ -7,7 +8,7 @@ const TAB_SIZE = 81
 const APP_SIZE = 1024
 
 // 辅助: 创建纯色圆/形状的 SVG
-function svgIcon(shape, color) {
+async function svgIcon(shape, color) {
   const c = color || '#8c8c8c'
   switch (shape) {
     case 'home': // 房屋形状
@@ -26,19 +27,18 @@ function svgIcon(shape, color) {
         <circle cx="40.5" cy="28" r="14" fill="${c}"/>
         <path d="M12 75c0-16 12-26 28.5-26S69 59 69 75" fill="${c}"/>
       </svg>`
-    case 'app-icon': // App 图标: 渐变绿底 + O 字
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="${APP_SIZE}" height="${APP_SIZE}" viewBox="0 0 1024 1024">
+    case 'app-icon': { // 使用已确认的三花形象和当前品牌名
+      const sprite = (await sharp('src/static/ui/cat-calico-sprite.webp').png().toBuffer()).toString('base64')
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${APP_SIZE}" height="${APP_SIZE}" viewBox="0 0 1024 1024">
         <defs>
-          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#2c5f2d"/>
-            <stop offset="100%" stop-color="#1a3a1c"/>
-          </linearGradient>
+          <clipPath id="cat"><rect x="160" y="48" width="704" height="704"/></clipPath>
         </defs>
-        <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
-        <circle cx="512" cy="400" r="140" fill="none" stroke="#ffffff" stroke-width="36" opacity="0.9"/>
-        <text x="512" y="700" text-anchor="middle" font-family="sans-serif" font-size="200" font-weight="bold" fill="#ffffff" opacity="0.9">小易</text>
-        <text x="512" y="870" text-anchor="middle" font-family="sans-serif" font-size="64" fill="#ffffff" opacity="0.5">XIAOYI</text>
+        <rect width="1024" height="1024" rx="224" fill="#eee7f8"/>
+        <circle cx="512" cy="410" r="340" fill="#faf8fc"/>
+        <image xlink:href="data:image/png;base64,${sprite}" x="160" y="48" width="2112" height="1408" clip-path="url(#cat)"/>
+        <text x="512" y="895" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="140" font-weight="bold" fill="#59428e">猫来运转</text>
       </svg>`
+    }
     default:
       return ''
   }
@@ -54,18 +54,18 @@ async function generate() {
     ['tab-profile-active.png', 'profile', '#2c5f2d'],
   ]
 
-  for (const [name, shape, color] of pairs) {
-    const svg = svgIcon(shape, color)
+  for (const [name, shape, color] of (process.argv.includes('--app-only') ? [] : pairs)) {
+    const svg = await svgIcon(shape, color)
     await sharp(Buffer.from(svg)).resize(TAB_SIZE, TAB_SIZE).png().toFile(`${ICON_DIR}/${name}`)
     console.log(`  ${name} (${TAB_SIZE}x${TAB_SIZE})`)
   }
 
   // App Icon
-  const appSvg = svgIcon('app-icon')
+  const appSvg = await svgIcon('app-icon')
   await sharp(Buffer.from(appSvg)).resize(APP_SIZE, APP_SIZE).png().toFile(`${ICON_DIR}/app-icon.png`)
   console.log(`  app-icon.png (${APP_SIZE}x${APP_SIZE})`)
 
-  console.log('\n✅ 所有图标生成完成')
+  console.log('\n✅ 图标生成完成')
 }
 
 generate().catch(e => { console.error(e); process.exit(1) })

@@ -1,0 +1,107 @@
+{
+  "release": "admin0-20261003-133014",
+  "bundleSha256": "8448d8485d0677ab3fa19d0e33840a10b09f53653daefce3fb64d09fbf71ba08",
+  "backup": "/root/oasis-backups/admin0-20261003-133014",
+  "image": "oasis-backend:admin0-20261003-133014",
+  "oldImageTag": "oasis-backend:before-admin0-20261003-133014",
+  "migration": "e2a73c9b4d10",
+  "indexSha256": "201e3d5f8ea36bcf63485cd3b48be03b3848c412ede90865ee86e363a7585a70",
+  "health": "ok",
+  "apiAndDatabaseUnchanged": true,
+  "accountTransition": {
+    "from": 1,
+    "to": 0,
+    "isAdmin": true,
+    "userCountUnchanged": true,
+    "otherAdminsUnchanged": true,
+    "credentialsUnchanged": true,
+    "ownedRecordContentsUnchanged": true,
+    "records": [
+      {
+        "table": "analysis_logs",
+        "rows": 9
+      },
+      {
+        "table": "daily_fortunes",
+        "rows": 2
+      },
+      {
+        "table": "divination_readings",
+        "rows": 1
+      },
+      {
+        "table": "payment_orders",
+        "rows": 0
+      },
+      {
+        "table": "reports",
+        "rows": 2
+      },
+      {
+        "table": "user_memberships",
+        "rows": 0
+      }
+    ]
+  },
+  "accountVerification": {
+    "userId": 0,
+    "isAdmin": true,
+    "administratorIds": [
+      0
+    ],
+    "baziDailyLimit": "unlimited",
+    "divinationDailyLimit": 0,
+    "divinationRemainingToday": null,
+    "legacyId1TokenAccepted": true,
+    "id0TokenAccepted": true,
+    "legacyTokenRefreshReturnsId0": true,
+    "liveAiRequestsMade": 0
+  },
+  "before": {
+    "api": {
+      "id": "6139f48d8cb2bd61259e95a622193e9836476ba030149f2e38793a00e858156c",
+      "image": "sha256:0c994536bddb66445885237f1a5dcc1916bccea922661c76b4e9fc24061f9b52",
+      "started": "2026-09-30T07:01:23.374730084Z",
+      "status": "running",
+      "health": null
+    },
+    "backend": {
+      "id": "f55133e05081ddf397b21909baa4e48a6280c25645a813cbc39a74c1527fe54d",
+      "image": "sha256:b594214d581f5b60eec1536ffc2440b399a26906b26fbc7fecb2423b1a4893bc",
+      "started": "2026-10-03T12:20:17.691852386Z",
+      "status": "running",
+      "health": "healthy"
+    },
+    "db": {
+      "id": "31b311f00308ef5f72a87f1c8347d69940528d24f580d6592436d3d9549afc7b",
+      "image": "sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+      "started": "2026-09-23T14:36:58.684824257Z",
+      "status": "running",
+      "health": "healthy"
+    }
+  },
+  "after": {
+    "api": {
+      "id": "6139f48d8cb2bd61259e95a622193e9836476ba030149f2e38793a00e858156c",
+      "image": "sha256:0c994536bddb66445885237f1a5dcc1916bccea922661c76b4e9fc24061f9b52",
+      "started": "2026-09-30T07:01:23.374730084Z",
+      "status": "running",
+      "health": null
+    },
+    "backend": {
+      "id": "d45881c30d1a6ab660798dc5ff32dc3ff09881ca6990463d012f7328e710f9f2",
+      "image": "sha256:7962941204408c29e2b16afeb41b5fdf667b0dda00210f8b84eb0fd74297c0db",
+      "started": "2026-10-03T13:32:37.651435798Z",
+      "status": "running",
+      "health": "healthy"
+    },
+    "db": {
+      "id": "31b311f00308ef5f72a87f1c8347d69940528d24f580d6592436d3d9549afc7b",
+      "image": "sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+      "started": "2026-09-23T14:36:58.684824257Z",
+      "status": "running",
+      "health": "healthy"
+    }
+  },
+  "webFiles": 119
+}

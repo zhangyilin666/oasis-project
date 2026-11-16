@@ -1,0 +1,9 @@
+{
+  "release": "h5-20261003-101805",
+  "bundleSha256": "7125ee7e35283ddd22bcfb9d7ef89ac6289afa8fc65c89519829da387e14775c",
+  "files": 133,
+  "indexSha256": "dc4ccc4c383a59dd6f305af9d619c21074b853039e6a8d9f40a05e98bcf20a92",
+  "backup": "/root/oasis-backups/h5-20261003-101805",
+  "containersUnchanged": true,
+  "health": "ok"
+}

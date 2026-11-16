@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.auth_api import router as auth_router
 from app.api.app_auth_api import router as app_auth_router
 from app.api.oasis_api import router as oasis_router
+from app.api.divination_api import router as divination_router
 from app.core.config import settings
 from app.core.exceptions import global_exception_handler
 from app.core.kb_provider import init_kb
@@ -46,7 +47,7 @@ app = FastAPI(
 )
 
 # CORS 配置：从 settings.CORS_ORIGINS 读取允许来源
-# 生产环境必须显式配置，禁止留空
+# 同域网页部署不需要 CORS；跨域客户端应配置明确来源。
 _cors_raw = settings.CORS_ORIGINS.strip()
 if not _cors_raw:
     logger.warning("CORS_ORIGINS not set, CORS middleware DISABLED")
@@ -59,6 +60,7 @@ else:
     _allow_credentials = True
     logger.info("CORS enabled for origins: %s", _origins)
 
+if _cors_raw:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=_origins,
@@ -68,6 +70,7 @@ else:
     )
 
 app.include_router(oasis_router)
+app.include_router(divination_router)
 app.include_router(auth_router)
 app.include_router(app_auth_router)  # App 手机号认证路由
 app.add_exception_handler(Exception, global_exception_handler)
@@ -75,4 +78,4 @@ app.add_exception_handler(Exception, global_exception_handler)
 
 @app.get("/")
 async def root():
-    return {"code": 200, "data": None, "message": "小易 Backend Running"}
+    return {"code": 200, "data": None, "message": "猫来运转 Backend Running"}

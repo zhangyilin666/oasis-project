@@ -1,4 +1,4 @@
--- 小易 数据库初始化脚本
+-- 猫来运转 数据库初始化脚本
 -- 由 docker-compose 在首次启动时自动执行
 
 CREATE DATABASE IF NOT EXISTS oasis_db

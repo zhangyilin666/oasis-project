@@ -1,0 +1,65 @@
+name: xiaoyi-api
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: oasis_db
+      MYSQL_USER: oasis_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD}
+    volumes:
+      - api_mysql:/var/lib/mysql
+    healthcheck:
+      test: [CMD, mysqladmin, ping, -h, 127.0.0.1]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build: ./python_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: mysql+pymysql://oasis_user:${MYSQL_PASSWORD}@db:3306/oasis_db?charset=utf8mb4
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?Set JWT_SECRET_KEY}
+      AI_PROVIDER: ${AI_PROVIDER:-deepseek}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_DEFAULT_MODEL: ${DEEPSEEK_DEFAULT_MODEL:-deepseek-flash}
+      ALLOW_MOCK_AI: ${ALLOW_MOCK_AI:-false}
+      CORS_ORIGINS: ""
+      RATE_LIMIT_ANALYZE_PER_DAY: ${RATE_LIMIT_ANALYZE_PER_DAY:-5}
+      RATE_LIMIT_DIVINATION_PER_DAY: ${RATE_LIMIT_DIVINATION_PER_DAY:-5}
+      REPORT_TIMEOUT_MINUTES: 15
+    volumes:
+      - ./data_center/knowledge:/app/data_center/knowledge:ro
+    healthcheck:
+      test: [CMD, curl, -f, http://localhost:8000/health]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  api:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${PUBLISH_ADDRESS:-127.0.0.1}:${HTTP_PORT:-18080}:80"
+      - "${PUBLISH_ADDRESS:-127.0.0.1}:${HTTPS_PORT:-18443}:443"
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+    volumes:
+      - ./deploy/Caddyfile.api:/etc/caddy/Caddyfile:ro
+      - api_caddy_data:/data
+      - api_caddy_config:/config
+
+volumes:
+  api_mysql:
+  api_caddy_data:
+  api_caddy_config:

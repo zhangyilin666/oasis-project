@@ -56,7 +56,10 @@ class AIClient:
         self.api_key = api_key or settings.ANTHROPIC_API_KEY
         self.default_model = default_model or settings.ANTHROPIC_DEFAULT_MODEL
         self.timeout = timeout if timeout is not None else self._DEFAULT_TIMEOUT
-        self._client = anthropic.Anthropic(api_key=self.api_key)
+        kwargs = {"api_key": self.api_key, "max_retries": 0}
+        if settings.ANTHROPIC_BASE_URL:
+            kwargs["base_url"] = settings.ANTHROPIC_BASE_URL
+        self._client = anthropic.Anthropic(**kwargs)
 
     # ------------------------------------------------------------------
     # StepExecutor callable 接口
@@ -92,13 +95,16 @@ class AIClient:
                 max_tokens=step.max_tokens,
                 temperature=step.temperature,
                 messages=[{"role": "user", "content": prompt}],
+                **({"system": step.system_prompt} if step.system_prompt else {}),
                 timeout=self.timeout,
             )
         except anthropic.APIError as exc:
-            logger.error("Anthropic API error in step '%s': %s", step.name, exc)
+            logger.error("Anthropic API error in step '%s': %s", step.name, type(exc).__name__)
             raise
 
         text = self._extract_text(response)
+        if not text.strip() or getattr(response, "stop_reason", None) == "max_tokens":
+            raise RuntimeError("AI 返回内容为空或被截断，请重试")
 
         usage = {}
         if response.usage:

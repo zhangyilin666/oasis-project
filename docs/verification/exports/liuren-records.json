@@ -1,0 +1,172 @@
+{
+  "format": "oasis-liuren-records",
+  "formatVersion": 1,
+  "exportedAt": "2026-10-03T08:00:00.000Z",
+  "records": [
+    {
+      "id": "synthetic-liuren",
+      "savedAt": "2026-10-03T08:00:00.000Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "liuren-daqquan-jiuzong-v1",
+        "method": "大六壬 · 九宗门 · 中气换将",
+        "createdAt": "2026-10-03T08:00:00.000Z",
+        "input": {
+          "name": "合成验收：六壬古例",
+          "mode": "manual",
+          "date": "",
+          "time": "",
+          "utcOffsetMinutes": 480,
+          "day": "甲子",
+          "general": "子",
+          "hour": "卯",
+          "locationNote": "",
+          "question": ""
+        },
+        "calendar": null,
+        "board": {
+          "day": "甲子",
+          "general": "子",
+          "hour": "卯",
+          "shift": 9,
+          "dayPeriod": "昼",
+          "noble": "丑",
+          "nobleDirection": "顺",
+          "palaces": [
+            {
+              "earth": "子",
+              "heaven": "酉",
+              "god": "太常",
+              "empty": false
+            },
+            {
+              "earth": "丑",
+              "heaven": "戌",
+              "god": "玄武",
+              "empty": true
+            },
+            {
+              "earth": "寅",
+              "heaven": "亥",
+              "god": "太阴",
+              "empty": true
+            },
+            {
+              "earth": "卯",
+              "heaven": "子",
+              "god": "天后",
+              "empty": false
+            },
+            {
+              "earth": "辰",
+              "heaven": "丑",
+              "god": "贵人",
+              "empty": false
+            },
+            {
+              "earth": "巳",
+              "heaven": "寅",
+              "god": "腾蛇",
+              "empty": false
+            },
+            {
+              "earth": "午",
+              "heaven": "卯",
+              "god": "朱雀",
+              "empty": false
+            },
+            {
+              "earth": "未",
+              "heaven": "辰",
+              "god": "六合",
+              "empty": false
+            },
+            {
+              "earth": "申",
+              "heaven": "巳",
+              "god": "勾陈",
+              "empty": false
+            },
+            {
+              "earth": "酉",
+              "heaven": "午",
+              "god": "青龙",
+              "empty": false
+            },
+            {
+              "earth": "戌",
+              "heaven": "未",
+              "god": "天空",
+              "empty": false
+            },
+            {
+              "earth": "亥",
+              "heaven": "申",
+              "god": "白虎",
+              "empty": false
+            }
+          ],
+          "lessons": [
+            {
+              "lower": "甲",
+              "upper": "亥",
+              "relation": "无克"
+            },
+            {
+              "lower": "亥",
+              "upper": "申",
+              "relation": "无克"
+            },
+            {
+              "lower": "子",
+              "upper": "酉",
+              "relation": "无克"
+            },
+            {
+              "lower": "酉",
+              "upper": "午",
+              "relation": "上克下"
+            }
+          ],
+          "transmissions": [
+            "午",
+            "卯",
+            "子"
+          ],
+          "method": "贼克",
+          "status": "complete",
+          "explanation": [
+            "四课无下贼上，取唯一上克下之上神。"
+          ],
+          "xun": "甲子",
+          "voids": [
+            "戌",
+            "亥"
+          ]
+        },
+        "sources": [
+          {
+            "title": "《六壬大全》卷七",
+            "url": "https://zh.wikisource.org/zh-hans/六壬大全/7",
+            "usage": "九宗门古例与涉害《订讹》；固定测试先于本项目规则实现。"
+          },
+          {
+            "title": "《六壬大全》卷一",
+            "url": "https://zh.wikisource.org/zh-hant/六壬大全/1",
+            "usage": "月将、寄宫、四课及起传规则。"
+          },
+          {
+            "title": "《大六壬探原》",
+            "url": "https://www.dao-mind.com/zh-HK/library/liuren/daliuren-tanyuan",
+            "usage": "中气换将及阴别责古例；只参考规则与事实数据。"
+          },
+          {
+            "title": "lunar-typescript 1.8.6",
+            "url": "https://github.com/6tail/lunar-typescript",
+            "usage": "MIT；仅用于历法、中气和干支，本项目独立实现六壬布盘。"
+          }
+        ]
+      }
+    }
+  ]
+}

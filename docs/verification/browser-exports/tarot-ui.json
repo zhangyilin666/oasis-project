@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "kind": "oasis-tarot-records",
+  "records": [
+    {
+      "id": "tarot-1791015558530-1",
+      "savedAt": "2026-10-03T08:19:18.530Z",
+      "snapshot": {
+        "ruleVersion": "tarot-manual-v1",
+        "nameVersion": "rws-names-zh-v1",
+        "recordingMethod": "manual",
+        "duplicatePolicy": "single-deck-no-repeats",
+        "question": "验收牌阵：整理本周学习",
+        "date": "2026-10-03",
+        "deckDescription": "韦特体系牌组",
+        "drawNotes": "",
+        "spread": {
+          "kind": "three",
+          "name": "三张复盘"
+        },
+        "cards": [
+          {
+            "position": 1,
+            "positionName": "当前状况",
+            "card": {
+              "id": "major-00",
+              "name": "愚人",
+              "english": "The Fool",
+              "group": "major",
+              "majorNumber": 0,
+              "rank": null
+            },
+            "orientation": "upright",
+            "note": ""
+          },
+          {
+            "position": 2,
+            "positionName": "需要留意",
+            "card": {
+              "id": "major-08",
+              "name": "力量",
+              "english": "Strength",
+              "group": "major",
+              "majorNumber": 8,
+              "rank": null
+            },
+            "orientation": "reversed",
+            "note": ""
+          },
+          {
+            "position": 3,
+            "positionName": "行动思考",
+            "card": {
+              "id": "major-21",
+              "name": "世界",
+              "english": "The World",
+              "group": "major",
+              "majorNumber": 21,
+              "rank": null
+            },
+            "orientation": "upright",
+            "note": ""
+          }
+        ],
+        "notes": "合成验收：愚人正位、力量逆位、世界正位；记录自己的观察。",
+        "conventions": [
+          "采用 RWS（韦特–史密斯）体系的 78 张文字牌目：22 张大阿卡纳与四花色各 14 张小阿卡纳；力量编号 8，正义编号 11。",
+          "中文牌名由本工具统一用字；王牌即 Ace，星币亦常称钱币。你的牌组若用不同名称，可写入牌组说明。",
+          "每张牌与正逆位均由你手动记录，同一条记录限一副牌，不重复选牌；本版不随机抽牌。",
+          "单张与三张的位置名是本工具的复盘模板；自定义牌阵可录入 1 至 10 个位置，不把位置名当作预测结论。",
+          "仅整理文字牌名与用户笔记，不引入牌图或复制现代牌义。来源页面可阅读，不表示其中图片、版式或译文获准再分发。"
+        ],
+        "sources": [
+          {
+            "title": "V&A · 塔罗历史与 78 张牌的分类",
+            "url": "https://www.vam.ac.uk/articles/tarot-cards"
+          },
+          {
+            "title": "A. E. Waite 原著 · 第 II 部大牌名称与编号",
+            "url": "https://en.wikisource.org/wiki/The_Pictorial_Key_to_the_Tarot/Part_2"
+          },
+          {
+            "title": "A. E. Waite 原著 · 第 III 部四花色牌目",
+            "url": "https://en.wikisource.org/wiki/The_Pictorial_Key_to_the_Tarot/Part_3"
+          }
+        ]
+      }
+    }
+  ]
+}

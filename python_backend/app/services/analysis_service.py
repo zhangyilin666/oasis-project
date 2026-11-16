@@ -31,6 +31,7 @@ from app.models.log_model import AnalysisLog
 from app.models.report_model import Report
 from app.schemas.oasis_schema import UserInput
 from app.services.ai_client import create_claude_executor
+from app.services.report_integrity import report_facts, verified_executor, verification_summary
 from app.services.calendar_service import (
     BaziResult,
     YunResult,
@@ -110,11 +111,12 @@ def analyze_user_input(
 
     # ---- 2. RAG 知识检索 ----
     # 从八字结果提取关键词 → 检索古籍知识库 → 构建引用上下文
-    kb_context = _build_kb_context(bazi_result)
+    kb_context, kb_references = _build_kb_evidence(bazi_result)
 
     # ---- 3. AI 分析管线 ----
     # 按 AI_PROVIDER 配置选择 executor 和模型名
     executor, ai_model = _resolve_ai_backend()
+    executor = verified_executor(executor, report_facts(bazi_result, yun_result), kb_references)
     pipeline = create_oasis_analyze_workflow(executor=executor, ai_model=ai_model)
     workflow_result = pipeline.run(
         input_data={
@@ -136,10 +138,16 @@ def analyze_user_input(
     # ---- 3.5 提取大运白话总结 ----
     yun_summary_text = _extract_step_output(workflow_result, "dayun_summary")
 
+    if workflow_result.status != "success" or not analysis_text.strip() or not yun_summary_text.strip():
+        raise RuntimeError("AI 分析未通过完整性校验，请稍后重试")
+
     # ---- 4. 持久化 Report ----
     calendar_data = bazi_result.to_dict()
     calendar_data["yun"] = yun_result.to_dict()
     calendar_data["yun_summary"] = yun_summary_text
+    calendar_data["suggestion"] = _extract_step_output(workflow_result, "suggestion")
+    calendar_data["references"] = kb_references
+    calendar_data["verification"] = verification_summary(workflow_result)
 
     report = Report(
         user_id=user_id,
@@ -185,7 +193,7 @@ def analyze_user_input(
             for s in workflow_result.steps
         ],
         "trace_id": trace_id,
-        "kb_references": _extract_kb_references(kb_context),
+        "kb_references": kb_references,
     }
 
 
@@ -217,6 +225,8 @@ def _resolve_ai_backend() -> tuple:
         logger.info("AI backend: Anthropic Claude (model=%s)", settings.ANTHROPIC_DEFAULT_MODEL)
         return create_claude_executor(), settings.ANTHROPIC_DEFAULT_MODEL
 
+    if not settings.ALLOW_MOCK_AI:
+        raise RuntimeError("AI 服务尚未配置，请联系管理员")
     logger.warning(
         "AI backend: MOCK (provider=%s, deepseek_key=%s, anthropic_key=%s)",
         provider,
@@ -229,6 +239,7 @@ def _resolve_ai_backend() -> tuple:
 def _format_birth_info(user_input: UserInput) -> str:
     """将 UserInput 格式化为 Report.birth_info 字符串（≤100 chars）。"""
     parts = [
+        user_input.name,
         user_input.birth_date,
         user_input.birth_time,
     ]
@@ -236,7 +247,7 @@ def _format_birth_info(user_input: UserInput) -> str:
         parts.append(user_input.gender)
     if user_input.location:
         parts.append(user_input.location)
-    return " ".join(parts)
+    return " ".join(parts)[:100]
 
 
 def _extract_analysis_text(workflow_result) -> str:
@@ -271,14 +282,14 @@ def _extract_step_output(workflow_result, step_name: str) -> str:
 # 底层 AI 提供商名称 → 面向用户的品牌名映射
 # 目的：用户不需要知道后台用了 DeepSeek / Claude，避免“AI 算命”抵触心理
 _MODEL_BRAND_MAP: dict[str, str] = {
-    "deepseek-chat": "小易 AI",
-    "deepseek-reasoner": "小易 AI",
-    "claude-sonnet-4-6": "小易 AI",
-    "claude-opus-4-8": "小易 AI",
-    "mock": "小易 AI",
-    "unknown": "小易 AI",
+    "deepseek-chat": "猫来运转 AI",
+    "deepseek-reasoner": "猫来运转 AI",
+    "claude-sonnet-4-6": "猫来运转 AI",
+    "claude-opus-4-8": "猫来运转 AI",
+    "mock": "猫来运转 AI",
+    "unknown": "猫来运转 AI",
 }
-_DEFAULT_BRAND_NAME: str = "小易 AI"
+_DEFAULT_BRAND_NAME: str = "猫来运转 AI"
 
 
 def _brand_model_name(raw_name: str) -> str:
@@ -406,92 +417,37 @@ def _extract_kb_search_terms(bazi_result) -> list[str]:
     return terms[:8]
 
 
-def _build_kb_context(bazi_result) -> str:
-    """
-    查询 RAG 知识库并构建古籍引用上下文。
-
-    从八字结果提取关键词 → 逐词检索知识库 → 去重合并 → 格式化为
-    可注入 AI prompt 的上下文文本。
-
-    Returns:
-        格式化的古籍引用文本，形如：
-        【古籍引用】
-        1. 《文献名》 > "原文段落..." (相关度: 0.85)
-        2. ...
-        若知识库为空或未初始化，返回空字符串。
-    """
+def _build_kb_evidence(bazi_result) -> tuple[str, list[dict]]:
+    """Persist the same bounded source excerpts supplied to the model."""
+    from app.core.kb_provider import get_kb
     try:
-        from app.core.kb_provider import get_kb  # noqa: F811
-
         kb = get_kb()
     except RuntimeError:
-        logger.warning("KnowledgeBase not initialized, skipping RAG retrieval")
-        return ""
-
-    if kb.document_count == 0:
-        logger.info("KnowledgeBase is empty, skipping RAG retrieval")
-        return ""
-
-    search_terms = _extract_kb_search_terms(bazi_result)
-    if not search_terms:
-        return ""
-
-    # 逐词检索，去重合并（按 document_id 去重，保留最高分）
-    seen_ids: set[str] = set()
-    merged: list[tuple[str, str, float]] = []  # (title, snippet, score)
-
-    for term in search_terms:
-        results = kb.search(term, top_k=2)
-        for r in results:
-            if r.document_id not in seen_ids:
-                seen_ids.add(r.document_id)
-                merged.append((r.title, r.content_snippet, r.score))
-
-    if not merged:
-        logger.info("No KB results for terms: %s", search_terms)
-        return ""
-
-    # 按分数降序，取 top 5
-    merged.sort(key=lambda x: x[2], reverse=True)
-    merged = merged[:5]
-
-    # 构建引用文本
-    lines = ["【古籍引用：以下内容源自传统命理典籍，供分析参考】", ""]
-    for i, (title, snippet, score) in enumerate(merged, 1):
-        # 截断过长段落
-        display_snippet = snippet[:200] if len(snippet) > 200 else snippet
-        lines.append(f"{i}. 《{title}》 (相关度: {score:.2f})")
-        lines.append(f"   \"{display_snippet}\"")
-        lines.append("")
-
-    context = "\n".join(lines)
-    logger.info(
-        "KB context built: %d references, %d chars",
-        len(merged),
-        len(context),
-    )
-    return context
-
-
-def _extract_kb_references(kb_context: str) -> list[dict]:
-    """
-    从 kb_context 文本中提取引用信息列表，用于 API 响应。
-
-    Returns:
-        [{"title": "渊海子平", "snippet": "...", "score": 0.92}, ...]
-    """
-    import re
-
-    refs: list[dict] = []
-    # 解析形如 "1. 《书名》 (相关度: 0.85)" 的行
-    pattern = re.compile(
-        r'^\d+\.\s*《(.+?)》\s*\(相关度:\s*([\d.]+)\)',
-        re.MULTILINE,
-    )
-    matches = pattern.findall(kb_context)
-    for title, score in matches:
-        refs.append({
-            "title": title,
-            "score": float(score),
+        return "", []
+    merged = {}
+    for term in _extract_kb_search_terms(bazi_result):
+        for result in kb.search(term, top_k=2):
+            identity = (result.document_id, result.metadata.get("paragraph", 1))
+            if identity not in merged or result.score > merged[identity].score:
+                merged[identity] = result
+    references = []
+    for result in sorted(merged.values(), key=lambda item: item.score, reverse=True)[:5]:
+        meta = result.metadata
+        references.append({
+            "id": f"{result.document_id}:p{meta.get('paragraph', 1)}:{meta.get('sha256', '')[:12]}",
+            "document_id": result.document_id,
+            "title": meta.get("display_title", result.title),
+            "paragraph": meta.get("paragraph", 1),
+            "kind": meta.get("content_kind", "项目学习笔记，来源待核验"),
+            "sha256": meta.get("sha256", ""),
+            "snippet": result.content_snippet[:200],
         })
-    return refs
+    context = "\n\n".join(
+        f"资料ID：{ref['id']}\n标题：{ref['title']} · 第{ref['paragraph']}段\n"
+        f"性质：{ref['kind']}\n摘录：{ref['snippet']}" for ref in references
+    )
+    return context, references
+
+
+def _build_kb_context(bazi_result) -> str:
+    return _build_kb_evidence(bazi_result)[0]

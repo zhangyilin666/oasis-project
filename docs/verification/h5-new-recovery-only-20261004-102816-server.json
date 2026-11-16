@@ -1,0 +1,9 @@
+{
+  "release": "h5-new-recovery-only-20261004-102816",
+  "bundleSha256": "6034bcf3ad2b75ba8b1c14d66e2beb3357a3ae651d709599f15525cd34c0dd03",
+  "files": 73,
+  "indexSha256": "61e12bd216b73f849584ce0c7f9479dec32cbd9908fb8121e6cc3cfd3c3b601f",
+  "backup": "/root/oasis-backups/h5-new-recovery-only-20261004-102816",
+  "containersUnchanged": true,
+  "health": "ok"
+}

@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "kind": "name-culture",
+  "records": [
+    {
+      "id": "name-culture-1791015281662-1",
+      "savedAt": "2026-10-03T08:14:41.662Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "name-culture-v1",
+        "dataVersion": "unihan-17.0.0-subset-v1",
+        "input": {
+          "name": "歐陽明·𠮷龘",
+          "confirmedPronunciation": "验收用：读音待本人确认",
+          "notes": "合成验收：保留繁体与罕用字，未收录不补造释义。"
+        },
+        "characters": [
+          {
+            "character": "歐",
+            "codePoint": "U+6B50",
+            "status": "available",
+            "definition": "used in transliterating non-Chinese words such as Europe, ohm; surname",
+            "mandarin": "ōu",
+            "totalStrokes": "15",
+            "simplified": [
+              {
+                "codePoint": "U+6B27",
+                "character": "欧"
+              }
+            ],
+            "traditional": []
+          },
+          {
+            "character": "陽",
+            "codePoint": "U+967D",
+            "status": "available",
+            "definition": "the active, male principle in Chinese philosophy (yang); light; sun",
+            "mandarin": "yáng",
+            "totalStrokes": "11",
+            "simplified": [
+              {
+                "codePoint": "U+9633",
+                "character": "阳"
+              }
+            ],
+            "traditional": []
+          },
+          {
+            "character": "明",
+            "codePoint": "U+660E",
+            "status": "available",
+            "definition": "bright, light, brilliant; clear",
+            "mandarin": "míng",
+            "totalStrokes": "8",
+            "simplified": [],
+            "traditional": []
+          },
+          {
+            "character": "·",
+            "codePoint": "U+00B7",
+            "status": "separator",
+            "simplified": [],
+            "traditional": []
+          },
+          {
+            "character": "𠮷",
+            "codePoint": "U+20BB7",
+            "status": "available",
+            "totalStrokes": "6",
+            "simplified": [],
+            "traditional": []
+          },
+          {
+            "character": "龘",
+            "codePoint": "U+9F98",
+            "status": "available",
+            "definition": "the appearance of a dragon walking",
+            "mandarin": "dá",
+            "totalStrokes": "48",
+            "simplified": [
+              {
+                "codePoint": "U+2EE5D",
+                "character": "𮹝"
+              }
+            ],
+            "traditional": []
+          }
+        ],
+        "conventions": [
+          "逐字保留输入字形和 Unicode 码位，不自动简繁转换，不推断姓氏与名字的分界。",
+          "普通话字段为 kMandarin 的常用读音，不是全部多音字读法；人名读音请由你确认。",
+          "笔画保留 Unihan kTotalStrokes 原值，是字库的说明性数据，不等同于康熙字典或姓名数理的笔画口径。",
+          "字义为 kDefinition 的英文原始摘要；不将字义当作姓名所有者的性格、健康或命运。",
+          "简繁候选仅展示字库映射，可能一对多或包含自身；不自动替换，也不把候选视作任意语境下可互换。",
+          "本机字库仅收录 116 个字；缺字明确显示未收录，仍可保存你自行核对的读音和笔记。",
+          "字体由设备提供，罕用字可能显示为方框；码位可用于核对。本版不附带字体文件、五格或命运评分。"
+        ],
+        "data": {
+          "title": "Unihan 姓名文化字库子集",
+          "version": "17.0.0",
+          "license": "Unicode-3.0",
+          "sourceSha256": "f7a48b2b545acfaa77b2d607ae28747404ce02baefee16396c5d2d7a8ef34b5e"
+        },
+        "sources": [
+          {
+            "title": "Unicode 17.0.0 · Unihan 固定版本数据",
+            "url": "https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip"
+          },
+          {
+            "title": "Unicode 17.0.0 · UAX #38 属性说明",
+            "url": "https://www.unicode.org/reports/tr38/tr38-39.html"
+          },
+          {
+            "title": "Unicode 数据许可 · Unicode License V3",
+            "url": "https://www.unicode.org/license.txt"
+          }
+        ]
+      }
+    }
+  ]
+}

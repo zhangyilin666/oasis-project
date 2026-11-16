@@ -33,6 +33,7 @@ class Report(Base):
         nullable=True,
         comment="AI生成运势分析（pending/processing 时为 NULL）"
     )
+    input_data: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     status: Mapped[ReportStatus] = mapped_column(
         SQLEnum(ReportStatus),
         nullable=False,
@@ -58,6 +59,8 @@ class Report(Base):
         nullable=False,
         comment="最后更新时间（重新生成分析时更新）"
     )
+    # Retain only the submission record after deletion so daily quotas cannot be reset.
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     # 反向关联：一个 Report 对应多条 AnalysisLog
     analysis_logs = relationship(

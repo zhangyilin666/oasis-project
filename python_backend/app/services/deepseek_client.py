@@ -58,6 +58,7 @@ class DeepSeekClient:
         self._client = OpenAI(
             api_key=self.api_key,
             base_url=self.base_url,
+            max_retries=0,
         )
 
     # ------------------------------------------------------------------
@@ -93,14 +94,20 @@ class DeepSeekClient:
                 model=model,
                 max_tokens=step.max_tokens,
                 temperature=step.temperature,
-                messages=[{"role": "user", "content": prompt}],
+                messages=([{"role": "system", "content": step.system_prompt}] if step.system_prompt else [])
+                + [{"role": "user", "content": prompt}],
+                **({"extra_body": {"thinking": {"type": "disabled"}}}
+                   if model in ("deepseek-flash", "deepseek-v4-pro") else {}),
+                **({"response_format": {"type": "json_object"}} if step.output_schema else {}),
                 timeout=self.timeout,
             )
         except Exception as exc:
-            logger.error("DeepSeek API error in step '%s': %s", step.name, exc)
+            logger.error("DeepSeek API error in step '%s': %s", step.name, type(exc).__name__)
             raise
 
         text = self._extract_text(response)
+        if not text.strip() or (response.choices and response.choices[0].finish_reason == "length"):
+            raise RuntimeError("AI 返回内容为空或被截断，请重试")
 
         usage = {}
         if response.usage:

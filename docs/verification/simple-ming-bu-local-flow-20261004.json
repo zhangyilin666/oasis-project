@@ -1,0 +1,12 @@
+{
+  "creates": 5,
+  "reads": 1,
+  "count": 5,
+  "methods": [
+    "liuyao-coins",
+    "meihua-two-numbers",
+    "liuyao-manual",
+    "liuyao-najia",
+    "meihua-calendar"
+  ]
+}

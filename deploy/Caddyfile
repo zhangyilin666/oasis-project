@@ -1,0 +1,13 @@
+{$SITE_ADDRESS::80} {
+    encode gzip
+    @api path /api/* /health
+    handle @api {
+        reverse_proxy backend:8000
+    }
+    handle {
+        root * /srv
+        header Cache-Control "no-cache"
+        try_files {path} /index.html
+        file_server
+    }
+}

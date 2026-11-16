@@ -17,22 +17,7 @@ export default defineConfig({
     cssTarget: 'chrome80',
     // 减小包体积
     minify: 'esbuild',
-    // chunk 拆分策略
-    rollupOptions: {
-      output: {
-        manualChunks(id: string) {
-          if (id.includes('node_modules/@dcloudio')) {
-            return 'uni-framework'
-          }
-          if (id.includes('node_modules/pinia')) {
-            return 'pinia'
-          }
-          if (id.includes('node_modules')) {
-            return 'vendor'
-          }
-        },
-      },
-    },
+    // 由构建器处理依赖顺序，避免框架与 vendor 手工拆包形成循环依赖。
   },
   // H5 开发服务器
   server: {

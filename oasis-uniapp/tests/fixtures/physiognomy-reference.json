@@ -1,0 +1,13 @@
+{
+  "reviewedAt": "2026-10-03",
+  "provenance": "Manually transcribed term correspondences from the fixed primary-text sections, before the adapter assertions; modern prose and punctuation are not reproduced.",
+  "encyclopediaRevision": "1942595",
+  "fiveOffices": [["耳", "采听官"], ["眉", "保寿官"], ["眼", "监察官"], ["鼻", "审辨官"], ["口", "出纳官"]],
+  "threeRegions": [["上停", "发际至眉"], ["中停", "眉至准头"], ["下停", "准头至地阁"]],
+  "fiveMountains": [["额", "衡山"], ["颏", "恒山"], ["鼻", "嵩山"], ["左颧", "泰山"], ["右颧", "华山"]],
+  "fourRivers": [["耳", "江"], ["目", "河"], ["口", "淮"], ["鼻", "济"]],
+  "sources": [
+    { "article": "fei-xiang", "revision": "382201", "section": "非相篇第五开篇", "position": "questions judging people from physical appearance" },
+    { "article": "authorship", "revision": "631293", "section": "太清神鉴四库全书本提要", "authorClaim": "王朴", "acceptedByEditors": false }
+  ]
+}

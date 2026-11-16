@@ -1,58 +1,11 @@
-<!--
-  错误重试组件 — 从小程序 components/error-retry 移植
-  Props: message
-  Events: retry
--->
 <template>
-  <view class="error-retry">
-    <text class="error-retry__icon">⚠️</text>
-    <text class="error-retry__message">{{ message }}</text>
-    <view class="error-retry__btn" @click="emit('retry')">
-      <text class="error-retry__btn-text">重新加载</text>
-    </view>
-  </view>
+ <view class="error-retry" role="status"><CatCompanion small mood="comfort" /><text class="error-title">{{ message }}</text><text class="error-hint">可以检查网络后再试一次，已有报告仍会保留。</text><AppButton class="btn-secondary" @click="emit('retry')">再试一次</AppButton></view>
 </template>
-
 <script setup lang="ts">
-withDefaults(defineProps<{
-  message?: string
-}>(), {
-  message: '加载失败',
-})
-
-const emit = defineEmits<{
-  retry: []
-}>()
+import CatCompanion from './CatCompanion.vue'
+withDefaults(defineProps<{ message?: string }>(), { message: '暂时没能连接上' })
+const emit = defineEmits<{ retry: [] }>()
 </script>
-
-<style lang="scss" scoped>
-.error-retry {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100rpx 0;
-
-  &__icon {
-    font-size: 80rpx;
-    margin-bottom: var(--spacing-md);
-  }
-
-  &__message {
-    font-size: var(--font-md);
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-lg);
-  }
-
-  &__btn {
-    padding: 16rpx 48rpx;
-    background: var(--color-primary);
-    border-radius: 40rpx;
-  }
-
-  &__btn-text {
-    color: #fff;
-    font-size: var(--font-md);
-  }
-}
+<style scoped>
+.error-retry { display: flex; align-items: center; flex-direction: column; text-align: center; padding: 28px 20px; background: #f3eef9; border-radius: 20px; margin: 16px 0; }.error-title { margin-top: 12px; font-size: 16px; font-weight: 600; }.error-hint { margin-top: 8px; font-size: 12px; color: #726580; }.error-retry .btn-secondary { margin-top: 20px; width: auto; background: white; }
 </style>

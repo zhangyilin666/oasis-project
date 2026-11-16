@@ -1,0 +1,701 @@
+{
+  "format": "oasis-western-study-collection",
+  "formatVersion": 1,
+  "exportedAt": "2026-10-03T08:00:00.000Z",
+  "records": [
+    {
+      "id": "synthetic-western-study",
+      "name": "合成验收：双人相位",
+      "note": "保存双方独立资料与100种相位比较中的命中项。",
+      "savedAt": "2026-10-03T08:00:00.000Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "western-equal-synastry-study-v1",
+        "mode": "synastry",
+        "engine": {
+          "name": "astronomy-engine",
+          "version": "2.1.19",
+          "license": "MIT"
+        },
+        "zodiac": "tropical-true-ecliptic-of-date",
+        "houseSystems": [
+          "whole-sign",
+          "equal-ascendant"
+        ],
+        "participants": [
+          {
+            "role": "A",
+            "name": "合成A",
+            "profile": {
+              "date": "2000-08-16",
+              "time": "12:00",
+              "gender": "女",
+              "utcOffset": 8,
+              "timePrecision": "minute",
+              "place": {
+                "latitude": 31.23,
+                "longitude": 121.47
+              }
+            },
+            "utcTime": "2000-08-16T04:00:00.000Z",
+            "timeResolution": {
+              "mode": "manual",
+              "utcOffset": 8
+            },
+            "positions": [
+              {
+                "body": "Sun",
+                "name": "太阳",
+                "longitude": 143.59281835439344,
+                "sign": "狮子座",
+                "degree": 23.592818354393444,
+                "motion": "顺行",
+                "wholeSignHouse": 10,
+                "equalAscendantHouse": 10
+              },
+              {
+                "body": "Moon",
+                "name": "月亮",
+                "longitude": 334.23096328928966,
+                "sign": "双鱼座",
+                "degree": 4.230963289289662,
+                "motion": "顺行",
+                "wholeSignHouse": 5,
+                "equalAscendantHouse": 4
+              },
+              {
+                "body": "Mercury",
+                "name": "水星",
+                "longitude": 137.3785286524219,
+                "sign": "狮子座",
+                "degree": 17.378528652421892,
+                "motion": "顺行",
+                "wholeSignHouse": 10,
+                "equalAscendantHouse": 9
+              },
+              {
+                "body": "Venus",
+                "name": "金星",
+                "longitude": 161.59863424015907,
+                "sign": "处女座",
+                "degree": 11.598634240159072,
+                "motion": "顺行",
+                "wholeSignHouse": 11,
+                "equalAscendantHouse": 10
+              },
+              {
+                "body": "Mars",
+                "name": "火星",
+                "longitude": 129.7398109731131,
+                "sign": "狮子座",
+                "degree": 9.739810973113094,
+                "motion": "顺行",
+                "wholeSignHouse": 10,
+                "equalAscendantHouse": 9
+              },
+              {
+                "body": "Jupiter",
+                "name": "木星",
+                "longitude": 68.16813740849284,
+                "sign": "双子座",
+                "degree": 8.16813740849284,
+                "motion": "顺行",
+                "wholeSignHouse": 8,
+                "equalAscendantHouse": 7
+              },
+              {
+                "body": "Saturn",
+                "name": "土星",
+                "longitude": 60.319397286734045,
+                "sign": "双子座",
+                "degree": 0.3193972867340449,
+                "motion": "顺行",
+                "wholeSignHouse": 8,
+                "equalAscendantHouse": 7
+              },
+              {
+                "body": "Uranus",
+                "name": "天王星",
+                "longitude": 318.6461929727493,
+                "sign": "水瓶座",
+                "degree": 18.646192972749304,
+                "motion": "逆行",
+                "wholeSignHouse": 4,
+                "equalAscendantHouse": 4
+              },
+              {
+                "body": "Neptune",
+                "name": "海王星",
+                "longitude": 304.6716401150783,
+                "sign": "水瓶座",
+                "degree": 4.671640115078276,
+                "motion": "逆行",
+                "wholeSignHouse": 4,
+                "equalAscendantHouse": 3
+              },
+              {
+                "body": "Pluto",
+                "name": "冥王星",
+                "longitude": 250.1583475739501,
+                "sign": "射手座",
+                "degree": 10.158347573950095,
+                "motion": "逆行",
+                "wholeSignHouse": 2,
+                "equalAscendantHouse": 1
+              }
+            ],
+            "houses": {
+              "status": "ready",
+              "ascendant": 227.97815270529068,
+              "midheaven": 144.01354319940663,
+              "wholeSign": {
+                "id": "whole-sign",
+                "cusps": [
+                  210,
+                  240,
+                  270,
+                  300,
+                  330,
+                  0,
+                  30,
+                  60,
+                  90,
+                  120,
+                  150,
+                  180
+                ],
+                "midheavenHouse": 10
+              },
+              "equalAscendant": {
+                "id": "equal-ascendant",
+                "cusps": [
+                  227.97815270529068,
+                  257.97815270529065,
+                  287.97815270529065,
+                  317.97815270529065,
+                  347.97815270529065,
+                  17.978152705290654,
+                  47.978152705290654,
+                  77.97815270529065,
+                  107.97815270529065,
+                  137.97815270529065,
+                  167.97815270529065,
+                  197.97815270529065
+                ],
+                "midheavenHouse": 10
+              }
+            },
+            "limitations": [
+              "宫头与落宫依赖出生时刻及地点。天顶MC是独立角点，在这两种宫制中均不保证是第十宫宫头。"
+            ]
+          },
+          {
+            "role": "B",
+            "name": "合成B",
+            "profile": {
+              "date": "2000-01-01",
+              "time": "12:00",
+              "gender": "男",
+              "utcOffset": 0,
+              "timePrecision": "minute",
+              "place": {
+                "latitude": 51.48,
+                "longitude": 0
+              }
+            },
+            "utcTime": "2000-01-01T12:00:00.000Z",
+            "timeResolution": {
+              "mode": "manual",
+              "utcOffset": 0
+            },
+            "positions": [
+              {
+                "body": "Sun",
+                "name": "太阳",
+                "longitude": 280.3687386398185,
+                "sign": "摩羯座",
+                "degree": 10.368738639818503,
+                "motion": "顺行",
+                "wholeSignHouse": 10,
+                "equalAscendantHouse": 9
+              },
+              {
+                "body": "Moon",
+                "name": "月亮",
+                "longitude": 223.3238911274741,
+                "sign": "天蝎座",
+                "degree": 13.323891127474099,
+                "motion": "顺行",
+                "wholeSignHouse": 8,
+                "equalAscendantHouse": 7
+              },
+              {
+                "body": "Mercury",
+                "name": "水星",
+                "longitude": 271.88891206646304,
+                "sign": "摩羯座",
+                "degree": 1.8889120664630354,
+                "motion": "顺行",
+                "wholeSignHouse": 10,
+                "equalAscendantHouse": 9
+              },
+              {
+                "body": "Venus",
+                "name": "金星",
+                "longitude": 241.56523294036208,
+                "sign": "射手座",
+                "degree": 1.5652329403620797,
+                "motion": "顺行",
+                "wholeSignHouse": 9,
+                "equalAscendantHouse": 8
+              },
+              {
+                "body": "Mars",
+                "name": "火星",
+                "longitude": 327.96389907790285,
+                "sign": "水瓶座",
+                "degree": 27.963899077902852,
+                "motion": "顺行",
+                "wholeSignHouse": 11,
+                "equalAscendantHouse": 11
+              },
+              {
+                "body": "Jupiter",
+                "name": "木星",
+                "longitude": 25.254199844874222,
+                "sign": "白羊座",
+                "degree": 25.254199844874222,
+                "motion": "顺行",
+                "wholeSignHouse": 1,
+                "equalAscendantHouse": 1
+              },
+              {
+                "body": "Saturn",
+                "name": "土星",
+                "longitude": 40.39612413717839,
+                "sign": "金牛座",
+                "degree": 10.39612413717839,
+                "motion": "逆行",
+                "wholeSignHouse": 2,
+                "equalAscendantHouse": 1
+              },
+              {
+                "body": "Uranus",
+                "name": "天王星",
+                "longitude": 314.8061046271607,
+                "sign": "水瓶座",
+                "degree": 14.806104627160721,
+                "motion": "顺行",
+                "wholeSignHouse": 11,
+                "equalAscendantHouse": 10
+              },
+              {
+                "body": "Neptune",
+                "name": "海王星",
+                "longitude": 303.1954420594734,
+                "sign": "水瓶座",
+                "degree": 3.1954420594734074,
+                "motion": "顺行",
+                "wholeSignHouse": 11,
+                "equalAscendantHouse": 10
+              },
+              {
+                "body": "Pluto",
+                "name": "冥王星",
+                "longitude": 251.45473515991364,
+                "sign": "射手座",
+                "degree": 11.454735159913639,
+                "motion": "顺行",
+                "wholeSignHouse": 9,
+                "equalAscendantHouse": 8
+              }
+            ],
+            "houses": {
+              "status": "ready",
+              "ascendant": 24.268136927802345,
+              "midheaven": 279.6110618554224,
+              "wholeSign": {
+                "id": "whole-sign",
+                "cusps": [
+                  0,
+                  30,
+                  60,
+                  90,
+                  120,
+                  150,
+                  180,
+                  210,
+                  240,
+                  270,
+                  300,
+                  330
+                ],
+                "midheavenHouse": 10
+              },
+              "equalAscendant": {
+                "id": "equal-ascendant",
+                "cusps": [
+                  24.268136927802345,
+                  54.268136927802345,
+                  84.26813692780235,
+                  114.26813692780235,
+                  144.26813692780235,
+                  174.26813692780235,
+                  204.26813692780235,
+                  234.26813692780235,
+                  264.26813692780235,
+                  294.26813692780235,
+                  324.26813692780235,
+                  354.26813692780235
+                ],
+                "midheavenHouse": 9
+              }
+            },
+            "limitations": [
+              "宫头与落宫依赖出生时刻及地点。天顶MC是独立角点，在这两种宫制中均不保证是第十宫宫头。"
+            ]
+          }
+        ],
+        "synastry": {
+          "ruleVersion": "synastry-ten-bodies-major-six-degrees-v1",
+          "kind": "cross-chart-natal-aspects",
+          "orbDegrees": 6,
+          "aspectsIncluded": [
+            {
+              "angle": 0,
+              "name": "合相"
+            },
+            {
+              "angle": 60,
+              "name": "六合"
+            },
+            {
+              "angle": 90,
+              "name": "刑相"
+            },
+            {
+              "angle": 120,
+              "name": "拱相"
+            },
+            {
+              "angle": 180,
+              "name": "对冲"
+            }
+          ],
+          "pairsConsidered": 100,
+          "aspects": [
+            {
+              "aBody": "Venus",
+              "bBody": "Pluto",
+              "aName": "金星",
+              "bName": "冥王星",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 89.85610091975457,
+              "orb": 0.14389908024543274
+            },
+            {
+              "aBody": "Mars",
+              "bBody": "Saturn",
+              "aName": "火星",
+              "bName": "土星",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 89.3436868359347,
+              "orb": 0.6563131640652955
+            },
+            {
+              "aBody": "Venus",
+              "bBody": "Saturn",
+              "aName": "金星",
+              "bName": "土星",
+              "name": "拱相",
+              "angle": 120,
+              "separation": 121.20251010298068,
+              "orb": 1.202510102980682
+            },
+            {
+              "aBody": "Venus",
+              "bBody": "Sun",
+              "aName": "金星",
+              "bName": "太阳",
+              "name": "拱相",
+              "angle": 120,
+              "separation": 118.77010439965943,
+              "orb": 1.2298956003405692
+            },
+            {
+              "aBody": "Saturn",
+              "bBody": "Venus",
+              "aName": "土星",
+              "bName": "金星",
+              "name": "对冲",
+              "angle": 180,
+              "separation": 178.75416434637197,
+              "orb": 1.2458356536280348
+            },
+            {
+              "aBody": "Pluto",
+              "bBody": "Pluto",
+              "aName": "冥王星",
+              "bName": "冥王星",
+              "name": "合相",
+              "angle": 0,
+              "separation": 1.2963875859635436,
+              "orb": 1.2963875859635436
+            },
+            {
+              "aBody": "Neptune",
+              "bBody": "Neptune",
+              "aName": "海王星",
+              "bName": "海王星",
+              "name": "合相",
+              "angle": 0,
+              "separation": 1.4761980556048684,
+              "orb": 1.4761980556048684
+            },
+            {
+              "aBody": "Sun",
+              "bBody": "Jupiter",
+              "aName": "太阳",
+              "bName": "木星",
+              "name": "拱相",
+              "angle": 120,
+              "separation": 118.33861850951916,
+              "orb": 1.661381490480835
+            },
+            {
+              "aBody": "Mars",
+              "bBody": "Pluto",
+              "aName": "火星",
+              "bName": "冥王星",
+              "name": "拱相",
+              "angle": 120,
+              "separation": 121.71492418680054,
+              "orb": 1.7149241868005447
+            },
+            {
+              "aBody": "Venus",
+              "bBody": "Moon",
+              "aName": "金星",
+              "bName": "月亮",
+              "name": "六合",
+              "angle": 60,
+              "separation": 61.72525688731503,
+              "orb": 1.7252568873150267
+            },
+            {
+              "aBody": "Moon",
+              "bBody": "Mercury",
+              "aName": "月亮",
+              "bName": "水星",
+              "name": "六合",
+              "angle": 60,
+              "separation": 62.342051222826626,
+              "orb": 2.342051222826626
+            },
+            {
+              "aBody": "Saturn",
+              "bBody": "Mars",
+              "aName": "土星",
+              "bName": "火星",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 92.3554982088312,
+              "orb": 2.355498208831193
+            },
+            {
+              "aBody": "Mercury",
+              "bBody": "Uranus",
+              "aName": "水星",
+              "bName": "天王星",
+              "name": "对冲",
+              "angle": 180,
+              "separation": 177.42757597473883,
+              "orb": 2.5724240252611708
+            },
+            {
+              "aBody": "Moon",
+              "bBody": "Venus",
+              "aName": "月亮",
+              "bName": "金星",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 92.66573034892758,
+              "orb": 2.665730348927582
+            },
+            {
+              "aBody": "Saturn",
+              "bBody": "Neptune",
+              "aName": "土星",
+              "bName": "海王星",
+              "name": "拱相",
+              "angle": 120,
+              "separation": 117.12395522726064,
+              "orb": 2.8760447727393625
+            },
+            {
+              "aBody": "Neptune",
+              "bBody": "Venus",
+              "aName": "海王星",
+              "bName": "金星",
+              "name": "六合",
+              "angle": 60,
+              "separation": 63.106407174716196,
+              "orb": 3.106407174716196
+            },
+            {
+              "aBody": "Jupiter",
+              "bBody": "Pluto",
+              "aName": "木星",
+              "bName": "冥王星",
+              "name": "对冲",
+              "angle": 180,
+              "separation": 176.7134022485792,
+              "orb": 3.2865977514208
+            },
+            {
+              "aBody": "Mars",
+              "bBody": "Moon",
+              "aName": "火星",
+              "bName": "月亮",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 93.584080154361,
+              "orb": 3.584080154361004
+            },
+            {
+              "aBody": "Uranus",
+              "bBody": "Uranus",
+              "aName": "天王星",
+              "bName": "天王星",
+              "name": "合相",
+              "angle": 0,
+              "separation": 3.8400883455885833,
+              "orb": 3.8400883455885833
+            },
+            {
+              "aBody": "Mercury",
+              "bBody": "Moon",
+              "aName": "水星",
+              "bName": "月亮",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 85.9453624750522,
+              "orb": 4.054637524947793
+            },
+            {
+              "aBody": "Sun",
+              "bBody": "Mars",
+              "aName": "太阳",
+              "bName": "火星",
+              "name": "对冲",
+              "angle": 180,
+              "separation": 175.6289192764906,
+              "orb": 4.371080723509408
+            },
+            {
+              "aBody": "Pluto",
+              "bBody": "Uranus",
+              "aName": "冥王星",
+              "bName": "天王星",
+              "name": "六合",
+              "angle": 60,
+              "separation": 64.64775705321063,
+              "orb": 4.647757053210626
+            },
+            {
+              "aBody": "Jupiter",
+              "bBody": "Neptune",
+              "aName": "木星",
+              "bName": "海王星",
+              "name": "拱相",
+              "angle": 120,
+              "separation": 124.97269534901943,
+              "orb": 4.972695349019432
+            },
+            {
+              "aBody": "Mars",
+              "bBody": "Uranus",
+              "aName": "火星",
+              "bName": "天王星",
+              "name": "对冲",
+              "angle": 180,
+              "separation": 174.93370634595237,
+              "orb": 5.066293654047627
+            },
+            {
+              "aBody": "Uranus",
+              "bBody": "Moon",
+              "aName": "天王星",
+              "bName": "月亮",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 95.3223018452752,
+              "orb": 5.322301845275206
+            },
+            {
+              "aBody": "Neptune",
+              "bBody": "Saturn",
+              "aName": "海王星",
+              "bName": "土星",
+              "name": "刑相",
+              "angle": 90,
+              "separation": 95.72448402210011,
+              "orb": 5.724484022100114
+            },
+            {
+              "aBody": "Mercury",
+              "bBody": "Pluto",
+              "aName": "水星",
+              "bName": "冥王星",
+              "name": "拱相",
+              "angle": 120,
+              "separation": 114.07620650749175,
+              "orb": 5.923793492508253
+            }
+          ]
+        },
+        "conventions": [
+          "A、B各自的当地出生时刻、历史时区与地点分别解析，独立换算成UTC。",
+          "十天体使用热带黄道近似地心视位置；每人的日期真黄经直接比较，不做恒星岁差校正。",
+          "整宫制从上升星座0°开始；ASC等宫制从上升点度数开始，每宫30°。落宫按未舍入黄经，含本宫宫头、不含下一宫宫头。",
+          "宫位只在已确认时刻且有支持的地点时提供；纬度绝对值须小于66°，这是本版产品支持范围。",
+          "双人比较逐一检查A十天体与B十天体的100种组合，保留A太阳/B月亮与A月亮/B太阳的身份差别。",
+          "相位限定合相0°、六合60°、刑相90°、拱相120°、对冲180°；统一容许度6°并包含边界，按未舍入偏差排序。"
+        ],
+        "limitations": [
+          "双人相位比较（Synastry）不生成组合中点盘；本页也未计算角点相位、交点、交叉落宫或行运关系。",
+          "相位数量和角度不是关系质量、婚姻适合度或命运的评分，本页提供几何事实与个人笔记。",
+          "天体、时刻与宫头误差会影响接近分界的落宫或相位。独立参考样例通过不构成所有日期的精度保证。"
+        ],
+        "sources": [
+          {
+            "title": "Astronomy Engine · 天体与坐标计算",
+            "url": "https://github.com/cosinekitty/astronomy",
+            "version": "2.1.19",
+            "license": "MIT"
+          },
+          {
+            "title": "Swiss Ephemeris · 等宫制与整宫制定义",
+            "url": "https://www.astro.com/swisseph/swisseph.htm",
+            "version": "§6.2.5；独立参考服务2.10.03",
+            "license": "仅引用公开定义与数值校验，未集成代码或星历文件"
+          },
+          {
+            "title": "Swiss Ephemeris · ASC等宫制 A／E 参数",
+            "url": "https://www.astro.com/swisseph/swephprg.htm",
+            "version": "House methods A/E: cusp 1 is Ascendant",
+            "license": "公开接口说明引用"
+          },
+          {
+            "title": "Astrodienst · Synastry与组合中点盘的区别",
+            "url": "https://www.astro.com/faq/fq_fh_owtype_e.htm",
+            "version": "Chart Types · Synastry / Composite Midpoint",
+            "license": "作者服务说明引用；本页为原创摘要"
+          }
+        ]
+      }
+    }
+  ]
+}

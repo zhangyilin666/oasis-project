@@ -1,0 +1,9 @@
+{
+  "release": "h5-themed-feedback-20261003-151655",
+  "bundleSha256": "97f564f71bbd7a101b736c4a0c31c4852037f5a2d1edafd85edc870d3735dc43",
+  "files": 124,
+  "indexSha256": "45d66bdbcdb4dc553b045a52f5d90385ad302e66f1349ff17968a2deff46d4c5",
+  "backup": "/root/oasis-backups/h5-themed-feedback-20261003-151655",
+  "containersUnchanged": true,
+  "health": "ok"
+}

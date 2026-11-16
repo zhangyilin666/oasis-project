@@ -2,7 +2,7 @@
 <view class="login-page">
   <view class="login-header">
     <view class="logo">🌿</view>
-    <text class="app-name">小易</text>
+    <text class="app-name">猫来运转</text>
     <text class="app-desc">AI 驱动的命理分析 · 传统文化生活指南</text>
   </view>
 

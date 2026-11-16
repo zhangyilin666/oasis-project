@@ -1,0 +1,51 @@
+{
+  "source": "Astrodienst official Swiss Ephemeris Test Page, live swetest 2.10.03 output",
+  "sourceUrl": "https://www.astro.com/swisseph/swetest.htm",
+  "retrieved": "2026-10-03",
+  "method": "Public GET form: /cgi/swetest.cgi?b=DATE&n=1&s=1&p=0&f=Pl&arg=OPTIONS; decimal tropical ASC/MC and whole-sign cusp 1 copied from server output. Greenwich first captured as DMS then converted arithmetically. No Swiss Ephemeris source or binary is included or required.",
+  "toleranceDegrees": 0.002,
+  "cases": [
+    {
+      "id": "greenwich-north-prime-meridian",
+      "instant": "2000-01-01T12:00:00.000Z",
+      "place": { "latitude": 51.4779, "longitude": 0 },
+      "command": "swetest -b1.1.2000 -n1 -s1 -fPL -p0 -ut12:00 -house0,51.4779,W",
+      "expected": { "ascendant": 24.2661891944, "midheaven": 279.6110878056, "firstCusp": 0 }
+    },
+    {
+      "id": "shanghai-north-east-mc-eleventh-house",
+      "instant": "2000-08-16T04:30:00.000Z",
+      "place": { "latitude": 31.2304, "longitude": 121.4737 },
+      "command": "swetest -b16.8.2000 -n1 -s1 -fPl -p0 -ut04:30 -house121.4737,31.2304,W",
+      "expected": { "ascendant": 234.2783672, "midheaven": 151.8475191, "firstCusp": 210 }
+    },
+    {
+      "id": "new-york-north-west",
+      "instant": "2024-03-20T03:06:00.000Z",
+      "place": { "latitude": 40.7128, "longitude": -74.006 },
+      "command": "swetest -b20.3.2024 -n1 -s1 -fPl -p0 -ut03:06 -house-74.006,40.7128,W",
+      "expected": { "ascendant": 227.7325423, "midheaven": 148.4845947, "firstCusp": 210 }
+    },
+    {
+      "id": "sydney-south-east",
+      "instant": "2000-01-01T12:00:00.000Z",
+      "place": { "latitude": -33.8688, "longitude": 151.2093 },
+      "command": "swetest -b1.1.2000 -n1 -s1 -fPl -p0 -ut12:00 -house151.2093,-33.8688,W",
+      "expected": { "ascendant": 152.4889091, "midheaven": 73.0891868, "firstCusp": 150 }
+    },
+    {
+      "id": "buenos-aires-south-west-mc-ninth-house",
+      "instant": "2024-12-21T09:20:00.000Z",
+      "place": { "latitude": -34.6037, "longitude": -58.3816 },
+      "command": "swetest -b21.12.2024 -n1 -s1 -fPl -p0 -ut09:20 -house-58.3816,-34.6037,W",
+      "expected": { "ascendant": 278.481045, "midheaven": 171.3552347, "firstCusp": 270 }
+    },
+    {
+      "id": "equator-zero-is-valid",
+      "instant": "2000-01-01T12:00:00.000Z",
+      "place": { "latitude": 0, "longitude": 0 },
+      "command": "swetest -b1.1.2000 -n1 -s1 -fPl -p0 -ut12:00 -house0,0,W",
+      "expected": { "ascendant": 11.3738996, "midheaven": 279.6110878, "firstCusp": 0 }
+    }
+  ]
+}

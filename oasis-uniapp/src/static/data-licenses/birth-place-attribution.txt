@@ -1,0 +1,7 @@
+Birth place selection data
+
+Administrative names: @vant/area-data 2.2.0, MIT. Copyright (c) Youzan; Copyright (c) Chen Jiahan and other contributors. Extracted the three name/code tables as JSON. The original notice is in vant-area-data-MIT.txt.
+
+Approximate city reference points: GeoNames, https://www.geonames.org/, Creative Commons Attribution 4.0 International, https://creativecommons.org/licenses/by/4.0/. Snapshot 2026-10-03. Filtered cities15000 to unique exact Chinese name/alias matches at administrative-seat feature levels; checked source region/province and, for non-municipality mainland cities, source admin2 code. The resulting points are approximate city references, not district centroids, addresses, or verified birth locations. No coordinate transformation applied; WGS84 retained. Original GeoNames readme and CC BY 4.0 license accompany this file.
+
+Product clock defaults: mainland Asia/Shanghai (Beijing clock); Hong Kong Asia/Hong_Kong; Macau Asia/Macau; Taiwan Asia/Taipei. These defaults do not infer which clock a historical birth record used. Manual timezone input remains available.

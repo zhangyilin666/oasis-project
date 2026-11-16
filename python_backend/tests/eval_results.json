@@ -1,0 +1,155 @@
+{
+  "timestamp": "2026-07-25T12:51:14.570604",
+  "config": {
+    "model": "deepseek-v4-pro",
+    "kb_documents": 4,
+    "kb_paragraphs": 91,
+    "test_questions": 20
+  },
+  "summary": {
+    "no_rag": {
+      "total_assertions": 82,
+      "verifiable": 57,
+      "unverifiable": 25,
+      "verifiable_rate": 69.5,
+      "hallucination_rate": 30.5
+    },
+    "with_rag": {
+      "total_assertions": 92,
+      "verifiable": 92,
+      "unverifiable": 0,
+      "verifiable_rate": 100.0,
+      "hallucination_rate": 0.0
+    },
+    "improvement": {
+      "verifiable_rate_pp": 30.5,
+      "hallucination_reduction_pct": 100.0,
+      "hallucination_reduction_pp": 30.5
+    }
+  },
+  "details": {
+    "no_rag_samples": [
+      {
+        "question": "五行相克的规律是怎样的？",
+        "assertion": "土克水的含义是土能筑堤挡水、填平洼地",
+        "verifiable": false,
+        "confidence": 0.178
+      },
+      {
+        "question": "五行相克的规律是怎样的？",
+        "assertion": "火克金的含义是烈火能熔化金属、改变形态",
+        "verifiable": false,
+        "confidence": 0.2
+      },
+      {
+        "question": "五行相克的规律是怎样的？",
+        "assertion": "金克木的含义是金属刀具能砍伐树木、雕琢木材",
+        "verifiable": false,
+        "confidence": 0.172
+      },
+      {
+        "question": "五行相克的规律是怎样的？",
+        "assertion": "正常状态下，五行相克是维持系统平衡的生理性调节",
+        "verifiable": false,
+        "confidence": 0.199
+      },
+      {
+        "question": "五行相克的规律是怎样的？",
+        "assertion": "克制太过称为相乘，反向克制称为相侮",
+        "verifiable": false,
+        "confidence": 0.176
+      },
+      {
+        "question": "金在五行中代表什么特性和方位？",
+        "assertion": "“金曰从革”出自《尚书·洪范》。",
+        "verifiable": false,
+        "confidence": 0.045
+      },
+      {
+        "question": "金在五行中代表什么特性和方位？",
+        "assertion": "金开窍于鼻，其华",
+        "verifiable": false,
+        "confidence": 0.064
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "木对应的人体系统主要是肝胆系统。",
+        "verifiable": false,
+        "confidence": 0.18
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "指甲的健康状况反映了肝血的盛衰。",
+        "verifiable": false,
+        "confidence": 0.09
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "眼睛的视物功能依赖于肝血的濡养和肝气的疏泄。",
+        "verifiable": false,
+        "confidence": 0.09
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "胆储存和排泄胆汁，帮助消化，这一过程也依赖于肝的疏泄功能。",
+        "verifiable": false,
+        "confidence": 0.087
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "人体的肌腱、韧带等“筋”的柔韧性和运动功能依赖于肝血的濡养。",
+        "verifiable": false,
+        "confidence": 0.104
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "怒这种情绪与肝的关系最为密切。",
+        "verifiable": false,
+        "confidence": 0.129
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "大怒或经常郁怒会导致肝气上逆、肝阳上亢或肝气郁结。",
+        "verifiable": false,
+        "confidence": 0.098
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "肝气郁结或肝火旺盛的人更容易产生急躁易怒的情绪。",
+        "verifiable": false,
+        "confidence": 0.098
+      },
+      {
+        "question": "木在五行中对应哪些身体器官和情志？",
+        "assertion": "木系统涵盖了肝、胆、筋、目、爪。",
+        "verifiable": false,
+        "confidence": 0.123
+      },
+      {
+        "question": "正官格的人有什么性格特点？适合什么职业？",
+        "assertion": "正官格过旺或为正官所累时，优点会转化为缺点，可能产生巨大的精神压力。",
+        "verifiable": false,
+        "confidence": 0.132
+      },
+      {
+        "question": "正官格的人有什么性格特点？适合什么职业？",
+        "assertion": "法律、纪律、仲裁行业是正官格的核心优势所在。",
+        "verifiable": false,
+        "confidence": 0.195
+      },
+      {
+        "question": "正官格的人有什么性格特点？适合什么职业？",
+        "assertion": "正官格格局的优劣需要结合整个八字的配合来判断。",
+        "verifiable": false,
+        "confidence": 0.179
+      },
+      {
+        "question": "正官格的人有什么性格特点？适合什么职业？",
+        "assertion": "正官格宜官星清纯，不喜官杀混杂。",
+        "verifiable": false,
+        "confidence": 0.186
+      }
+    ],
+    "with_rag_samples": []
+  }
+}

@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # 基础配置
-    APP_NAME: str = "小易"
+    APP_NAME: str = "猫来运转"
     APP_VERSION: str = "0.1.0"
     DEBUG: bool = False
 
@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     # DeepSeek API (OpenAI 兼容协议)
     DEEPSEEK_API_KEY: str = ""
     DEEPSEEK_BASE_URL: str = "https://api.deepseek.com"
-    DEEPSEEK_DEFAULT_MODEL: str = "deepseek-chat"
+    DEEPSEEK_DEFAULT_MODEL: str = "deepseek-flash"
 
     # WeChat Mini-Program
     WECHAT_APPID: str = ""
@@ -49,6 +49,10 @@ class Settings(BaseSettings):
 
     # 速率限制：每用户每天最大分析次数（0 = 无限制）
     RATE_LIMIT_ANALYZE_PER_DAY: int = 5
+    RATE_LIMIT_DIVINATION_PER_DAY: int = 5  # 独立问卦解读限额；0 表示不限
+    KNOWLEDGE_DIR: str = ""
+    ALLOW_MOCK_AI: bool = False
+    REPORT_TIMEOUT_MINUTES: int = 15
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 

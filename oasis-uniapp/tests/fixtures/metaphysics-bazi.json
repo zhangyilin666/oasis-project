@@ -1,0 +1,243 @@
+{
+  "reference": {
+    "engine": "lunar-python",
+    "version": "1.4.8",
+    "url": "https://github.com/6tail/lunar-python",
+    "conventions": "Gregorian civil input at UTC+08:00; EightChar.setSect(2); element counts include the eight visible stem/branch elements only.",
+    "independence": "Fixed expected values generated using the existing Python backend dependency, not lunar-typescript at test runtime. Both projects share 6tail ancestry: this is cross-language regression evidence, not independent calendar certification."
+  },
+  "cases": [
+    {
+      "id": "before_lichun",
+      "profile": {
+        "date": "2024-02-04",
+        "time": "16:26",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "癸卯",
+          "乙丑",
+          "戊戌",
+          "庚申"
+        ],
+        "elements": {
+          "金": 2,
+          "木": 2,
+          "水": 1,
+          "火": 0,
+          "土": 3
+        },
+        "lunar": {
+          "year": 2023,
+          "month": 12,
+          "day": 25
+        }
+      }
+    },
+    {
+      "id": "after_lichun",
+      "profile": {
+        "date": "2024-02-04",
+        "time": "16:28",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "甲辰",
+          "丙寅",
+          "戊戌",
+          "庚申"
+        ],
+        "elements": {
+          "金": 2,
+          "木": 2,
+          "水": 0,
+          "火": 1,
+          "土": 3
+        },
+        "lunar": {
+          "year": 2023,
+          "month": 12,
+          "day": 25
+        }
+      }
+    },
+    {
+      "id": "late_zi",
+      "profile": {
+        "date": "2000-01-01",
+        "time": "23:00",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "己卯",
+          "丙子",
+          "戊午",
+          "甲子"
+        ],
+        "elements": {
+          "金": 0,
+          "木": 2,
+          "水": 2,
+          "火": 2,
+          "土": 2
+        },
+        "lunar": {
+          "year": 1999,
+          "month": 11,
+          "day": 25
+        }
+      }
+    },
+    {
+      "id": "midnight",
+      "profile": {
+        "date": "2000-01-02",
+        "time": "00:00",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "己卯",
+          "丙子",
+          "己未",
+          "甲子"
+        ],
+        "elements": {
+          "金": 0,
+          "木": 2,
+          "水": 2,
+          "火": 1,
+          "土": 3
+        },
+        "lunar": {
+          "year": 1999,
+          "month": 11,
+          "day": 26
+        }
+      }
+    },
+    {
+      "id": "reference_birth",
+      "profile": {
+        "date": "2000-08-16",
+        "time": "04:30",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "庚辰",
+          "甲申",
+          "丙午",
+          "庚寅"
+        ],
+        "elements": {
+          "金": 3,
+          "木": 2,
+          "水": 0,
+          "火": 2,
+          "土": 1
+        },
+        "lunar": {
+          "year": 2000,
+          "month": 7,
+          "day": 17
+        }
+      }
+    },
+    {
+      "id": "leap_month_start",
+      "profile": {
+        "date": "2023-03-22",
+        "time": "12:00",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "癸卯",
+          "乙卯",
+          "己卯",
+          "庚午"
+        ],
+        "elements": {
+          "金": 1,
+          "木": 4,
+          "水": 1,
+          "火": 1,
+          "土": 1
+        },
+        "lunar": {
+          "year": 2023,
+          "month": -2,
+          "day": 1
+        }
+      }
+    },
+    {
+      "id": "leap_month_second_half",
+      "profile": {
+        "date": "2023-04-06",
+        "time": "12:00",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "癸卯",
+          "丙辰",
+          "甲午",
+          "庚午"
+        ],
+        "elements": {
+          "金": 1,
+          "木": 2,
+          "水": 1,
+          "火": 3,
+          "土": 1
+        },
+        "lunar": {
+          "year": 2023,
+          "month": -2,
+          "day": 16
+        }
+      }
+    },
+    {
+      "id": "gregorian_leap_day",
+      "profile": {
+        "date": "2000-02-29",
+        "time": "00:00",
+        "gender": "男",
+        "utcOffset": 8
+      },
+      "expected": {
+        "pillars": [
+          "庚辰",
+          "戊寅",
+          "丁巳",
+          "庚子"
+        ],
+        "elements": {
+          "金": 2,
+          "木": 1,
+          "水": 1,
+          "火": 2,
+          "土": 2
+        },
+        "lunar": {
+          "year": 2000,
+          "month": 1,
+          "day": 25
+        }
+      }
+    }
+  ]
+}

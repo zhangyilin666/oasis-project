@@ -1,0 +1,9 @@
+{
+  "release": "h5-ai-only-20261003-145439",
+  "bundleSha256": "2c40d3d3e2c100d2b6d4bb61b49924c4ae9ade598dfc5c70998a40be7eba0df7",
+  "files": 124,
+  "indexSha256": "decc4090fbeaf3921c7148d48a47058d06c7640a2b65af484a529a335f9ddc16",
+  "backup": "/root/oasis-backups/h5-ai-only-20261003-145439",
+  "containersUnchanged": true,
+  "health": "ok"
+}

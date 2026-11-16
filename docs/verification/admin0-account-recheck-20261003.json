@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-03",
+  "revision": "e2a73c9b4d10",
+  "userCount": 9,
+  "administratorIds": [0],
+  "positiveIdAdminCount": 0,
+  "id0Exists": true,
+  "id0IsAdmin": true,
+  "id1Exists": false,
+  "aliases": [{"oldId": 1, "currentId": 0}],
+  "adminBaziQuotaCheck": "allowed",
+  "adminDivinationQuota": {"dailyLimit": 0, "remainingToday": null},
+  "publicAdminIdentity": {"user_id": 0, "is_admin": true},
+  "ordinarySample": {"id": 2, "isAdmin": false, "divinationDailyLimit": 5, "remainingToday": 5},
+  "browserAccountBefore": 10,
+  "browserAccountAfter": 0,
+  "browserAdministratorLabel": "管理员 · AI 解读不限次数",
+  "accountSwitchMethod": "Existing account restore flow; existing credential unchanged",
+  "temporaryCredentialMaterialRemoved": true,
+  "liveAiRequestsMade": 0,
+  "roleOrIdDatabaseChangesMade": false,
+  "screenshot": "admin0-current-account-20261003.png"
+}

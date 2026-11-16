@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import asyncio
-from datetime import date
+from datetime import date, datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import func, select
+from starlette.concurrency import run_in_threadpool
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.orm import Session
 
 from app.core.logger import logger
@@ -12,6 +13,7 @@ from app.core.rate_limit import check_daily_analyze_limit
 from app.core.security_deps import get_current_user
 from app.db.database import get_db
 from app.models.log_model import AnalysisLog
+from app.models.daily_fortune_model import DailyFortune
 from app.models.report_model import Report
 from app.models.report_status import ReportStatus
 from app.models.user_model import User
@@ -21,6 +23,7 @@ from app.services.background_analysis import process_report_in_background
 from app.services.calendar_service import get_day_almanac
 from app.services.daily_fortune_service import get_daily_fortune
 from app.services.yun_service import get_yun_fortune
+from app.services.report_lifecycle import expire_stale_reports
 
 router = APIRouter()
 
@@ -78,6 +81,7 @@ async def analyze(
         status=ReportStatus.PENDING,
         calendar_data=None,
         ai_analysis=None,
+        input_data=user_input.model_dump(),
     )
     db.add(report)
     db.commit()
@@ -117,6 +121,25 @@ async def analyze(
 # 报告查询端点
 # ---------------------------------------------------------------------------
 
+
+@router.post("/api/v1/app/oasis/report/{report_id}/retry", response_model=OasisResponse)
+async def retry_report(
+    report_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    expire_stale_reports(db, current_user.id)
+    report = db.scalar(select(Report).where(
+        Report.id == report_id, Report.user_id == current_user.id, Report.deleted_at.is_(None),
+    ))
+    if report is None:
+        raise HTTPException(404, detail={"code": 404, "message": "报告不存在"})
+    if report.status != ReportStatus.FAILED or not report.input_data:
+        raise HTTPException(409, detail={"code": 409, "message": "当前报告不能重试，请重新填写出生信息"})
+    payload = UserInput(**report.input_data)
+    await run_in_threadpool(check_daily_analyze_limit, current_user, db)
+    return await analyze(payload, current_user, db, None)
+
 @router.get(
     "/api/v1/wechat/oasis/reports",
     response_model=OasisResponse,
@@ -139,15 +162,16 @@ async def list_reports(
     列表项仅含摘要信息（不含完整 AI 分析文本），
     查看完整内容请使用 GET /report/{report_id}。
     """
+    expire_stale_reports(db, current_user.id)
     total = db.scalar(
         select(func.count()).select_from(Report).where(
-            Report.user_id == current_user.id
+            Report.user_id == current_user.id, Report.deleted_at.is_(None),
         )
     )
 
     rows = db.execute(
         select(Report)
-        .where(Report.user_id == current_user.id)
+        .where(Report.user_id == current_user.id, Report.deleted_at.is_(None))
         .order_by(Report.created_at.desc())
         .offset(skip)
         .limit(limit)
@@ -196,8 +220,9 @@ async def get_report(
 
     仅允许查看本人报告。报告不存在或不属于当前用户时返回 404。
     """
+    expire_stale_reports(db, current_user.id)
     report = db.scalar(
-        select(Report).where(Report.id == report_id)
+        select(Report).where(Report.id == report_id, Report.deleted_at.is_(None))
     )
 
     if report is None:
@@ -238,6 +263,7 @@ async def get_report(
             "user_id": report.user_id,
             "status": report.status.value if hasattr(report.status, "value") else report.status,
             "error_message": report.error_message,
+            "can_retry": bool(report.input_data) and report.status == ReportStatus.FAILED,
             "birth_info": report.birth_info,
             "calendar_data": calendar_data,
             "ai_analysis": report.ai_analysis or "",
@@ -259,6 +285,37 @@ async def get_report(
             "updated_at": report.updated_at.isoformat() if report.updated_at else None,
         },
     )
+
+
+# ---------------------------------------------------------------------------
+# 删除报告
+# ---------------------------------------------------------------------------
+
+@router.delete("/api/v1/wechat/oasis/report/{report_id}", response_model=OasisResponse)
+@router.delete("/api/v1/app/oasis/report/{report_id}", response_model=OasisResponse)
+def delete_report(
+    report_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    # Same lock order as daily queries: never recreate a cache after its report is deleted.
+    db.execute(select(User.id).where(User.id == current_user.id).with_for_update()).first()
+    report = db.scalar(select(Report).where(
+        Report.id == report_id, Report.user_id == current_user.id, Report.deleted_at.is_(None),
+    ).with_for_update())
+    if report is None:
+        raise HTTPException(404, detail={"code": 404, "message": "报告不存在或已删除"})
+    if report.status not in (ReportStatus.COMPLETED, ReportStatus.FAILED):
+        raise HTTPException(409, detail={"code": 409, "message": "报告正在生成，请完成后再删除"})
+
+    db.execute(delete(DailyFortune).where(DailyFortune.report_id == report.id))
+    # Usage logs contain no report content; preserve their accounting and unlink the report.
+    db.execute(update(AnalysisLog).where(AnalysisLog.report_id == report.id).values(report_id=None))
+    report.deleted_at = datetime.now(timezone.utc)
+    report.birth_info = ""
+    report.input_data = report.calendar_data = report.ai_analysis = report.error_message = None
+    db.commit()
+    return OasisResponse(code=200, message="报告已删除", data={"report_id": report_id})
 
 
 # ---------------------------------------------------------------------------
@@ -402,7 +459,8 @@ async def almanac(
     response_model=OasisResponse,
     summary="今日运势（App）",
 )
-async def daily_fortune(
+def daily_fortune(
+    report_id: Optional[int] = Query(None, ge=1),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -418,6 +476,7 @@ async def daily_fortune(
         fortune = get_daily_fortune(
             user_id=current_user.id,
             db=db,
+            report_id=report_id,
         )
     except ValueError as exc:
         return OasisResponse(

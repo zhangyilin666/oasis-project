@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "verified_at": "2026-10-03T12:26:58.552632+00:00",
+  "file": "D:\\Oasis_Project\\docs\\verification\\divination-production-ui-export-20261003.json",
+  "file_sha256": "a4ed133d05632924a591ca44098031cdfb86dabcb4d258311947992f6d43ec58",
+  "reading_id": 1,
+  "status": "completed",
+  "model_label": "猫来运转 AI",
+  "method": "liuyao-coins",
+  "rule_version": "liuyao-coins-v1",
+  "original": {
+    "number": 54,
+    "name": "归妹"
+  },
+  "changed": {
+    "number": 54,
+    "name": "归妹"
+  },
+  "moving_lines": [],
+  "coin_values": 18,
+  "coin_throws": 6,
+  "source_version": "zhouyi-wikisource-2026-10-03-v1",
+  "source_license": "CC-BY-SA-4.0",
+  "evidence_count": 1,
+  "referenced_evidence_ids": [
+    "zhouyi.54.judgment"
+  ],
+  "facts_sha256": "12a4a06a7d24ccce8dd3654793c570c080f8c78d67efba0a8674ad270aac787d",
+  "analysis_sha256": "fd82ee86b3431a277c56db120f4aff79e5b9cb36c2ceeb3ca42d076289ccd317",
+  "checks": {
+    "all_fact_fields_equal": true,
+    "actual_analysis_contract_valid": true,
+    "all_citations_available": true,
+    "all_coin_sums_match": true,
+    "license_attribution_and_changes_preserved": true,
+    "non_mock_model_label": true
+  },
+  "boundary": "Offline content validation only; provider provenance and UI-download origin require the accompanying production acceptance evidence."
+}

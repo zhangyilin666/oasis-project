@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.logger import logger
 from app.db.database import get_db
-from app.models.user_model import User
 from app.schemas.auth_schema import RefreshResponse, WechatLoginRequest, WechatLoginResponse
 from app.services.wechat_service import authenticate_wechat_user
+from app.services.user_identity import resolve_user_by_id
 from app.utils.security import create_access_token, verify_token_with_grace
 
 router = APIRouter(prefix="/api/v1/wechat", tags=["Auth"])
@@ -89,8 +88,7 @@ async def refresh_token(
         )
 
     # 确认用户仍存在
-    stmt = select(User).where(User.id == int(user_id))
-    user = db.scalars(stmt).first()
+    user = resolve_user_by_id(db, user_id)
     if user is None:
         logger.warning("Refresh: user not found: id=%s", user_id)
         raise HTTPException(

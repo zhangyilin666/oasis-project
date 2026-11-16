@@ -3,10 +3,10 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "首页",
+        "navigationBarTitleText": "猫来运转",
         "enablePullDownRefresh": true,
-        "backgroundColor": "#f5f5f5",
-        "navigationBarBackgroundColor": "#ffffff",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
         "navigationBarTextStyle": "black",
         "app-plus": {
           "titleNView": {
@@ -18,15 +18,52 @@
           "animationType": "slide-in-right",
           "animationDuration": 250,
           "bounce": "none"
-        }
+        },
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/explore/index",
+      "style": {
+        "navigationBarTitleText": "八字 AI 解读",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/divination-tools/index",
+      "style": {
+        "navigationBarTitleText": "问一卦",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/divination/index",
+      "style": {
+        "navigationBarTitleText": "问一卦",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/almanac/index",
+      "style": {
+        "navigationBarTitleText": "黄历与节气",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
+        "navigationBarTextStyle": "black"
       }
     },
     {
       "path": "pages/analyze/index",
       "style": {
-        "navigationBarTitleText": "八字分析",
-        "backgroundColor": "#f5f5f5",
-        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTitleText": "八字 AI 解读",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
         "navigationBarTextStyle": "black",
         "app-plus": {
           "titleNView": {
@@ -43,8 +80,8 @@
       "style": {
         "navigationBarTitleText": "报告",
         "enablePullDownRefresh": true,
-        "backgroundColor": "#f5f5f5",
-        "navigationBarBackgroundColor": "#ffffff",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
         "navigationBarTextStyle": "black",
         "app-plus": {
           "titleNView": {
@@ -54,15 +91,16 @@
           "animationType": "slide-in-right",
           "animationDuration": 250,
           "bounce": "none"
-        }
+        },
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/report-detail/index",
       "style": {
         "navigationBarTitleText": "分析报告",
-        "backgroundColor": "#f5f5f5",
-        "navigationBarBackgroundColor": "#ffffff",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
         "navigationBarTextStyle": "black",
         "app-plus": {
           "titleNView": {
@@ -78,8 +116,8 @@
       "path": "pages/profile/index",
       "style": {
         "navigationBarTitleText": "我的",
-        "backgroundColor": "#f5f5f5",
-        "navigationBarBackgroundColor": "#ffffff",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
         "navigationBarTextStyle": "black",
         "app-plus": {
           "titleNView": {
@@ -88,15 +126,16 @@
           },
           "animationType": "slide-in-right",
           "animationDuration": 250
-        }
+        },
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/agreement/index",
       "style": {
         "navigationBarTitleText": "",
-        "backgroundColor": "#ffffff",
-        "navigationBarBackgroundColor": "#ffffff",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
         "navigationBarTextStyle": "black",
         "app-plus": {
           "titleNView": false,
@@ -107,26 +146,26 @@
     }
   ],
   "tabBar": {
-    "color": "#8c8c8c",
-    "selectedColor": "#2c5f2d",
+    "color": "#857991",
+    "selectedColor": "#7760b2",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [
       {
-        "iconPath": "/static/images/tab-home.png",
-        "selectedIconPath": "/static/images/tab-home-active.png",
+        "iconPath": "static/images/tab-home.png",
+        "selectedIconPath": "static/images/tab-home-active.png",
         "pagePath": "pages/home/index",
-        "text": "首页"
+        "text": "今日"
       },
       {
-        "iconPath": "/static/images/tab-reports.png",
-        "selectedIconPath": "/static/images/tab-reports-active.png",
+        "iconPath": "static/images/tab-reports.png",
+        "selectedIconPath": "static/images/tab-reports-active.png",
         "pagePath": "pages/reports/index",
         "text": "报告"
       },
       {
-        "iconPath": "/static/images/tab-profile.png",
-        "selectedIconPath": "/static/images/tab-profile-active.png",
+        "iconPath": "static/images/tab-profile.png",
+        "selectedIconPath": "static/images/tab-profile-active.png",
         "pagePath": "pages/profile/index",
         "text": "我的"
       }
@@ -134,7 +173,7 @@
   },
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#f5f5f5"
+    "navigationBarBackgroundColor": "#faf8fc",
+    "backgroundColor": "#faf8fc"
   }
 }

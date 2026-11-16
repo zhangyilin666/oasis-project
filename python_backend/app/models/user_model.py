@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, String, func
+from sqlalchemy import Boolean, DateTime, String, false, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -10,6 +10,10 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    is_admin: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default=false(), nullable=False,
+        comment="管理员账号，不受每日 AI 分析次数限制",
+    )
     # openid：微信小程序用户唯一标识（App 手机号用户为 NULL）
     openid: Mapped[str | None] = mapped_column(
         String(128), unique=True, index=True, nullable=True

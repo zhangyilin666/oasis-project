@@ -1,0 +1,704 @@
+{
+  "format": "oasis-taiyi-records",
+  "formatVersion": 1,
+  "exportedAt": "2026-10-03T09:51:52.246Z",
+  "records": [
+    {
+      "id": "mus6g44t-hgcwsonzok",
+      "savedAt": "2026-10-03T09:16:02.669Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "taiyi-jinjing-year-724-v1",
+        "method": "《太乙金镜式经》四库本 · 岁计 · 724 年锚",
+        "createdAt": "2026-10-03T09:15:54.715Z",
+        "input": {
+          "name": "太乙验收：714待校勘局",
+          "year": "714",
+          "sourceNote": "",
+          "question": ""
+        },
+        "yearPolicy": "所求岁年以公元年份标识；只输入岁年，不将具体公历时刻自动归年，不暗定立春、春节或 1 月 1 日年界。",
+        "epoch": {
+          "anchorYear": 724,
+          "anchorAccumulated": 1937281,
+          "additive": 1936557,
+          "note": "本版取卷一后文“开元十二年甲子积一百九十三万七千二百八十一”为锚；同卷前段另有“开元十五年甲子”等不同记载，尚未校勘为统一纪元。"
+        },
+        "accumulated": 1937271,
+        "yearGanZhi": "甲寅",
+        "taiSui": "寅",
+        "combinedSpirit": "亥",
+        "cycle360": 111,
+        "cycle60": 51,
+        "cycle72": 39,
+        "cycle24": 15,
+        "cycle18": 3,
+        "ji": 2,
+        "divisions": [
+          {
+            "divisor": 360,
+            "quotient": 5381,
+            "remainder": 111,
+            "ordinal": 111
+          },
+          {
+            "divisor": 72,
+            "quotient": 26906,
+            "remainder": 39,
+            "ordinal": 39
+          },
+          {
+            "divisor": 24,
+            "quotient": 80719,
+            "remainder": 15,
+            "ordinal": 15
+          },
+          {
+            "divisor": 18,
+            "quotient": 107626,
+            "remainder": 3,
+            "ordinal": 3
+          },
+          {
+            "divisor": 60,
+            "quotient": 32287,
+            "remainder": 51,
+            "ordinal": 51
+          }
+        ],
+        "board": {
+          "ju": 39,
+          "dun": "阳",
+          "taiyi": 6,
+          "palaceYear": 3,
+          "governance": "理人",
+          "skyEye": "戌",
+          "skyEyeName": "阴主",
+          "strike": "亥",
+          "strikeName": "大义",
+          "calculationSpirit": "子",
+          "host": {
+            "count": null,
+            "general": null,
+            "assistant": null,
+            "steps": [
+              {
+                "position": "戌",
+                "amount": 1,
+                "kind": "间神起一"
+              },
+              {
+                "position": "乾",
+                "amount": 1,
+                "kind": "正宫"
+              },
+              {
+                "position": "子",
+                "amount": 8,
+                "kind": "正宫"
+              },
+              {
+                "position": "艮",
+                "amount": 3,
+                "kind": "正宫"
+              },
+              {
+                "position": "卯",
+                "amount": 4,
+                "kind": "正宫"
+              },
+              {
+                "position": "巽",
+                "amount": 9,
+                "kind": "正宫"
+              },
+              {
+                "position": "午",
+                "amount": 2,
+                "kind": "正宫"
+              },
+              {
+                "position": "坤",
+                "amount": 7,
+                "kind": "正宫"
+              }
+            ],
+            "unresolved": "第 39 局待校勘：卷三表列主算 25，依卷二行算步骤得 35；本版将主算及主将留空，步骤仅供核对。"
+          },
+          "guest": {
+            "count": 34,
+            "general": 4,
+            "assistant": 2,
+            "steps": [
+              {
+                "position": "亥",
+                "amount": 1,
+                "kind": "间神起一"
+              },
+              {
+                "position": "子",
+                "amount": 8,
+                "kind": "正宫"
+              },
+              {
+                "position": "艮",
+                "amount": 3,
+                "kind": "正宫"
+              },
+              {
+                "position": "卯",
+                "amount": 4,
+                "kind": "正宫"
+              },
+              {
+                "position": "巽",
+                "amount": 9,
+                "kind": "正宫"
+              },
+              {
+                "position": "午",
+                "amount": 2,
+                "kind": "正宫"
+              },
+              {
+                "position": "坤",
+                "amount": 7,
+                "kind": "正宫"
+              }
+            ],
+            "unresolved": null
+          },
+          "status": "partial",
+          "palaces": [
+            {
+              "number": 1,
+              "trigram": "乾",
+              "position": "乾",
+              "direction": "西北",
+              "markers": []
+            },
+            {
+              "number": 2,
+              "trigram": "离",
+              "position": "午",
+              "direction": "南",
+              "markers": [
+                "客参将"
+              ]
+            },
+            {
+              "number": 3,
+              "trigram": "艮",
+              "position": "艮",
+              "direction": "东北",
+              "markers": []
+            },
+            {
+              "number": 4,
+              "trigram": "震",
+              "position": "卯",
+              "direction": "东",
+              "markers": [
+                "客大将"
+              ]
+            },
+            {
+              "number": 5,
+              "trigram": "中",
+              "position": "中",
+              "direction": "中",
+              "markers": []
+            },
+            {
+              "number": 6,
+              "trigram": "兑",
+              "position": "酉",
+              "direction": "西",
+              "markers": [
+                "太乙"
+              ]
+            },
+            {
+              "number": 7,
+              "trigram": "坤",
+              "position": "坤",
+              "direction": "西南",
+              "markers": []
+            },
+            {
+              "number": 8,
+              "trigram": "坎",
+              "position": "子",
+              "direction": "北",
+              "markers": []
+            },
+            {
+              "number": 9,
+              "trigram": "巽",
+              "position": "巽",
+              "direction": "东南",
+              "markers": []
+            }
+          ],
+          "spirits": [
+            {
+              "position": "子",
+              "name": "地主",
+              "markers": [
+                "计神"
+              ]
+            },
+            {
+              "position": "丑",
+              "name": "阳德",
+              "markers": []
+            },
+            {
+              "position": "艮",
+              "name": "和德",
+              "markers": []
+            },
+            {
+              "position": "寅",
+              "name": "吕申",
+              "markers": []
+            },
+            {
+              "position": "卯",
+              "name": "高丛",
+              "markers": []
+            },
+            {
+              "position": "辰",
+              "name": "太阳",
+              "markers": []
+            },
+            {
+              "position": "巽",
+              "name": "大炅",
+              "markers": []
+            },
+            {
+              "position": "巳",
+              "name": "大神",
+              "markers": []
+            },
+            {
+              "position": "午",
+              "name": "大威",
+              "markers": []
+            },
+            {
+              "position": "未",
+              "name": "天道",
+              "markers": []
+            },
+            {
+              "position": "坤",
+              "name": "大武",
+              "markers": []
+            },
+            {
+              "position": "申",
+              "name": "武德",
+              "markers": []
+            },
+            {
+              "position": "酉",
+              "name": "太簇",
+              "markers": []
+            },
+            {
+              "position": "戌",
+              "name": "阴主",
+              "markers": [
+                "天目"
+              ]
+            },
+            {
+              "position": "乾",
+              "name": "阴德",
+              "markers": []
+            },
+            {
+              "position": "亥",
+              "name": "大义",
+              "markers": [
+                "始击"
+              ]
+            }
+          ],
+          "explanation": [
+            "阳局 39：三年移一宫，按一、二、三、四、六、七、八、九行宫；太乙在兑6宫，第 3 年。",
+            "天目起武德申，顺行十六神，乾阴德及坤大武各重留一年；第 3 位为阴主戌。",
+            "计神从寅逆行十二支，得子；以计神加和德艮，天目所临为始击大义亥。",
+            "主客分别从天目、始击行算：正宫按宫数起，间神起一，顺数经过的正宫，至太乙宫前止；目与太乙同处正宫取本宫数。",
+            "大将取算数个位，整十取十位；参将为大将乘三的个位。这里只陈列传统规则位置，不作现实胜负解释。"
+          ]
+        },
+        "sources": [
+          {
+            "title": "《太乙金镜式经》卷一 · 四库本 3a–4b",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_001.txt",
+            "usage": "724 岁年积数锚、局数、太乙、天目、计神；保留同卷纪元文字分歧。"
+          },
+          {
+            "title": "卷二 · 九宫、十六神与运式法",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_002.txt",
+            "usage": "太乙专用九宫编号、始击转盘和主客行算步骤。"
+          },
+          {
+            "title": "卷三 · 阳局立成表",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_003.txt",
+            "usage": "23 个独立固定局式；第 39、50 局主算与步骤有冲突，相关字段留空待校勘。"
+          },
+          {
+            "title": "卷六 · 十三、二十二局将位例",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_006.txt",
+            "usage": "主客大将、参将的独立古例。只核对位置，不采用占断。"
+          },
+          {
+            "title": "卷九 · 二十五局客算四十例",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_009.txt",
+            "usage": "客算四十对应大将四宫、参将二宫，保留与其他实现的区别。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mus6fxlw-308krfxszq",
+      "savedAt": "2026-10-03T09:15:54.212Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "taiyi-jinjing-year-724-v1",
+        "method": "《太乙金镜式经》四库本 · 岁计 · 724 年锚",
+        "createdAt": "2026-10-03T09:15:40.147Z",
+        "input": {
+          "name": "太乙验收：724岁年锚例",
+          "year": "724",
+          "sourceNote": "",
+          "question": ""
+        },
+        "yearPolicy": "所求岁年以公元年份标识；只输入岁年，不将具体公历时刻自动归年，不暗定立春、春节或 1 月 1 日年界。",
+        "epoch": {
+          "anchorYear": 724,
+          "anchorAccumulated": 1937281,
+          "additive": 1936557,
+          "note": "本版取卷一后文“开元十二年甲子积一百九十三万七千二百八十一”为锚；同卷前段另有“开元十五年甲子”等不同记载，尚未校勘为统一纪元。"
+        },
+        "accumulated": 1937281,
+        "yearGanZhi": "甲子",
+        "taiSui": "子",
+        "combinedSpirit": "丑",
+        "cycle360": 121,
+        "cycle60": 1,
+        "cycle72": 49,
+        "cycle24": 1,
+        "cycle18": 13,
+        "ji": 3,
+        "divisions": [
+          {
+            "divisor": 360,
+            "quotient": 5381,
+            "remainder": 121,
+            "ordinal": 121
+          },
+          {
+            "divisor": 72,
+            "quotient": 26906,
+            "remainder": 49,
+            "ordinal": 49
+          },
+          {
+            "divisor": 24,
+            "quotient": 80720,
+            "remainder": 1,
+            "ordinal": 1
+          },
+          {
+            "divisor": 18,
+            "quotient": 107626,
+            "remainder": 13,
+            "ordinal": 13
+          },
+          {
+            "divisor": 60,
+            "quotient": 32288,
+            "remainder": 1,
+            "ordinal": 1
+          }
+        ],
+        "board": {
+          "ju": 49,
+          "dun": "阳",
+          "taiyi": 1,
+          "palaceYear": 1,
+          "governance": "理天",
+          "skyEye": "巽",
+          "skyEyeName": "大炅",
+          "strike": "辰",
+          "strikeName": "太阳",
+          "calculationSpirit": "寅",
+          "host": {
+            "count": 24,
+            "general": 4,
+            "assistant": 2,
+            "steps": [
+              {
+                "position": "巽",
+                "amount": 9,
+                "kind": "正宫"
+              },
+              {
+                "position": "午",
+                "amount": 2,
+                "kind": "正宫"
+              },
+              {
+                "position": "坤",
+                "amount": 7,
+                "kind": "正宫"
+              },
+              {
+                "position": "酉",
+                "amount": 6,
+                "kind": "正宫"
+              }
+            ],
+            "unresolved": null
+          },
+          "guest": {
+            "count": 25,
+            "general": 5,
+            "assistant": 5,
+            "steps": [
+              {
+                "position": "辰",
+                "amount": 1,
+                "kind": "间神起一"
+              },
+              {
+                "position": "巽",
+                "amount": 9,
+                "kind": "正宫"
+              },
+              {
+                "position": "午",
+                "amount": 2,
+                "kind": "正宫"
+              },
+              {
+                "position": "坤",
+                "amount": 7,
+                "kind": "正宫"
+              },
+              {
+                "position": "酉",
+                "amount": 6,
+                "kind": "正宫"
+              }
+            ],
+            "unresolved": null
+          },
+          "status": "complete",
+          "palaces": [
+            {
+              "number": 1,
+              "trigram": "乾",
+              "position": "乾",
+              "direction": "西北",
+              "markers": [
+                "太乙"
+              ]
+            },
+            {
+              "number": 2,
+              "trigram": "离",
+              "position": "午",
+              "direction": "南",
+              "markers": [
+                "主参将"
+              ]
+            },
+            {
+              "number": 3,
+              "trigram": "艮",
+              "position": "艮",
+              "direction": "东北",
+              "markers": []
+            },
+            {
+              "number": 4,
+              "trigram": "震",
+              "position": "卯",
+              "direction": "东",
+              "markers": [
+                "主大将"
+              ]
+            },
+            {
+              "number": 5,
+              "trigram": "中",
+              "position": "中",
+              "direction": "中",
+              "markers": [
+                "客大将",
+                "客参将"
+              ]
+            },
+            {
+              "number": 6,
+              "trigram": "兑",
+              "position": "酉",
+              "direction": "西",
+              "markers": []
+            },
+            {
+              "number": 7,
+              "trigram": "坤",
+              "position": "坤",
+              "direction": "西南",
+              "markers": []
+            },
+            {
+              "number": 8,
+              "trigram": "坎",
+              "position": "子",
+              "direction": "北",
+              "markers": []
+            },
+            {
+              "number": 9,
+              "trigram": "巽",
+              "position": "巽",
+              "direction": "东南",
+              "markers": []
+            }
+          ],
+          "spirits": [
+            {
+              "position": "子",
+              "name": "地主",
+              "markers": []
+            },
+            {
+              "position": "丑",
+              "name": "阳德",
+              "markers": []
+            },
+            {
+              "position": "艮",
+              "name": "和德",
+              "markers": []
+            },
+            {
+              "position": "寅",
+              "name": "吕申",
+              "markers": [
+                "计神"
+              ]
+            },
+            {
+              "position": "卯",
+              "name": "高丛",
+              "markers": []
+            },
+            {
+              "position": "辰",
+              "name": "太阳",
+              "markers": [
+                "始击"
+              ]
+            },
+            {
+              "position": "巽",
+              "name": "大炅",
+              "markers": [
+                "天目"
+              ]
+            },
+            {
+              "position": "巳",
+              "name": "大神",
+              "markers": []
+            },
+            {
+              "position": "午",
+              "name": "大威",
+              "markers": []
+            },
+            {
+              "position": "未",
+              "name": "天道",
+              "markers": []
+            },
+            {
+              "position": "坤",
+              "name": "大武",
+              "markers": []
+            },
+            {
+              "position": "申",
+              "name": "武德",
+              "markers": []
+            },
+            {
+              "position": "酉",
+              "name": "太簇",
+              "markers": []
+            },
+            {
+              "position": "戌",
+              "name": "阴主",
+              "markers": []
+            },
+            {
+              "position": "乾",
+              "name": "阴德",
+              "markers": []
+            },
+            {
+              "position": "亥",
+              "name": "大义",
+              "markers": []
+            }
+          ],
+          "explanation": [
+            "阳局 49：三年移一宫，按一、二、三、四、六、七、八、九行宫；太乙在乾1宫，第 1 年。",
+            "天目起武德申，顺行十六神，乾阴德及坤大武各重留一年；第 13 位为大炅巽。",
+            "计神从寅逆行十二支，得寅；以计神加和德艮，天目所临为始击太阳辰。",
+            "主客分别从天目、始击行算：正宫按宫数起，间神起一，顺数经过的正宫，至太乙宫前止；目与太乙同处正宫取本宫数。",
+            "大将取算数个位，整十取十位；参将为大将乘三的个位。这里只陈列传统规则位置，不作现实胜负解释。"
+          ]
+        },
+        "sources": [
+          {
+            "title": "《太乙金镜式经》卷一 · 四库本 3a–4b",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_001.txt",
+            "usage": "724 岁年积数锚、局数、太乙、天目、计神；保留同卷纪元文字分歧。"
+          },
+          {
+            "title": "卷二 · 九宫、十六神与运式法",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_002.txt",
+            "usage": "太乙专用九宫编号、始击转盘和主客行算步骤。"
+          },
+          {
+            "title": "卷三 · 阳局立成表",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_003.txt",
+            "usage": "23 个独立固定局式；第 39、50 局主算与步骤有冲突，相关字段留空待校勘。"
+          },
+          {
+            "title": "卷六 · 十三、二十二局将位例",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_006.txt",
+            "usage": "主客大将、参将的独立古例。只核对位置，不采用占断。"
+          },
+          {
+            "title": "卷九 · 二十五局客算四十例",
+            "url": "https://raw.githubusercontent.com/kanripo/KR3g0047/master/KR3g0047_009.txt",
+            "usage": "客算四十对应大将四宫、参将二宫，保留与其他实现的区别。"
+          }
+        ]
+      }
+    }
+  ]
+}

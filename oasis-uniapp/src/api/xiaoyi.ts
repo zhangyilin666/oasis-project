@@ -1,7 +1,7 @@
 /**
  * Oasis 业务 API 服务 — 八字分析 / 报告 / 知识库 / 每日运势
  */
-import { get, post } from './request'
+import { get, post, del } from './request'
 import { API_PREFIX } from '@/config/env'
 
 const XIAOYI = `${API_PREFIX}/oasis`
@@ -37,11 +37,29 @@ export interface AnalysisLog {
   created_at: string
 }
 
+export interface ReportReference {
+  id: string
+  document_id: string
+  title: string
+  paragraph: number
+  kind: string
+  sha256: string
+  snippet: string
+}
+
+export interface ReportVerification {
+  version: number
+  status: 'structured_checked' | 'not_checked'
+  scope: string
+  reference_ids: string[]
+}
+
 export interface ReportDetail {
   id: number
   user_id: number
   status: string
   error_message: string | null
+  can_retry: boolean
   birth_info: string
   calendar_data: any
   ai_analysis: string | null
@@ -69,6 +87,8 @@ export interface AlmanacDay {
 }
 
 export interface DailyFortune {
+  report_id: number
+  birth_info: string
   date: string
   day_gan_zhi: string
   day_relation: string
@@ -101,6 +121,10 @@ export function getReportDetailApi(reportId: number) {
   return get<ReportDetail>(`${XIAOYI}/report/${reportId}`)
 }
 
+export function deleteReportApi(reportId: number) {
+  return del<{ report_id: number }>(`${XIAOYI}/report/${reportId}`)
+}
+
 export function getKnowledgeListApi() {
   return get<{ total: number; documents: any[] }>(`${XIAOYI}/knowledge`)
 }
@@ -113,8 +137,12 @@ export function getAlmanacApi(solarDate?: string) {
   return get<AlmanacDay>(`${XIAOYI}/almanac`, solarDate ? { solar_date: solarDate } : undefined)
 }
 
-export function getDailyFortuneApi() {
-  return get<DailyFortune>(`${XIAOYI}/daily-fortune`, undefined, { timeout: 30000 })
+export function getDailyFortuneApi(reportId?: number) {
+  return get<DailyFortune>(`${XIAOYI}/daily-fortune`, { report_id: reportId }, { timeout: 150000 })
+}
+
+export function retryReportApi(reportId: number) {
+  return post<{ report_id: number; status: string }>(`${XIAOYI}/report/${reportId}/retry`)
 }
 
 export interface YunStartInfo {

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "kind": "physiognomy-culture",
+  "records": [
+    {
+      "id": "physiognomy-culture-1791016883710-1",
+      "savedAt": "2026-10-03T08:41:23.710Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "physiognomy-notes-v1",
+        "contentVersion": "physiognomy-reading-2026-10-v1",
+        "kind": "cultural-reading-note",
+        "input": {
+          "articleId": "three-regions",
+          "date": "2026-10-03",
+          "title": "文化验收：核对三停的原文定位",
+          "note": "合成验收：这里采用发际至眉、眉至准头、准头至地阁；保留同段其他术语的区别。"
+        },
+        "article": {
+          "id": "three-regions",
+          "title": "三停",
+          "aliases": [
+            "上停",
+            "中停",
+            "下停",
+            "三才三停论",
+            "三才三停論"
+          ],
+          "category": "terms",
+          "summary": "三停把面部纵向分成三段。本词条选取所引卷中“发际—眉—准头—地阁”的这一组划分，以便对照词语。准头指鼻尖一带，地阁指下颏一带。",
+          "readingNote": "同段还用“上府、中府、下府”列另一组描述；不同书本未必采用相同边界。图示不用于测量美丑、比例标准或判断人生阶段。",
+          "locator": "神相全编二 → 三才三停论，三停的后一组部位描述",
+          "source": {
+            "title": "《钦定古今图书集成》艺术典第632卷",
+            "edition": "相术部汇考二 · 所引《神相全编二》",
+            "revision": "Wikisource oldid=1942595",
+            "url": "https://zh.wikisource.org/w/index.php?title=欽定古今圖書集成/博物彙編/藝術典/第632卷&oldid=1942595",
+            "reviewedAt": "2026-10-03",
+            "rights": "古籍原文为公有领域；本工具短释义与图解自行创作，不复制平台现代标点、注译或图片。"
+          },
+          "diagram": "three-regions",
+          "terms": [
+            {
+              "label": "上停",
+              "description": "发际至眉"
+            },
+            {
+              "label": "中停",
+              "description": "眉至准头"
+            },
+            {
+              "label": "下停",
+              "description": "准头至地阁"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

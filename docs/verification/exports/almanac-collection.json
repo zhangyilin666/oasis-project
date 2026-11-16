@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "kind": "oasis-almanac-snapshots",
+  "records": [
+    {
+      "id": "almanac-1791014400000-1",
+      "savedAt": "2026-10-03T08:00:00.000Z",
+      "result": {
+        "schemaVersion": 1,
+        "ruleVersion": "almanac-v1",
+        "engine": {
+          "name": "lunar-typescript",
+          "version": "1.8.6",
+          "license": "MIT"
+        },
+        "input": {
+          "date": "2026-10-03",
+          "time": "12:00"
+        },
+        "observation": {
+          "timeZone": "UTC+08:00",
+          "utcOffset": 8,
+          "utcTime": "2026-10-03T04:00:00.000Z",
+          "weekday": "星期六"
+        },
+        "lunar": {
+          "year": 2026,
+          "month": 8,
+          "day": 23,
+          "isLeapMonth": false,
+          "label": "二〇二六年八月廿三",
+          "animal": "马"
+        },
+        "ganzhi": {
+          "lunarYear": "丙午",
+          "solarTermYear": "丙午",
+          "solarTermMonth": "丁酉",
+          "day": "庚戌"
+        },
+        "solarTerms": {
+          "current": "秋分",
+          "previous": {
+            "name": "秋分",
+            "kind": "中气",
+            "beijingTime": "2026-09-23 08:05:14",
+            "utcTime": "2026-09-23T00:05:14.000Z"
+          },
+          "next": {
+            "name": "寒露",
+            "kind": "节",
+            "beijingTime": "2026-10-08 14:29:17",
+            "utcTime": "2026-10-08T06:29:17.000Z"
+          },
+          "precisionNote": "交节时间为历法库计算值；显示秒位便于复核，独立参考核对到分钟，不代表秒级准确。"
+        },
+        "traditional": {
+          "yi": [
+            "嫁娶",
+            "订盟",
+            "纳采",
+            "祭祀",
+            "祈福",
+            "出行",
+            "修造",
+            "动土",
+            "移徙",
+            "入宅"
+          ],
+          "ji": [
+            "针灸",
+            "伐木",
+            "作梁",
+            "造庙",
+            "行丧",
+            "安葬"
+          ],
+          "monthGanZhi": "丁酉",
+          "convention": "通用传统宜忌采用整日口径：十二节交节所在日 00:00 起按新月干支查表，与上方按交节时刻换月的节令月可能不同。不同历书可有差异，不作个人择日结论。",
+          "sourceUrl": "https://6tail.cn/calendar/lunar.yiji.html"
+        },
+        "conventions": [
+          "公历日期范围为 1900–2099 年；日期与时间固定按 UTC+08:00 解释，不跟随设备时区，也不套用历史夏令时。",
+          "农历年及其生肖以农历正月初一 00:00 为界；闰月单独标明。",
+          "节气年干支以立春交节时刻为界；节令月干支以十二节的交节时刻为界。",
+          "日干支以 00:00 换日，23:00 不提前换日。",
+          "当前节气区间从上一交节计算时刻开始，到下一交节计算时刻之前结束；节与中气均纳入。"
+        ],
+        "sources": [
+          {
+            "title": "香港天文台 · 公历与农历日期对照表",
+            "url": "https://www.hko.gov.hk/sc/gts/time/conversion.htm",
+            "role": "reference"
+          },
+          {
+            "title": "香港天文台 · 二十四节气时刻（香港时间）",
+            "url": "https://www.hko.gov.hk/sc/gts/astronomy/Solar_Term.htm",
+            "role": "reference"
+          },
+          {
+            "title": "香港天文台 · 节气与太阳黄经",
+            "url": "https://www.hko.gov.hk/sc/gts/time/24solarterms.htm",
+            "role": "reference"
+          },
+          {
+            "title": "lunar · 干支计算口径",
+            "url": "https://6tail.cn/calendar/lunar.ganzhi.html",
+            "role": "calculation"
+          },
+          {
+            "title": "lunar · 节气计算说明",
+            "url": "https://6tail.cn/calendar/lunar.jieqi.html",
+            "role": "calculation"
+          },
+          {
+            "title": "lunar · 宜忌资料与流派口径",
+            "url": "https://6tail.cn/calendar/lunar.yiji.html",
+            "role": "traditional"
+          }
+        ]
+      }
+    }
+  ]
+}

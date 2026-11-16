@@ -1,4 +1,4 @@
-# 小易 — 一键部署配置
+# 猫来运转 — 一键部署配置
 # 用法:
 #   1. 复制 .env.example 为 .env，填入真实密钥
 #   2. docker compose up -d
@@ -42,7 +42,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      APP_NAME: ${APP_NAME:-小易}
+      APP_NAME: ${APP_NAME:-猫来运转}
       APP_VERSION: ${APP_VERSION:-0.1.0}
       DEBUG: "False"
       DATABASE_URL: mysql+pymysql://oasis_user:${MYSQL_PASSWORD}@db:3306/oasis_db?charset=utf8mb4
@@ -53,10 +53,18 @@ services:
       DEEPSEEK_DEFAULT_MODEL: ${DEEPSEEK_DEFAULT_MODEL:-deepseek-chat}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       ANTHROPIC_BASE_URL: ${ANTHROPIC_BASE_URL:-}
-      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      # 生产禁止使用 "*"（会关闭 credentials 并放行任意来源）。
+      # 默认给本地全栈 profile 一组显式来源；部署到公网时请在 .env 覆盖为真实站点地址，
+      # 例如 CORS_ORIGINS=https://cat.example.com（逗号分隔，不带空格）。
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost,http://127.0.0.1}
       RATE_LIMIT_ANALYZE_PER_DAY: ${RATE_LIMIT_ANALYZE_PER_DAY:-5}
+      RATE_LIMIT_DIVINATION_PER_DAY: ${RATE_LIMIT_DIVINATION_PER_DAY:-5}
     ports:
       - "127.0.0.1:8000:8000"
+    volumes:
+      # 知识库（RAG 语料）。不挂载则容器内目录为空，报告生成的引用溯源会退化。
+      # 与 docker-compose.api.yml / docker-compose.mobile.yml 保持一致。
+      - ./data_center/knowledge:/app/data_center/knowledge:ro
     networks:
       - oasis-net
     healthcheck:

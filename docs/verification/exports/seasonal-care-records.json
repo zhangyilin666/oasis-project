@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "kind": "seasonal-care",
+  "records": [
+    {
+      "id": "seasonal-care-1791020221089-1",
+      "savedAt": "2026-10-03T09:37:01.089Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "seasonal-care-v1",
+        "reading": {
+          "schemaVersion": 1,
+          "ruleVersion": "seasonal-care-v1",
+          "contentVersion": "seasonal-care-content-v1",
+          "query": {
+            "date": "2026-10-03",
+            "theme": "all"
+          },
+          "calendar": {
+            "ruleVersion": "almanac-v1",
+            "engine": "lunar-typescript",
+            "engineVersion": "1.8.6",
+            "timeZone": "UTC+08:00",
+            "sampleTime": "12:00",
+            "utcTime": "2026-10-03T04:00:00.000Z",
+            "lunarLabel": "二〇二六年八月廿三",
+            "currentTerm": "秋分",
+            "previous": {
+              "name": "秋分",
+              "kind": "中气",
+              "beijingTime": "2026-09-23 08:05:14",
+              "utcTime": "2026-09-23T00:05:14.000Z"
+            },
+            "next": {
+              "name": "寒露",
+              "kind": "节",
+              "beijingTime": "2026-10-08 14:29:17",
+              "utcTime": "2026-10-08T06:29:17.000Z"
+            },
+            "precisionNote": "交节时间为历法库计算值；显示秒位便于复核，独立参考核对到分钟，不代表秒级准确。",
+            "season": "autumn",
+            "seasonLabel": "秋",
+            "source": {
+              "title": "香港天文台 · 二十四节气定义与季候背景",
+              "url": "https://www.hko.gov.hk/sc/gts/time/24solarterms.htm",
+              "checkedAt": "2026-10-03"
+            }
+          },
+          "cultureCards": [
+            {
+              "id": "culture-autumn",
+              "layer": "culture",
+              "season": "autumn",
+              "theme": "seasonal",
+              "title": "秋 · 读“容平”",
+              "excerpt": "容平",
+              "summary": "篇中以收敛、安宁描写秋日。这里保留其文化意象，作为观察与整理日常的阅读线索。",
+              "reflectionPrompt": "这个时节，你想整理哪一件日常小事？",
+              "source": {
+                "title": "《黄帝内经·素问》第一卷",
+                "author": "古代医籍汇编；本页不采用单一作者署名",
+                "url": "https://zh.wikisource.org/w/index.php?title=黃帝內經/素問第一卷&oldid=2083230",
+                "location": "四气调神大论篇第二 · 春夏秋冬四段",
+                "publishedAt": null,
+                "revision": "维基文库文本修订 2083230（2021-10-17）",
+                "checkedAt": "2026-10-03"
+              }
+            }
+          ],
+          "healthCards": [
+            {
+              "id": "health-food",
+              "layer": "public-health",
+              "season": "all",
+              "theme": "food",
+              "title": "日常饮食 · 看整体与多样性",
+              "excerpt": "",
+              "summary": "WHO 将健康膳食概括为营养充足、平衡、适量、多样四个原则；具体组合随个人情况、文化和当地食物而异。",
+              "reflectionPrompt": "只记录：今天餐食里有哪些不同类别的食物？",
+              "source": {
+                "title": "Healthy diet",
+                "author": "世界卫生组织（WHO）",
+                "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+                "location": "Overview · four principles",
+                "publishedAt": "2026-01-26",
+                "revision": null,
+                "checkedAt": "2026-10-03"
+              }
+            },
+            {
+              "id": "health-movement",
+              "layer": "public-health",
+              "season": "all",
+              "theme": "movement",
+              "title": "日常活动 · 看见已有的活动",
+              "excerpt": "",
+              "summary": "WHO 把通勤、家务和休闲中的身体活动都纳入讨论，并强调有活动好过完全不动。活动安排须结合实际能力与环境。",
+              "reflectionPrompt": "今天做过哪些适合自己的活动？也可以如实记下休息。",
+              "source": {
+                "title": "Physical activity",
+                "author": "世界卫生组织（WHO）",
+                "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+                "location": "Overview；How much physical activity is recommended?",
+                "publishedAt": "2024-06-26",
+                "revision": null,
+                "checkedAt": "2026-10-03"
+              }
+            },
+            {
+              "id": "health-routine",
+              "layer": "public-health",
+              "season": "all",
+              "theme": "routine",
+              "title": "作息记录 · 留意时间与睡眠质量",
+              "excerpt": "",
+              "summary": "CDC 建议尽量每天在相近时间入睡和起床；睡眠需要随年龄变化，质量同样重要。作息笔记可以帮助自己看见习惯。",
+              "reflectionPrompt": "今天的起居节奏怎样？写下想保留或调整的一件事。",
+              "source": {
+                "title": "About Sleep",
+                "author": "美国疾病控制与预防中心（CDC）",
+                "url": "https://www.cdc.gov/sleep/about/index.html",
+                "location": "Key points；What to do；Sleep quality",
+                "publishedAt": "2024-05-15",
+                "revision": null,
+                "checkedAt": "2026-10-03"
+              }
+            }
+          ],
+          "conventions": [
+            "按所选公历日期的 12:00、固定 UTC+08:00 查询，范围 1900–2099 年；不跟随设备时区或历史夏令时。交节日以中午所处的节气区间归类。",
+            "四时目录以立春、立夏、立秋、立冬为分界，每季六个节气。这是文化阅读的组织方式，不表示用户所在地的气象季节。",
+            "节气名称部分反映古代中原地区的气候与农事。南北半球及不同地区的天气、物候可能不同，请记录当地实际观察。",
+            "文化导读是对古代文本的原创短评；历史养生观与现代公共健康资料分区展示，古文中的病因和疗效说法不转为本页建议。",
+            "公共健康卡为所列机构资料的短摘要，全年适用的主题不会因节气改变成处方；本页不生成诊断、治疗、食疗配方或命盘健康推断。",
+            "习惯、状态和笔记由你手动记录，不打健康分、不判断是否达标。已有医嘱优先；持续健康困扰应向合资格专业人员咨询。",
+            "资料更新日期与本版复核日期分别保留；记录保存完整卡片与来源快照，回看不会静默替换为新内容。"
+          ]
+        },
+        "personal": {
+          "habit": "合成验收：作息观察",
+          "status": "observed",
+          "observation": "记录实际天气，不套用地区季候。",
+          "note": "资料来源随快照保存。"
+        }
+      }
+    }
+  ]
+}

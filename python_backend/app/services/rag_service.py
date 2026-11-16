@@ -24,6 +24,7 @@ RAG 知识库检索服务。
 from __future__ import annotations
 
 import re
+import hashlib
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional, Protocol
@@ -145,11 +146,11 @@ class KeywordRetriever:
         # 分词（简单按字/词切分，后续可接 jieba）
         keywords = self._tokenize(query)
 
-        scored: list[tuple[float, Document, str]] = []
-        for doc, para_text, _ in self._paragraphs:
+        scored = []
+        for doc, para_text, paragraph_index in self._paragraphs:
             score = self._compute_score(keywords, para_text, doc.title)
             if score > 0:
-                scored.append((score, doc, para_text))
+                scored.append((score, doc, para_text, paragraph_index))
 
         # 按分数降序排列
         scored.sort(key=lambda x: x[0], reverse=True)
@@ -158,16 +159,19 @@ class KeywordRetriever:
         if scored:
             max_score = scored[0][0]
             if max_score > 0:
-                scored = [(s / max_score, d, p) for s, d, p in scored]
+                scored = [(s / max_score, d, p, i) for s, d, p, i in scored]
 
         results = []
-        for score, doc, para_text in scored[:top_k]:
+        for score, doc, para_text, paragraph_index in scored[:top_k]:
             results.append(SearchResult(
                 document_id=doc.id,
                 title=doc.title,
                 content_snippet=para_text[:300],
                 score=round(score, 4),
-                metadata={"source_file": doc.source_file},
+                metadata={"source_file": doc.source_file, "paragraph": paragraph_index + 1,
+                          "content_kind": "项目学习笔记（含传统文献摘录与现代解释，未作版本校勘）",
+                          "display_title": doc.content.splitlines()[0].lstrip('# ').strip() or doc.title,
+                          "sha256": hashlib.sha256(doc.content.encode('utf-8')).hexdigest()},
             ))
 
         logger.debug(
@@ -244,7 +248,8 @@ class KnowledgeBase:
         """
         if data_dir is None:
             # 从 rag_service.py 向上找项目根目录
-            data_dir = Path(__file__).resolve().parents[3] / "data_center" / "knowledge"
+            from app.core.config import settings
+            data_dir = Path(settings.KNOWLEDGE_DIR) if settings.KNOWLEDGE_DIR else Path(__file__).resolve().parents[3] / "data_center" / "knowledge"
         self.data_dir = Path(data_dir)
         self.retriever: Retriever = retriever or KeywordRetriever()
 

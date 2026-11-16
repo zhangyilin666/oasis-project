@@ -1,0 +1,149 @@
+{
+  "verifiedAt": "2026-10-03T09:54:59.043Z",
+  "capturedAt": "2026-10-03T09:53:06.201Z",
+  "method": "Actual H5 export controls → explicit Copy JSON → clipboard → UTF-8 file → exact text readback → production source/snapshot validation",
+  "input": "Only synthetic acceptance records created during page testing. No direct browser storage inspection or user account export.",
+  "boundary": "Clipboard fallback verified. IAB native download completion timed out and is not certified. This is not Android, iPhone Safari, or WeChat device verification.",
+  "files": [
+    {
+      "name": "cross-reading-ui.json",
+      "kind": "cross-reading",
+      "records": 2,
+      "bytes": 296672,
+      "sha256": "50aba2c25332a2a472c0ae02e6f007257f1bc55c0c080783072875d71992c5a1"
+    },
+    {
+      "name": "divination-ui.json",
+      "kind": "divination",
+      "records": 3,
+      "bytes": 20131,
+      "sha256": "9916bba5696a27843294897c4292b9f5b1fd5a8b521c8ae8ba71a6691c1d6e07"
+    },
+    {
+      "name": "almanac-ui.json",
+      "kind": "almanac",
+      "records": 1,
+      "bytes": 4096,
+      "sha256": "dcf684c9557fb3431357bb0bccf1bb32a384e6d0c6b29c057c5c1da79f557285"
+    },
+    {
+      "name": "tarot-ui.json",
+      "kind": "tarot",
+      "records": 1,
+      "bytes": 3297,
+      "sha256": "0335f4805434e6992c416273f9cfe376a1abe890a9c4315b6e77db6f771596ac"
+    },
+    {
+      "name": "practice-ui.json",
+      "kind": "practice",
+      "records": 1,
+      "bytes": 1272,
+      "sha256": "bfd1facb9f15b662cb324dd1785404ceefa59028317edd22b5c41e3e4b770ad8"
+    },
+    {
+      "name": "space-ui.json",
+      "kind": "space",
+      "records": 2,
+      "bytes": 2638,
+      "sha256": "c3cf70ab4da217819b4651c73b1b923676d48cc531e8f29b99b56034a518e472"
+    },
+    {
+      "name": "names-ui.json",
+      "kind": "name-culture",
+      "records": 1,
+      "bytes": 4402,
+      "sha256": "c43cce995a342d34d39af49942c82be9cca98883cab414406feebea63f12a1c2"
+    },
+    {
+      "name": "date-selection-ui.json",
+      "kind": "date-selection",
+      "records": 1,
+      "bytes": 19029,
+      "sha256": "cc6bf2f8993bded84132caff6a9d19b9b20fc5339024c122367eaee99f114220"
+    },
+    {
+      "name": "qimen-ui.json",
+      "kind": "qimen",
+      "records": 1,
+      "bytes": 5621,
+      "sha256": "347ae009eceaaca4cd63e7e849db3512c8dd64422c4fbaff1851e0e4850361b7"
+    },
+    {
+      "name": "jyotish-ui.json",
+      "kind": "jyotish",
+      "records": 1,
+      "bytes": 29540,
+      "sha256": "6cf95570c23b0799cdd7729c7fb4f0f63670d654caed71e9e23f2088e382d1ba"
+    },
+    {
+      "name": "qizheng-ui.json",
+      "kind": "qizheng",
+      "records": 1,
+      "bytes": 9648,
+      "sha256": "9a9ef32d35e8dcffb1745398aac2d73810b1028276a886fd5a0873d982054526"
+    },
+    {
+      "name": "seasonal-care-ui.json",
+      "kind": "seasonal-care",
+      "records": 1,
+      "bytes": 7345,
+      "sha256": "83fbcf44e85409b24e930ecfc39c5f90708e3e3cbe70639367238187461ef31d"
+    },
+    {
+      "name": "physiognomy-ui.json",
+      "kind": "physiognomy-culture",
+      "records": 1,
+      "bytes": 2429,
+      "sha256": "0f05bcb0885477a76a46d903bd2302ca8527e5757b0526894f8acbbd374e5d0c"
+    },
+    {
+      "name": "flow-study-ui.json",
+      "kind": "flow-study",
+      "records": 2,
+      "bytes": 70611,
+      "sha256": "06c4d62523761d7d4a54b366683f3efe3e0216855f43498f72d239d83302bde0"
+    },
+    {
+      "name": "western-study-ui.json",
+      "kind": "western-study",
+      "records": 1,
+      "bytes": 22567,
+      "sha256": "c6b3c3ecda15668f643fa21590d49ae9393ffd6a323601b23b3b21b0c7356553"
+    },
+    {
+      "name": "liuren-ui.json",
+      "kind": "liuren",
+      "records": 1,
+      "bytes": 4714,
+      "sha256": "4d81b3e7e0cfe4e70c07f17120dac6b9817c1a1f88320f6a30242823c674ad50"
+    },
+    {
+      "name": "taiyi-ui.json",
+      "kind": "taiyi",
+      "records": 2,
+      "bytes": 21131,
+      "sha256": "00bd466dc5edd285680ba3f15432befd36cd5d77ae912c027940830704faf32d"
+    },
+    {
+      "name": "bazhai-ui.json",
+      "kind": "bazhai",
+      "records": 1,
+      "bytes": 6178,
+      "sha256": "4434c131940f32ec2f8f184b761bbf87fa1877817cde5a3ca054e0f64793f306"
+    },
+    {
+      "name": "qizheng-lodges-ui.json",
+      "kind": "qizheng-lodges",
+      "records": 1,
+      "bytes": 14189,
+      "sha256": "16d24da97bc0421995f01eefb3bb419e63a14e96469dcb5b4723c35663d3f635"
+    },
+    {
+      "name": "birth-charts-ui.json",
+      "kind": "birth-charts",
+      "records": 1,
+      "bytes": 51457,
+      "sha256": "aec3a3e3b7358c4932a4d7eed8adef4ebd1fffec7747640d33d9a82dd7b97dd2"
+    }
+  ]
+}

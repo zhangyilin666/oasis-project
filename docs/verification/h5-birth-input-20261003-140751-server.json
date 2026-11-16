@@ -1,0 +1,9 @@
+{
+  "release": "h5-birth-input-20261003-140751",
+  "bundleSha256": "24cf6fc8dce09d4afb090a0e4e695782bbe6a27035d2e3fa7e7fcc68a9fec78f",
+  "files": 128,
+  "indexSha256": "684020f5162c96e62fa3709aea09683f1d2ed45fb00a6b7628d42249979bf029",
+  "backup": "/root/oasis-backups/h5-birth-input-20261003-140751",
+  "containersUnchanged": true,
+  "health": "ok"
+}

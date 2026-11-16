@@ -33,6 +33,8 @@ from app.core.config import settings
 from app.core.logger import logger
 from app.models.daily_fortune_model import DailyFortune
 from app.models.report_model import Report
+from app.models.report_status import ReportStatus
+from app.models.user_model import User
 from app.services.calendar_service import (
     BaziResult,
     DailyFortuneData,
@@ -55,6 +57,7 @@ def _get_deepseek_client() -> OpenAI:
         _deepseek_client = OpenAI(
             api_key=settings.DEEPSEEK_API_KEY,
             base_url=settings.DEEPSEEK_BASE_URL,
+            max_retries=0,
         )
     return _deepseek_client
 
@@ -64,7 +67,7 @@ def _get_anthropic_client():
     global _anthropic_client
     if _anthropic_client is None:
         import anthropic as anthropic_sdk
-        kwargs = {"api_key": settings.ANTHROPIC_API_KEY}
+        kwargs = {"api_key": settings.ANTHROPIC_API_KEY, "max_retries": 0}
         if settings.ANTHROPIC_BASE_URL:
             kwargs["base_url"] = settings.ANTHROPIC_BASE_URL
         _anthropic_client = anthropic_sdk.Anthropic(**kwargs)
@@ -99,6 +102,7 @@ def get_daily_fortune(
     user_id: int,
     db: Session,
     today: Optional[date] = None,
+    report_id: Optional[int] = None,
 ) -> dict:
     """
     获取今日运势（带缓存）。
@@ -125,28 +129,31 @@ def get_daily_fortune(
         RuntimeError: AI 调用失败。
     """
     if today is None:
-        today = date.today()
+        from datetime import timezone, timedelta
+        today = datetime.now(timezone(timedelta(hours=8))).date()
+
+    # 同一用户串行生成，防止并发打开首页时重复付费或撞唯一键。
+    db.execute(select(User.id).where(User.id == user_id).with_for_update()).first()
+    stmt = select(Report).where(
+        Report.user_id == user_id, Report.status == ReportStatus.COMPLETED, Report.deleted_at.is_(None),
+    )
+    if report_id is not None:
+        stmt = stmt.where(Report.id == report_id)
+    report = db.scalar(stmt.order_by(Report.created_at.desc(), Report.id.desc()).limit(1).with_for_update())
+    if report is None or not report.calendar_data:
+        raise ValueError("请先选择一份已完成的八字报告")
 
     # ── 1. 查缓存 ──
     cached = db.scalar(
         select(DailyFortune).where(
             DailyFortune.user_id == user_id,
             DailyFortune.fortune_date == today,
-        )
+        ).with_for_update()
     )
-    if cached:
+    if cached and cached.report_id == report.id:
         logger.info("Daily fortune cache hit: user_id=%s date=%s", user_id, today)
-        return _fortune_to_response(cached, is_cached=True)
-
-    # ── 2. 加载用户最新 Report ──
-    report = db.scalar(
-        select(Report)
-        .where(Report.user_id == user_id)
-        .order_by(Report.created_at.desc())
-        .limit(1)
-    )
-    if not report:
-        raise ValueError("用户还没有八字报告，请先完成八字分析")
+        db.commit()
+        return {**_fortune_to_response(cached, is_cached=True), "report_id": report.id, "birth_info": report.birth_info}
 
     # ── 3. 重建八字/大运数据 ──
     calendar_data = report.calendar_data or {}
@@ -177,7 +184,12 @@ def get_daily_fortune(
         lucky_direction=ai_response.get("lucky_direction"),
         warning=ai_response.get("warning"),
     )
-    db.add(daily_fortune)
+    if cached:
+        for key in ("report_id", "day_gan_zhi", "day_relation", "clash_info", "fortune_text", "lucky_color", "lucky_direction", "warning"):
+            setattr(cached, key, getattr(daily_fortune, key))
+        daily_fortune = cached
+    else:
+        db.add(daily_fortune)
     db.commit()
     db.refresh(daily_fortune)
 
@@ -188,7 +200,7 @@ def get_daily_fortune(
         fortune_data.day_gan_zhi,
     )
 
-    return _fortune_to_response(daily_fortune, is_cached=False)
+    return {**_fortune_to_response(daily_fortune, is_cached=False), "report_id": report.id, "birth_info": report.birth_info}
 
 
 # ── 内部辅助函数 ──────────────────────────────────────────────────────
@@ -284,6 +296,8 @@ def _call_ai(fortune_data: DailyFortuneData) -> dict:
     elif provider == "anthropic" and settings.ANTHROPIC_API_KEY:
         return _call_anthropic_api(fortune_data)
     else:
+        if not settings.ALLOW_MOCK_AI:
+            raise RuntimeError("AI 服务尚未配置，请联系管理员")
         logger.warning("No AI provider configured, returning mock daily fortune")
         return _mock_daily_fortune(fortune_data)
 
@@ -316,9 +330,12 @@ def _call_deepseek_api(fortune_data: DailyFortuneData) -> dict:
     try:
         response = client.chat.completions.create(
             model=model,
-            max_tokens=512,
+            max_tokens=1024,
             temperature=0.85,
             messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            **({"extra_body": {"thinking": {"type": "disabled"}}}
+               if model in ("deepseek-flash", "deepseek-v4-pro") else {}),
             timeout=60.0,
         )
     except Exception as exc:
@@ -339,7 +356,7 @@ def _call_deepseek_api(fortune_data: DailyFortuneData) -> dict:
         usage.get("output_tokens", 0),
     )
 
-    if not text:
+    if not text or (response.choices and response.choices[0].finish_reason == "length"):
         raise RuntimeError("AI 返回了空内容")
 
     return _parse_ai_response(text)
@@ -363,7 +380,7 @@ def _call_anthropic_api(fortune_data: DailyFortuneData) -> dict:
     try:
         message = client.messages.create(
             model=model,
-            max_tokens=512,
+            max_tokens=1024,
             temperature=0.85,
             messages=[{"role": "user", "content": prompt}],
             timeout=60.0,
@@ -390,7 +407,7 @@ def _call_anthropic_api(fortune_data: DailyFortuneData) -> dict:
         usage.get("output_tokens", 0),
     )
 
-    if not text:
+    if not text or getattr(message, "stop_reason", None) == "max_tokens":
         raise RuntimeError("AI 返回了空内容")
 
     return _parse_ai_response(text)
@@ -406,46 +423,40 @@ def _extract_text(response) -> str:
 
 
 def _parse_ai_response(text: str) -> dict:
-    """解析 AI 返回的 JSON（处理可能的 markdown 包裹）。"""
-    # 先尝试直接解析
-    try:
-        return json.loads(text.strip())
-    except json.JSONDecodeError:
-        pass
-
-    # 尝试提取 ```json ... ``` 包裹的 JSON
+    """接收 JSON 对象，拒绝空正文与非法字段，避免坏结果写入每日缓存。"""
+    candidates = [text.strip()]
     json_match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
     if json_match:
-        try:
-            return json.loads(json_match.group(1).strip())
-        except json.JSONDecodeError:
-            pass
-
-    # 尝试匹配大括号包裹的 JSON 片段
+        candidates.append(json_match.group(1).strip())
     brace_match = re.search(r"\{[\s\S]*\}", text)
     if brace_match:
+        candidates.append(brace_match.group(0))
+    for candidate in candidates:
         try:
-            return json.loads(brace_match.group(0))
+            data = json.loads(candidate)
         except json.JSONDecodeError:
-            pass
-
-    # 兜底：把整个文本当作 fortune_text
-    logger.warning("Failed to parse AI JSON response, using raw text")
-    return {
-        "fortune_text": text.strip()[:300],
-        "lucky_color": "天蓝色",
-        "lucky_direction": "东方",
-        "warning": "无",
-    }
+            continue
+        if not isinstance(data, dict):
+            continue
+        result = {}
+        for key, limit in (("fortune_text", 2000), ("lucky_color", 20), ("lucky_direction", 20), ("warning", 200)):
+            value = data.get(key, "")
+            if not isinstance(value, str) or len(value) > limit:
+                raise RuntimeError("AI 返回字段格式不正确，请重试")
+            result[key] = value.strip()
+        if not result["fortune_text"]:
+            raise RuntimeError("AI 返回正文为空，请重试")
+        return result
+    raise RuntimeError("AI 返回内容不是有效的 JSON 对象，请重试")
 
 
 def _mock_daily_fortune(fortune_data: DailyFortuneData) -> dict:
     """当 AI 不可用时返回的 mock 数据。"""
     relation = fortune_data.day_relation or "比肩"
-    clash = fortune_data.clash_info or ""
+    clash = fortune_data.clash_info if fortune_data.clash_info != "无冲合" else ""
     day_gz = fortune_data.day_gan_zhi
 
-    mock_text = f"今天{day_gz}日，是您的{relation}日。"
+    mock_text = f"【演示内容】今天{day_gz}日，是您的{relation}日。"
 
     if "冲" in clash:
         mock_text += f" 今天是{clash.split('·')[0]}，建议保持低调，避免冲突。"

@@ -1,0 +1,6 @@
+# Apply after docker-compose.api-ip.yml to keep the existing API project and DB.
+services:
+  api:
+    volumes:
+      - ./deploy/Caddyfile.api-mobile:/etc/caddy/Caddyfile:ro
+      - ./oasis-uniapp/dist/build/h5:/srv:ro

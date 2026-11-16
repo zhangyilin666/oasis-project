@@ -1,5 +1,5 @@
 #!/bin/bash
-# 小易 — 一键部署脚本
+# 猫来运转 — 一键部署脚本
 # 用法:
 #   chmod +x deploy/deploy.sh
 #   ./deploy/deploy.sh
@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 echo "╔══════════════════════════════════╗"
-echo "║     小易 生产环境部署脚本         ║"
+echo "║     猫来运转 生产环境部署脚本         ║"
 echo "╚══════════════════════════════════╝"
 
 # ─── 1. 检查前置条件 ───

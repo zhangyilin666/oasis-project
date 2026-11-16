@@ -18,6 +18,17 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
+    # 最早版本曾依赖手工创建 users；全新数据库也必须能够从零迁移。
+    if not sa.inspect(op.get_bind()).has_table("users"):
+        op.create_table(
+            "users",
+            sa.Column("id", sa.Integer(), primary_key=True, autoincrement=True),
+            sa.Column("openid", sa.String(255), nullable=False, unique=True),
+            sa.Column("nickname", sa.String(255), nullable=True),
+            sa.Column("avatar_url", sa.String(500), nullable=True),
+            sa.Column("created_at", sa.DateTime(), server_default=sa.func.now(), nullable=False),
+            sa.Column("updated_at", sa.DateTime(), server_default=sa.func.now(), nullable=False),
+        )
     # ---- reports ----
     op.create_table(
         "reports",

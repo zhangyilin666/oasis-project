@@ -1,0 +1,9 @@
+{
+  "release": "h5-recovery-code-20261004-102237",
+  "bundleSha256": "0661c56928af0f89a4d59935490eecf4e77ca3c2445083616a259a11287eff98",
+  "files": 73,
+  "indexSha256": "f660aef3fd911d2ce789971359060e05c025d08533086d69e867f64a51b73893",
+  "backup": "/root/oasis-backups/h5-recovery-code-20261004-102237",
+  "containersUnchanged": true,
+  "health": "ok"
+}

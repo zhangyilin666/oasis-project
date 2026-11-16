@@ -1,0 +1,2582 @@
+{
+  "schemaVersion": 1,
+  "kind": "flow-study",
+  "records": [
+    {
+      "id": "flow-study-1791019493901-1",
+      "savedAt": "2026-10-03T09:24:53.901Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "flow-study-v1",
+        "input": {
+          "name": "运限验收：空偏移转IANA",
+          "birth": {
+            "date": "2000-08-16",
+            "time": "04:30",
+            "utcOffset": 8,
+            "timeZone": "Asia/Shanghai",
+            "gender": "女",
+            "timePrecision": "minute"
+          },
+          "observation": {
+            "date": "2023-08-28",
+            "time": "00:30",
+            "utcOffset": 8,
+            "timeZone": "Asia/Shanghai"
+          },
+          "note": "公开示例固定为寅时出生、2023 年 8 月 28 日子时观测。虚岁采用本版春节换年规则。"
+        },
+        "birthTime": {
+          "utcTime": "2000-08-15T20:30:00.000Z",
+          "beijingTime": "2000-08-16 04:30:00",
+          "resolvedUtcOffset": 8,
+          "mode": "iana",
+          "timeZone": "Asia/Shanghai"
+        },
+        "observationTime": {
+          "utcTime": "2023-08-27T16:30:00.000Z",
+          "beijingTime": "2023-08-28 00:30:00",
+          "resolvedUtcOffset": 8,
+          "mode": "iana",
+          "timeZone": "Asia/Shanghai"
+        },
+        "bazi": {
+          "engine": "lunar-typescript 1.8.6",
+          "ruleProfile": "bazi-day2-yun1",
+          "birthPillars": [
+            "庚辰",
+            "甲申",
+            "丙午",
+            "庚寅"
+          ],
+          "dayMaster": "丙",
+          "observationPillars": [
+            "癸卯",
+            "庚申",
+            "戊午",
+            "壬子"
+          ],
+          "solarYear": 2023,
+          "yearly": {
+            "ganZhi": "癸卯",
+            "stemGod": "正官",
+            "hidden": [
+              {
+                "stem": "乙",
+                "god": "正印"
+              }
+            ]
+          },
+          "currentMonth": {
+            "ganZhi": "庚申",
+            "stemGod": "偏财",
+            "hidden": [
+              {
+                "stem": "庚",
+                "god": "偏财"
+              },
+              {
+                "stem": "壬",
+                "god": "七杀"
+              },
+              {
+                "stem": "戊",
+                "god": "食神"
+              }
+            ]
+          },
+          "yearStart": "2023-02-04 10:42:33",
+          "yearEnd": "2024-02-04 16:27:07",
+          "months": [
+            {
+              "order": 1,
+              "jie": "立春",
+              "nextJie": "惊蛰",
+              "start": "2023-02-04 10:42:33",
+              "end": "2023-03-06 04:36:14",
+              "pillar": {
+                "ganZhi": "甲寅",
+                "stemGod": "偏印",
+                "hidden": [
+                  {
+                    "stem": "甲",
+                    "god": "偏印"
+                  },
+                  {
+                    "stem": "丙",
+                    "god": "比肩"
+                  },
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 2,
+              "jie": "惊蛰",
+              "nextJie": "清明",
+              "start": "2023-03-06 04:36:14",
+              "end": "2023-04-05 09:13:04",
+              "pillar": {
+                "ganZhi": "乙卯",
+                "stemGod": "正印",
+                "hidden": [
+                  {
+                    "stem": "乙",
+                    "god": "正印"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 3,
+              "jie": "清明",
+              "nextJie": "立夏",
+              "start": "2023-04-05 09:13:04",
+              "end": "2023-05-06 02:18:46",
+              "pillar": {
+                "ganZhi": "丙辰",
+                "stemGod": "比肩",
+                "hidden": [
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  },
+                  {
+                    "stem": "乙",
+                    "god": "正印"
+                  },
+                  {
+                    "stem": "癸",
+                    "god": "正官"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 4,
+              "jie": "立夏",
+              "nextJie": "芒种",
+              "start": "2023-05-06 02:18:46",
+              "end": "2023-06-06 06:18:21",
+              "pillar": {
+                "ganZhi": "丁巳",
+                "stemGod": "劫财",
+                "hidden": [
+                  {
+                    "stem": "丙",
+                    "god": "比肩"
+                  },
+                  {
+                    "stem": "庚",
+                    "god": "偏财"
+                  },
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 5,
+              "jie": "芒种",
+              "nextJie": "小暑",
+              "start": "2023-06-06 06:18:21",
+              "end": "2023-07-07 16:30:41",
+              "pillar": {
+                "ganZhi": "戊午",
+                "stemGod": "食神",
+                "hidden": [
+                  {
+                    "stem": "丁",
+                    "god": "劫财"
+                  },
+                  {
+                    "stem": "己",
+                    "god": "伤官"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 6,
+              "jie": "小暑",
+              "nextJie": "立秋",
+              "start": "2023-07-07 16:30:41",
+              "end": "2023-08-08 02:22:53",
+              "pillar": {
+                "ganZhi": "己未",
+                "stemGod": "伤官",
+                "hidden": [
+                  {
+                    "stem": "己",
+                    "god": "伤官"
+                  },
+                  {
+                    "stem": "丁",
+                    "god": "劫财"
+                  },
+                  {
+                    "stem": "乙",
+                    "god": "正印"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 7,
+              "jie": "立秋",
+              "nextJie": "白露",
+              "start": "2023-08-08 02:22:53",
+              "end": "2023-09-08 05:26:43",
+              "pillar": {
+                "ganZhi": "庚申",
+                "stemGod": "偏财",
+                "hidden": [
+                  {
+                    "stem": "庚",
+                    "god": "偏财"
+                  },
+                  {
+                    "stem": "壬",
+                    "god": "七杀"
+                  },
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  }
+                ]
+              },
+              "current": true
+            },
+            {
+              "order": 8,
+              "jie": "白露",
+              "nextJie": "寒露",
+              "start": "2023-09-08 05:26:43",
+              "end": "2023-10-08 21:15:34",
+              "pillar": {
+                "ganZhi": "辛酉",
+                "stemGod": "正财",
+                "hidden": [
+                  {
+                    "stem": "辛",
+                    "god": "正财"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 9,
+              "jie": "寒露",
+              "nextJie": "立冬",
+              "start": "2023-10-08 21:15:34",
+              "end": "2023-11-08 00:35:35",
+              "pillar": {
+                "ganZhi": "壬戌",
+                "stemGod": "七杀",
+                "hidden": [
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  },
+                  {
+                    "stem": "辛",
+                    "god": "正财"
+                  },
+                  {
+                    "stem": "丁",
+                    "god": "劫财"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 10,
+              "jie": "立冬",
+              "nextJie": "大雪",
+              "start": "2023-11-08 00:35:35",
+              "end": "2023-12-07 17:32:55",
+              "pillar": {
+                "ganZhi": "癸亥",
+                "stemGod": "正官",
+                "hidden": [
+                  {
+                    "stem": "壬",
+                    "god": "七杀"
+                  },
+                  {
+                    "stem": "甲",
+                    "god": "偏印"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 11,
+              "jie": "大雪",
+              "nextJie": "小寒",
+              "start": "2023-12-07 17:32:55",
+              "end": "2024-01-06 04:49:22",
+              "pillar": {
+                "ganZhi": "甲子",
+                "stemGod": "偏印",
+                "hidden": [
+                  {
+                    "stem": "癸",
+                    "god": "正官"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 12,
+              "jie": "小寒",
+              "nextJie": "立春",
+              "start": "2024-01-06 04:49:22",
+              "end": "2024-02-04 16:27:07",
+              "pillar": {
+                "ganZhi": "乙丑",
+                "stemGod": "正印",
+                "hidden": [
+                  {
+                    "stem": "己",
+                    "god": "伤官"
+                  },
+                  {
+                    "stem": "癸",
+                    "god": "正官"
+                  },
+                  {
+                    "stem": "辛",
+                    "god": "正财"
+                  }
+                ]
+              },
+              "current": false
+            }
+          ]
+        },
+        "ziwei": {
+          "engine": "iztro 2.6.1",
+          "ruleProfile": "ziwei-normal-current",
+          "config": {
+            "yearDivide": "normal",
+            "horoscopeDivide": "normal",
+            "ageDivide": "normal",
+            "dayDivide": "current",
+            "algorithm": "default"
+          },
+          "fixLeap": true,
+          "lunarDate": "二〇二三年七月十三",
+          "nominalAge": 24,
+          "inputTimeIndex": 0,
+          "effectiveTimeIndex": 0,
+          "palaces": [
+            {
+              "index": 0,
+              "name": "财帛",
+              "stem": "戊",
+              "branch": "寅",
+              "stars": [
+                "武曲",
+                "天相",
+                "天马"
+              ],
+              "ages": [
+                9,
+                21,
+                33,
+                45,
+                57,
+                69,
+                81,
+                93,
+                105,
+                117
+              ],
+              "decadalRange": [
+                43,
+                52
+              ]
+            },
+            {
+              "index": 1,
+              "name": "子女",
+              "stem": "己",
+              "branch": "卯",
+              "stars": [
+                "太阳",
+                "天梁"
+              ],
+              "ages": [
+                8,
+                20,
+                32,
+                44,
+                56,
+                68,
+                80,
+                92,
+                104,
+                116
+              ],
+              "decadalRange": [
+                33,
+                42
+              ]
+            },
+            {
+              "index": 2,
+              "name": "夫妻",
+              "stem": "庚",
+              "branch": "辰",
+              "stars": [
+                "七杀",
+                "右弼",
+                "火星"
+              ],
+              "ages": [
+                7,
+                19,
+                31,
+                43,
+                55,
+                67,
+                79,
+                91,
+                103,
+                115
+              ],
+              "decadalRange": [
+                23,
+                32
+              ]
+            },
+            {
+              "index": 3,
+              "name": "兄弟",
+              "stem": "辛",
+              "branch": "巳",
+              "stars": [
+                "天机"
+              ],
+              "ages": [
+                6,
+                18,
+                30,
+                42,
+                54,
+                66,
+                78,
+                90,
+                102,
+                114
+              ],
+              "decadalRange": [
+                13,
+                22
+              ]
+            },
+            {
+              "index": 4,
+              "name": "命宫",
+              "stem": "壬",
+              "branch": "午",
+              "stars": [
+                "紫微",
+                "文曲"
+              ],
+              "ages": [
+                5,
+                17,
+                29,
+                41,
+                53,
+                65,
+                77,
+                89,
+                101,
+                113
+              ],
+              "decadalRange": [
+                3,
+                12
+              ]
+            },
+            {
+              "index": 5,
+              "name": "父母",
+              "stem": "癸",
+              "branch": "未",
+              "stars": [
+                "天钺",
+                "陀罗"
+              ],
+              "ages": [
+                4,
+                16,
+                28,
+                40,
+                52,
+                64,
+                76,
+                88,
+                100,
+                112
+              ],
+              "decadalRange": [
+                113,
+                122
+              ]
+            },
+            {
+              "index": 6,
+              "name": "福德",
+              "stem": "甲",
+              "branch": "申",
+              "stars": [
+                "破军",
+                "文昌",
+                "禄存"
+              ],
+              "ages": [
+                3,
+                15,
+                27,
+                39,
+                51,
+                63,
+                75,
+                87,
+                99,
+                111
+              ],
+              "decadalRange": [
+                103,
+                112
+              ]
+            },
+            {
+              "index": 7,
+              "name": "田宅",
+              "stem": "乙",
+              "branch": "酉",
+              "stars": [
+                "地空",
+                "擎羊"
+              ],
+              "ages": [
+                2,
+                14,
+                26,
+                38,
+                50,
+                62,
+                74,
+                86,
+                98,
+                110
+              ],
+              "decadalRange": [
+                93,
+                102
+              ]
+            },
+            {
+              "index": 8,
+              "name": "官禄",
+              "stem": "丙",
+              "branch": "戌",
+              "stars": [
+                "廉贞",
+                "天府",
+                "左辅"
+              ],
+              "ages": [
+                1,
+                13,
+                25,
+                37,
+                49,
+                61,
+                73,
+                85,
+                97,
+                109
+              ],
+              "decadalRange": [
+                83,
+                92
+              ]
+            },
+            {
+              "index": 9,
+              "name": "仆役",
+              "stem": "丁",
+              "branch": "亥",
+              "stars": [
+                "太阴"
+              ],
+              "ages": [
+                12,
+                24,
+                36,
+                48,
+                60,
+                72,
+                84,
+                96,
+                108,
+                120
+              ],
+              "decadalRange": [
+                73,
+                82
+              ]
+            },
+            {
+              "index": 10,
+              "name": "迁移",
+              "stem": "戊",
+              "branch": "子",
+              "stars": [
+                "贪狼",
+                "铃星"
+              ],
+              "ages": [
+                11,
+                23,
+                35,
+                47,
+                59,
+                71,
+                83,
+                95,
+                107,
+                119
+              ],
+              "decadalRange": [
+                63,
+                72
+              ]
+            },
+            {
+              "index": 11,
+              "name": "疾厄",
+              "stem": "己",
+              "branch": "丑",
+              "stars": [
+                "天同",
+                "巨门",
+                "天魁",
+                "地劫"
+              ],
+              "ages": [
+                10,
+                22,
+                34,
+                46,
+                58,
+                70,
+                82,
+                94,
+                106,
+                118
+              ],
+              "decadalRange": [
+                53,
+                62
+              ]
+            }
+          ],
+          "scopes": [
+            {
+              "id": "origin",
+              "label": "本命",
+              "status": "ready",
+              "note": "生年四化；以下各层四化仍映射至这些本命星曜的落宫，不把星曜搬到流年宫位。",
+              "palaceIndex": 4,
+              "ganZhi": "庚辰",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阳",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "财帛",
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄"
+              ],
+              "flowStars": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ]
+            },
+            {
+              "id": "decadal",
+              "label": "大限",
+              "status": "ready",
+              "note": "24 虚岁所在大限；按阴阳与性别定顺逆。",
+              "palaceIndex": 2,
+              "ganZhi": "庚辰",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阳",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛",
+                "子女"
+              ],
+              "flowStars": [
+                [
+                  "运马"
+                ],
+                [
+                  "运曲"
+                ],
+                [],
+                [
+                  "运喜"
+                ],
+                [],
+                [
+                  "运钺",
+                  "运陀"
+                ],
+                [
+                  "运禄"
+                ],
+                [
+                  "运羊"
+                ],
+                [],
+                [
+                  "运昌",
+                  "运鸾"
+                ],
+                [],
+                [
+                  "运魁"
+                ]
+              ]
+            },
+            {
+              "id": "age",
+              "label": "小限",
+              "status": "ready",
+              "note": "按虚岁定位；男顺女逆。小限四化取所在本命宫干，非另造小限天干。",
+              "palaceIndex": 9,
+              "ganZhi": "丁亥",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "权",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                },
+                {
+                  "kind": "科",
+                  "star": "天机",
+                  "natalIndex": 3,
+                  "natalPalace": "兄弟",
+                  "branch": "巳"
+                },
+                {
+                  "kind": "忌",
+                  "star": "巨门",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛",
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德"
+              ],
+              "flowStars": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ]
+            },
+            {
+              "id": "yearly",
+              "label": "流年",
+              "status": "ready",
+              "note": "干支与虚岁以农历正月初一换年。",
+              "palaceIndex": 1,
+              "ganZhi": "癸卯",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "破军",
+                  "natalIndex": 6,
+                  "natalPalace": "福德",
+                  "branch": "申"
+                },
+                {
+                  "kind": "权",
+                  "star": "巨门",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "贪狼",
+                  "natalIndex": 10,
+                  "natalPalace": "迁移",
+                  "branch": "子"
+                }
+              ],
+              "palaceNames": [
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛",
+                "子女",
+                "夫妻"
+              ],
+              "flowStars": [
+                [],
+                [
+                  "流魁",
+                  "流昌"
+                ],
+                [],
+                [
+                  "流钺",
+                  "流马"
+                ],
+                [
+                  "流喜"
+                ],
+                [
+                  "年解"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "流曲",
+                  "流陀"
+                ],
+                [
+                  "流禄",
+                  "流鸾"
+                ],
+                [
+                  "流羊"
+                ]
+              ]
+            },
+            {
+              "id": "monthly",
+              "label": "流月",
+              "status": "ready",
+              "note": "按农历月；出生与观测的闰月十六日起按下一月定位。",
+              "palaceIndex": 3,
+              "ganZhi": "庚申",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阳",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛"
+              ],
+              "flowStars": [
+                [
+                  "月马"
+                ],
+                [
+                  "月曲"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "月钺",
+                  "月陀",
+                  "月鸾"
+                ],
+                [
+                  "月禄"
+                ],
+                [
+                  "月羊"
+                ],
+                [],
+                [
+                  "月昌"
+                ],
+                [],
+                [
+                  "月魁",
+                  "月喜"
+                ]
+              ]
+            },
+            {
+              "id": "daily",
+              "label": "流日",
+              "status": "ready",
+              "note": "流月命宫起初一，按农历日数顺推；日干支按本版 current 日界。",
+              "palaceIndex": 3,
+              "ganZhi": "戊午",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "贪狼",
+                  "natalIndex": 10,
+                  "natalPalace": "迁移",
+                  "branch": "子"
+                },
+                {
+                  "kind": "权",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "科",
+                  "star": "右弼",
+                  "natalIndex": 2,
+                  "natalPalace": "夫妻",
+                  "branch": "辰"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天机",
+                  "natalIndex": 3,
+                  "natalPalace": "兄弟",
+                  "branch": "巳"
+                }
+              ],
+              "palaceNames": [
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛"
+              ],
+              "flowStars": [
+                [],
+                [
+                  "日喜"
+                ],
+                [
+                  "日陀"
+                ],
+                [
+                  "日禄"
+                ],
+                [
+                  "日曲",
+                  "日羊"
+                ],
+                [
+                  "日钺"
+                ],
+                [
+                  "日昌",
+                  "日马"
+                ],
+                [
+                  "日鸾"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "日魁"
+                ]
+              ]
+            },
+            {
+              "id": "hourly",
+              "label": "流时",
+              "status": "ready",
+              "note": "流日命宫起子时，顺推至观测时辰；晚子按当日早子处理。",
+              "palaceIndex": 3,
+              "ganZhi": "壬子",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "天梁",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "紫微",
+                  "natalIndex": 4,
+                  "natalPalace": "命宫",
+                  "branch": "午"
+                },
+                {
+                  "kind": "科",
+                  "star": "左辅",
+                  "natalIndex": 8,
+                  "natalPalace": "官禄",
+                  "branch": "戌"
+                },
+                {
+                  "kind": "忌",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                }
+              ],
+              "palaceNames": [
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛"
+              ],
+              "flowStars": [
+                [
+                  "时昌",
+                  "时马"
+                ],
+                [
+                  "时魁",
+                  "时鸾"
+                ],
+                [],
+                [
+                  "时钺"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "时喜"
+                ],
+                [
+                  "时陀"
+                ],
+                [
+                  "时禄"
+                ],
+                [
+                  "时曲",
+                  "时羊"
+                ],
+                []
+              ]
+            }
+          ]
+        },
+        "conventions": [
+          "出生与观测分别输入当地日期、时分和时区，先还原同一 UTC 时刻，再转为固定 UTC+08:00。IANA 历史规则使用设备时区数据；保留解析偏移，不校正真太阳时。",
+          "八字沿用 bazi-day2-yun1 主盘口径：年以立春交节时刻、月以十二节交节时刻换界；日柱 sect=2，23 点仍归当日，时柱沿用引擎次日时干。本页只展开流年与流月及相对日主的十神。",
+          "紫微沿用 ziwei-normal-current：yearDivide/horoscopeDivide/ageDivide=normal，dayDivide=current，algorithm=default，fixLeap=true，使用内置四化表。春节换流年与虚岁，闰月十六日起按下一月，晚子按当日早子。",
+          "紫微本命、大限或童限、小限、流年、流月、流日、流时分别列出四化；小限四化取本命宫干。各层四化落宫均指星曜所在本命宫；流曜另列，不推演吉凶或事件。",
+          "区间采用起点包含、终点不包含。交节时间显示至秒是引擎分辨率，不表示天文绝对精度；独立节气资料以分钟核对。1900–2099 年的观测可跨未来；观测必须不早于出生。",
+          "结果和输入作为独立本机快照保存；重新查看不调用当前历法重排。导入三盘档案仅复制出生资料，不改动原档案。"
+        ],
+        "sources": [
+          {
+            "title": "lunar · 干支与节气",
+            "url": "https://6tail.cn/calendar/lunar.ganzhi.html",
+            "version": "lunar-typescript 1.8.6",
+            "license": "MIT"
+          },
+          {
+            "title": "iztro · 运限接口与小限四化",
+            "url": "https://docs.iztro.com/posts/horoscope",
+            "version": "iztro 2.6.1",
+            "license": "MIT"
+          },
+          {
+            "title": "iztro · 配置与插件",
+            "url": "https://docs.iztro.com/posts/config-n-plugin",
+            "version": "iztro 2.6.1",
+            "license": "MIT"
+          },
+          {
+            "title": "日本国立天文台 · 2026 年二十四节气（日本标准时）",
+            "url": "https://eco.mtk.nao.ac.jp/koyomi/yoko/2026/rekiyou262.html",
+            "version": "2026 年历要项；用于分钟级边界核对",
+            "license": "仅链接与事实核对"
+          }
+        ]
+      }
+    },
+    {
+      "id": "flow-study-1791018570679-1",
+      "savedAt": "2026-10-03T09:09:30.679Z",
+      "snapshot": {
+        "schemaVersion": 1,
+        "ruleVersion": "flow-study-v1",
+        "input": {
+          "name": "运限验收：公开流日流时例",
+          "birth": {
+            "date": "2000-08-16",
+            "time": "04:30",
+            "utcOffset": 8,
+            "gender": "女",
+            "timePrecision": "minute"
+          },
+          "observation": {
+            "date": "2023-08-28",
+            "time": "00:30",
+            "utcOffset": 8
+          },
+          "note": "合成验收：各层四化单列，月界按交节时刻核对。"
+        },
+        "birthTime": {
+          "utcTime": "2000-08-15T20:30:00.000Z",
+          "beijingTime": "2000-08-16 04:30:00",
+          "resolvedUtcOffset": 8,
+          "mode": "manual"
+        },
+        "observationTime": {
+          "utcTime": "2023-08-27T16:30:00.000Z",
+          "beijingTime": "2023-08-28 00:30:00",
+          "resolvedUtcOffset": 8,
+          "mode": "manual"
+        },
+        "bazi": {
+          "engine": "lunar-typescript 1.8.6",
+          "ruleProfile": "bazi-day2-yun1",
+          "birthPillars": [
+            "庚辰",
+            "甲申",
+            "丙午",
+            "庚寅"
+          ],
+          "dayMaster": "丙",
+          "observationPillars": [
+            "癸卯",
+            "庚申",
+            "戊午",
+            "壬子"
+          ],
+          "solarYear": 2023,
+          "yearly": {
+            "ganZhi": "癸卯",
+            "stemGod": "正官",
+            "hidden": [
+              {
+                "stem": "乙",
+                "god": "正印"
+              }
+            ]
+          },
+          "currentMonth": {
+            "ganZhi": "庚申",
+            "stemGod": "偏财",
+            "hidden": [
+              {
+                "stem": "庚",
+                "god": "偏财"
+              },
+              {
+                "stem": "壬",
+                "god": "七杀"
+              },
+              {
+                "stem": "戊",
+                "god": "食神"
+              }
+            ]
+          },
+          "yearStart": "2023-02-04 10:42:33",
+          "yearEnd": "2024-02-04 16:27:07",
+          "months": [
+            {
+              "order": 1,
+              "jie": "立春",
+              "nextJie": "惊蛰",
+              "start": "2023-02-04 10:42:33",
+              "end": "2023-03-06 04:36:14",
+              "pillar": {
+                "ganZhi": "甲寅",
+                "stemGod": "偏印",
+                "hidden": [
+                  {
+                    "stem": "甲",
+                    "god": "偏印"
+                  },
+                  {
+                    "stem": "丙",
+                    "god": "比肩"
+                  },
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 2,
+              "jie": "惊蛰",
+              "nextJie": "清明",
+              "start": "2023-03-06 04:36:14",
+              "end": "2023-04-05 09:13:04",
+              "pillar": {
+                "ganZhi": "乙卯",
+                "stemGod": "正印",
+                "hidden": [
+                  {
+                    "stem": "乙",
+                    "god": "正印"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 3,
+              "jie": "清明",
+              "nextJie": "立夏",
+              "start": "2023-04-05 09:13:04",
+              "end": "2023-05-06 02:18:46",
+              "pillar": {
+                "ganZhi": "丙辰",
+                "stemGod": "比肩",
+                "hidden": [
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  },
+                  {
+                    "stem": "乙",
+                    "god": "正印"
+                  },
+                  {
+                    "stem": "癸",
+                    "god": "正官"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 4,
+              "jie": "立夏",
+              "nextJie": "芒种",
+              "start": "2023-05-06 02:18:46",
+              "end": "2023-06-06 06:18:21",
+              "pillar": {
+                "ganZhi": "丁巳",
+                "stemGod": "劫财",
+                "hidden": [
+                  {
+                    "stem": "丙",
+                    "god": "比肩"
+                  },
+                  {
+                    "stem": "庚",
+                    "god": "偏财"
+                  },
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 5,
+              "jie": "芒种",
+              "nextJie": "小暑",
+              "start": "2023-06-06 06:18:21",
+              "end": "2023-07-07 16:30:41",
+              "pillar": {
+                "ganZhi": "戊午",
+                "stemGod": "食神",
+                "hidden": [
+                  {
+                    "stem": "丁",
+                    "god": "劫财"
+                  },
+                  {
+                    "stem": "己",
+                    "god": "伤官"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 6,
+              "jie": "小暑",
+              "nextJie": "立秋",
+              "start": "2023-07-07 16:30:41",
+              "end": "2023-08-08 02:22:53",
+              "pillar": {
+                "ganZhi": "己未",
+                "stemGod": "伤官",
+                "hidden": [
+                  {
+                    "stem": "己",
+                    "god": "伤官"
+                  },
+                  {
+                    "stem": "丁",
+                    "god": "劫财"
+                  },
+                  {
+                    "stem": "乙",
+                    "god": "正印"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 7,
+              "jie": "立秋",
+              "nextJie": "白露",
+              "start": "2023-08-08 02:22:53",
+              "end": "2023-09-08 05:26:43",
+              "pillar": {
+                "ganZhi": "庚申",
+                "stemGod": "偏财",
+                "hidden": [
+                  {
+                    "stem": "庚",
+                    "god": "偏财"
+                  },
+                  {
+                    "stem": "壬",
+                    "god": "七杀"
+                  },
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  }
+                ]
+              },
+              "current": true
+            },
+            {
+              "order": 8,
+              "jie": "白露",
+              "nextJie": "寒露",
+              "start": "2023-09-08 05:26:43",
+              "end": "2023-10-08 21:15:34",
+              "pillar": {
+                "ganZhi": "辛酉",
+                "stemGod": "正财",
+                "hidden": [
+                  {
+                    "stem": "辛",
+                    "god": "正财"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 9,
+              "jie": "寒露",
+              "nextJie": "立冬",
+              "start": "2023-10-08 21:15:34",
+              "end": "2023-11-08 00:35:35",
+              "pillar": {
+                "ganZhi": "壬戌",
+                "stemGod": "七杀",
+                "hidden": [
+                  {
+                    "stem": "戊",
+                    "god": "食神"
+                  },
+                  {
+                    "stem": "辛",
+                    "god": "正财"
+                  },
+                  {
+                    "stem": "丁",
+                    "god": "劫财"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 10,
+              "jie": "立冬",
+              "nextJie": "大雪",
+              "start": "2023-11-08 00:35:35",
+              "end": "2023-12-07 17:32:55",
+              "pillar": {
+                "ganZhi": "癸亥",
+                "stemGod": "正官",
+                "hidden": [
+                  {
+                    "stem": "壬",
+                    "god": "七杀"
+                  },
+                  {
+                    "stem": "甲",
+                    "god": "偏印"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 11,
+              "jie": "大雪",
+              "nextJie": "小寒",
+              "start": "2023-12-07 17:32:55",
+              "end": "2024-01-06 04:49:22",
+              "pillar": {
+                "ganZhi": "甲子",
+                "stemGod": "偏印",
+                "hidden": [
+                  {
+                    "stem": "癸",
+                    "god": "正官"
+                  }
+                ]
+              },
+              "current": false
+            },
+            {
+              "order": 12,
+              "jie": "小寒",
+              "nextJie": "立春",
+              "start": "2024-01-06 04:49:22",
+              "end": "2024-02-04 16:27:07",
+              "pillar": {
+                "ganZhi": "乙丑",
+                "stemGod": "正印",
+                "hidden": [
+                  {
+                    "stem": "己",
+                    "god": "伤官"
+                  },
+                  {
+                    "stem": "癸",
+                    "god": "正官"
+                  },
+                  {
+                    "stem": "辛",
+                    "god": "正财"
+                  }
+                ]
+              },
+              "current": false
+            }
+          ]
+        },
+        "ziwei": {
+          "engine": "iztro 2.6.1",
+          "ruleProfile": "ziwei-normal-current",
+          "config": {
+            "yearDivide": "normal",
+            "horoscopeDivide": "normal",
+            "ageDivide": "normal",
+            "dayDivide": "current",
+            "algorithm": "default"
+          },
+          "fixLeap": true,
+          "lunarDate": "二〇二三年七月十三",
+          "nominalAge": 24,
+          "inputTimeIndex": 0,
+          "effectiveTimeIndex": 0,
+          "palaces": [
+            {
+              "index": 0,
+              "name": "财帛",
+              "stem": "戊",
+              "branch": "寅",
+              "stars": [
+                "武曲",
+                "天相",
+                "天马"
+              ],
+              "ages": [
+                9,
+                21,
+                33,
+                45,
+                57,
+                69,
+                81,
+                93,
+                105,
+                117
+              ],
+              "decadalRange": [
+                43,
+                52
+              ]
+            },
+            {
+              "index": 1,
+              "name": "子女",
+              "stem": "己",
+              "branch": "卯",
+              "stars": [
+                "太阳",
+                "天梁"
+              ],
+              "ages": [
+                8,
+                20,
+                32,
+                44,
+                56,
+                68,
+                80,
+                92,
+                104,
+                116
+              ],
+              "decadalRange": [
+                33,
+                42
+              ]
+            },
+            {
+              "index": 2,
+              "name": "夫妻",
+              "stem": "庚",
+              "branch": "辰",
+              "stars": [
+                "七杀",
+                "右弼",
+                "火星"
+              ],
+              "ages": [
+                7,
+                19,
+                31,
+                43,
+                55,
+                67,
+                79,
+                91,
+                103,
+                115
+              ],
+              "decadalRange": [
+                23,
+                32
+              ]
+            },
+            {
+              "index": 3,
+              "name": "兄弟",
+              "stem": "辛",
+              "branch": "巳",
+              "stars": [
+                "天机"
+              ],
+              "ages": [
+                6,
+                18,
+                30,
+                42,
+                54,
+                66,
+                78,
+                90,
+                102,
+                114
+              ],
+              "decadalRange": [
+                13,
+                22
+              ]
+            },
+            {
+              "index": 4,
+              "name": "命宫",
+              "stem": "壬",
+              "branch": "午",
+              "stars": [
+                "紫微",
+                "文曲"
+              ],
+              "ages": [
+                5,
+                17,
+                29,
+                41,
+                53,
+                65,
+                77,
+                89,
+                101,
+                113
+              ],
+              "decadalRange": [
+                3,
+                12
+              ]
+            },
+            {
+              "index": 5,
+              "name": "父母",
+              "stem": "癸",
+              "branch": "未",
+              "stars": [
+                "天钺",
+                "陀罗"
+              ],
+              "ages": [
+                4,
+                16,
+                28,
+                40,
+                52,
+                64,
+                76,
+                88,
+                100,
+                112
+              ],
+              "decadalRange": [
+                113,
+                122
+              ]
+            },
+            {
+              "index": 6,
+              "name": "福德",
+              "stem": "甲",
+              "branch": "申",
+              "stars": [
+                "破军",
+                "文昌",
+                "禄存"
+              ],
+              "ages": [
+                3,
+                15,
+                27,
+                39,
+                51,
+                63,
+                75,
+                87,
+                99,
+                111
+              ],
+              "decadalRange": [
+                103,
+                112
+              ]
+            },
+            {
+              "index": 7,
+              "name": "田宅",
+              "stem": "乙",
+              "branch": "酉",
+              "stars": [
+                "地空",
+                "擎羊"
+              ],
+              "ages": [
+                2,
+                14,
+                26,
+                38,
+                50,
+                62,
+                74,
+                86,
+                98,
+                110
+              ],
+              "decadalRange": [
+                93,
+                102
+              ]
+            },
+            {
+              "index": 8,
+              "name": "官禄",
+              "stem": "丙",
+              "branch": "戌",
+              "stars": [
+                "廉贞",
+                "天府",
+                "左辅"
+              ],
+              "ages": [
+                1,
+                13,
+                25,
+                37,
+                49,
+                61,
+                73,
+                85,
+                97,
+                109
+              ],
+              "decadalRange": [
+                83,
+                92
+              ]
+            },
+            {
+              "index": 9,
+              "name": "仆役",
+              "stem": "丁",
+              "branch": "亥",
+              "stars": [
+                "太阴"
+              ],
+              "ages": [
+                12,
+                24,
+                36,
+                48,
+                60,
+                72,
+                84,
+                96,
+                108,
+                120
+              ],
+              "decadalRange": [
+                73,
+                82
+              ]
+            },
+            {
+              "index": 10,
+              "name": "迁移",
+              "stem": "戊",
+              "branch": "子",
+              "stars": [
+                "贪狼",
+                "铃星"
+              ],
+              "ages": [
+                11,
+                23,
+                35,
+                47,
+                59,
+                71,
+                83,
+                95,
+                107,
+                119
+              ],
+              "decadalRange": [
+                63,
+                72
+              ]
+            },
+            {
+              "index": 11,
+              "name": "疾厄",
+              "stem": "己",
+              "branch": "丑",
+              "stars": [
+                "天同",
+                "巨门",
+                "天魁",
+                "地劫"
+              ],
+              "ages": [
+                10,
+                22,
+                34,
+                46,
+                58,
+                70,
+                82,
+                94,
+                106,
+                118
+              ],
+              "decadalRange": [
+                53,
+                62
+              ]
+            }
+          ],
+          "scopes": [
+            {
+              "id": "origin",
+              "label": "本命",
+              "status": "ready",
+              "note": "生年四化；以下各层四化仍映射至这些本命星曜的落宫，不把星曜搬到流年宫位。",
+              "palaceIndex": 4,
+              "ganZhi": "庚辰",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阳",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "财帛",
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄"
+              ],
+              "flowStars": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ]
+            },
+            {
+              "id": "decadal",
+              "label": "大限",
+              "status": "ready",
+              "note": "24 虚岁所在大限；按阴阳与性别定顺逆。",
+              "palaceIndex": 2,
+              "ganZhi": "庚辰",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阳",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛",
+                "子女"
+              ],
+              "flowStars": [
+                [
+                  "运马"
+                ],
+                [
+                  "运曲"
+                ],
+                [],
+                [
+                  "运喜"
+                ],
+                [],
+                [
+                  "运钺",
+                  "运陀"
+                ],
+                [
+                  "运禄"
+                ],
+                [
+                  "运羊"
+                ],
+                [],
+                [
+                  "运昌",
+                  "运鸾"
+                ],
+                [],
+                [
+                  "运魁"
+                ]
+              ]
+            },
+            {
+              "id": "age",
+              "label": "小限",
+              "status": "ready",
+              "note": "按虚岁定位；男顺女逆。小限四化取所在本命宫干，非另造小限天干。",
+              "palaceIndex": 9,
+              "ganZhi": "丁亥",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "权",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                },
+                {
+                  "kind": "科",
+                  "star": "天机",
+                  "natalIndex": 3,
+                  "natalPalace": "兄弟",
+                  "branch": "巳"
+                },
+                {
+                  "kind": "忌",
+                  "star": "巨门",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛",
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德"
+              ],
+              "flowStars": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ]
+            },
+            {
+              "id": "yearly",
+              "label": "流年",
+              "status": "ready",
+              "note": "干支与虚岁以农历正月初一换年。",
+              "palaceIndex": 1,
+              "ganZhi": "癸卯",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "破军",
+                  "natalIndex": 6,
+                  "natalPalace": "福德",
+                  "branch": "申"
+                },
+                {
+                  "kind": "权",
+                  "star": "巨门",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "贪狼",
+                  "natalIndex": 10,
+                  "natalPalace": "迁移",
+                  "branch": "子"
+                }
+              ],
+              "palaceNames": [
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛",
+                "子女",
+                "夫妻"
+              ],
+              "flowStars": [
+                [],
+                [
+                  "流魁",
+                  "流昌"
+                ],
+                [],
+                [
+                  "流钺",
+                  "流马"
+                ],
+                [
+                  "流喜"
+                ],
+                [
+                  "年解"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "流曲",
+                  "流陀"
+                ],
+                [
+                  "流禄",
+                  "流鸾"
+                ],
+                [
+                  "流羊"
+                ]
+              ]
+            },
+            {
+              "id": "monthly",
+              "label": "流月",
+              "status": "ready",
+              "note": "按农历月；出生与观测的闰月十六日起按下一月定位。",
+              "palaceIndex": 3,
+              "ganZhi": "庚申",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "太阳",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                },
+                {
+                  "kind": "科",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天同",
+                  "natalIndex": 11,
+                  "natalPalace": "疾厄",
+                  "branch": "丑"
+                }
+              ],
+              "palaceNames": [
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛"
+              ],
+              "flowStars": [
+                [
+                  "月马"
+                ],
+                [
+                  "月曲"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "月钺",
+                  "月陀",
+                  "月鸾"
+                ],
+                [
+                  "月禄"
+                ],
+                [
+                  "月羊"
+                ],
+                [],
+                [
+                  "月昌"
+                ],
+                [],
+                [
+                  "月魁",
+                  "月喜"
+                ]
+              ]
+            },
+            {
+              "id": "daily",
+              "label": "流日",
+              "status": "ready",
+              "note": "流月命宫起初一，按农历日数顺推；日干支按本版 current 日界。",
+              "palaceIndex": 3,
+              "ganZhi": "戊午",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "贪狼",
+                  "natalIndex": 10,
+                  "natalPalace": "迁移",
+                  "branch": "子"
+                },
+                {
+                  "kind": "权",
+                  "star": "太阴",
+                  "natalIndex": 9,
+                  "natalPalace": "仆役",
+                  "branch": "亥"
+                },
+                {
+                  "kind": "科",
+                  "star": "右弼",
+                  "natalIndex": 2,
+                  "natalPalace": "夫妻",
+                  "branch": "辰"
+                },
+                {
+                  "kind": "忌",
+                  "star": "天机",
+                  "natalIndex": 3,
+                  "natalPalace": "兄弟",
+                  "branch": "巳"
+                }
+              ],
+              "palaceNames": [
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛"
+              ],
+              "flowStars": [
+                [],
+                [
+                  "日喜"
+                ],
+                [
+                  "日陀"
+                ],
+                [
+                  "日禄"
+                ],
+                [
+                  "日曲",
+                  "日羊"
+                ],
+                [
+                  "日钺"
+                ],
+                [
+                  "日昌",
+                  "日马"
+                ],
+                [
+                  "日鸾"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "日魁"
+                ]
+              ]
+            },
+            {
+              "id": "hourly",
+              "label": "流时",
+              "status": "ready",
+              "note": "流日命宫起子时，顺推至观测时辰；晚子按当日早子处理。",
+              "palaceIndex": 3,
+              "ganZhi": "壬子",
+              "mutations": [
+                {
+                  "kind": "禄",
+                  "star": "天梁",
+                  "natalIndex": 1,
+                  "natalPalace": "子女",
+                  "branch": "卯"
+                },
+                {
+                  "kind": "权",
+                  "star": "紫微",
+                  "natalIndex": 4,
+                  "natalPalace": "命宫",
+                  "branch": "午"
+                },
+                {
+                  "kind": "科",
+                  "star": "左辅",
+                  "natalIndex": 8,
+                  "natalPalace": "官禄",
+                  "branch": "戌"
+                },
+                {
+                  "kind": "忌",
+                  "star": "武曲",
+                  "natalIndex": 0,
+                  "natalPalace": "财帛",
+                  "branch": "寅"
+                }
+              ],
+              "palaceNames": [
+                "子女",
+                "夫妻",
+                "兄弟",
+                "命宫",
+                "父母",
+                "福德",
+                "田宅",
+                "官禄",
+                "仆役",
+                "迁移",
+                "疾厄",
+                "财帛"
+              ],
+              "flowStars": [
+                [
+                  "时昌",
+                  "时马"
+                ],
+                [
+                  "时魁",
+                  "时鸾"
+                ],
+                [],
+                [
+                  "时钺"
+                ],
+                [],
+                [],
+                [],
+                [
+                  "时喜"
+                ],
+                [
+                  "时陀"
+                ],
+                [
+                  "时禄"
+                ],
+                [
+                  "时曲",
+                  "时羊"
+                ],
+                []
+              ]
+            }
+          ]
+        },
+        "conventions": [
+          "出生与观测分别输入当地日期、时分和时区，先还原同一 UTC 时刻，再转为固定 UTC+08:00。IANA 历史规则使用设备时区数据；保留解析偏移，不校正真太阳时。",
+          "八字沿用 bazi-day2-yun1 主盘口径：年以立春交节时刻、月以十二节交节时刻换界；日柱 sect=2，23 点仍归当日，时柱沿用引擎次日时干。本页只展开流年与流月及相对日主的十神。",
+          "紫微沿用 ziwei-normal-current：yearDivide/horoscopeDivide/ageDivide=normal，dayDivide=current，algorithm=default，fixLeap=true，使用内置四化表。春节换流年与虚岁，闰月十六日起按下一月，晚子按当日早子。",
+          "紫微本命、大限或童限、小限、流年、流月、流日、流时分别列出四化；小限四化取本命宫干。各层四化落宫均指星曜所在本命宫；流曜另列，不推演吉凶或事件。",
+          "区间采用起点包含、终点不包含。交节时间显示至秒是引擎分辨率，不表示天文绝对精度；独立节气资料以分钟核对。1900–2099 年的观测可跨未来；观测必须不早于出生。",
+          "结果和输入作为独立本机快照保存；重新查看不调用当前历法重排。导入三盘档案仅复制出生资料，不改动原档案。"
+        ],
+        "sources": [
+          {
+            "title": "lunar · 干支与节气",
+            "url": "https://6tail.cn/calendar/lunar.ganzhi.html",
+            "version": "lunar-typescript 1.8.6",
+            "license": "MIT"
+          },
+          {
+            "title": "iztro · 运限接口与小限四化",
+            "url": "https://docs.iztro.com/posts/horoscope",
+            "version": "iztro 2.6.1",
+            "license": "MIT"
+          },
+          {
+            "title": "iztro · 配置与插件",
+            "url": "https://docs.iztro.com/posts/config-n-plugin",
+            "version": "iztro 2.6.1",
+            "license": "MIT"
+          },
+          {
+            "title": "日本国立天文台 · 2026 年二十四节气（日本标准时）",
+            "url": "https://eco.mtk.nao.ac.jp/koyomi/yoko/2026/rekiyou262.html",
+            "version": "2026 年历要项；用于分钟级边界核对",
+            "license": "仅链接与事实核对"
+          }
+        ]
+      }
+    }
+  ]
+}

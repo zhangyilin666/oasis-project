@@ -1,0 +1,9 @@
+{
+  "release": "h5-separate-ming-bu-20261003-144324",
+  "bundleSha256": "d1461f46470a9cd5f5658a35b11e1520f33b5af1bfea3ebd12ea2c45384bb895",
+  "files": 124,
+  "indexSha256": "b795f7aebb4e500216cbc451cd2692b00ba672525ef3f8b31a5b3056a1398b43",
+  "backup": "/root/oasis-backups/h5-separate-ming-bu-20261003-144324",
+  "containersUnchanged": true,
+  "health": "ok"
+}

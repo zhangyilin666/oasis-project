@@ -57,16 +57,16 @@
     <view v-else-if="isAlmanacLoading" class="content-panel"><view class="skeleton skeleton-title"></view><view class="skeleton skeleton-line"></view></view>
     <ErrorRetry v-else-if="isAlmanacError" message="黄历暂时没能加载" @retry="loadAlmanac" />
     <AppButton class="almanac-toggle text-button" @click="goAlmanac">按日期查看黄历与交节时刻 ↗</AppButton>
-    <view class="primary-entries" role="group" aria-label="选择八字解读或问一卦">
+    <view class="primary-entries" role="group" aria-label="选择八字解读或塔罗手记">
       <AppButton class="primary-entry ming-entry" aria-label="命，八字 AI 解读" @click="goAnalyze">
         <view class="primary-entry-top"><text class="primary-character">命</text><text class="primary-arrow" aria-hidden="true">↗</text></view>
         <text class="primary-title">八字 AI 解读</text>
         <text class="primary-description">填写出生资料<br />读一份专属解读</text>
       </AppButton>
-      <AppButton class="primary-entry bu-entry" aria-label="卜，自动起卦与 AI 解读" @click="goDivination">
-        <view class="primary-entry-top"><text class="primary-character">卜</text><text class="primary-arrow" aria-hidden="true">↗</text></view>
-        <text class="primary-title">问一卦</text>
-        <text class="primary-description">带着一个问题<br />起卦，读懂卦意</text>
+      <AppButton class="primary-entry bu-entry" aria-label="塔罗，记下牌阵与复盘" @click="goTarot">
+        <view class="primary-entry-top"><text class="primary-character">牌</text><text class="primary-arrow" aria-hidden="true">↗</text></view>
+        <text class="primary-title">塔罗手记</text>
+        <text class="primary-description">记下已经选出的牌<br />之后原样回看</text>
       </AppButton>
     </view>
     <view class="support-links" role="group" aria-label="报告与记录">
@@ -151,7 +151,7 @@ async function loadAlmanac() {
  finally { if (generation === almanacGeneration) isAlmanacLoading.value = false }
 }
 function goAnalyze() { uni.navigateTo({ url: '/pages/analyze/index' }) }
-function goDivination() { uni.navigateTo({ url: '/pages/divination/index' }) }
+function goTarot() { uni.navigateTo({ url: '/pages/tarot/index' }) }
 function goAlmanac() { uni.navigateTo({ url: '/pages/almanac/index' }) }
 function goReports() { uni.switchTab({ url: '/pages/reports/index' }) }
 function goProfile() { uni.switchTab({ url: '/pages/profile/index' }) }

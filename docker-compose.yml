@@ -58,7 +58,6 @@ services:
       # 例如 CORS_ORIGINS=https://cat.example.com（逗号分隔，不带空格）。
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost,http://127.0.0.1}
       RATE_LIMIT_ANALYZE_PER_DAY: ${RATE_LIMIT_ANALYZE_PER_DAY:-5}
-      RATE_LIMIT_DIVINATION_PER_DAY: ${RATE_LIMIT_DIVINATION_PER_DAY:-5}
     ports:
       - "127.0.0.1:8000:8000"
     volumes:

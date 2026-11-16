@@ -34,5 +34,6 @@ node_modules/
 *.log
 *.log.[0-9]*
 
-# uniapp 构建产物
+# uniapp 构建产物（含误提交的 APK 缓存）
 unpackage/
+*.apk

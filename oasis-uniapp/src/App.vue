@@ -2,15 +2,9 @@
 import { onLaunch, onShow, onHide, onError, onPageNotFound } from '@dcloudio/uni-app'
 import { useAuthStore } from '@/stores/auth'
 import { resetLoading } from '@/utils/ui'
-import { CLOSED_PAGE_PATHS } from '@/domain/metaphysics/navigation'
 
-onPageNotFound(({ path }) => {
-  const normalizedPath = path.replace(/^\/+/, '').split(/[?#]/, 1)[0]
-  const closed = CLOSED_PAGE_PATHS.some(page => page === normalizedPath)
-  uni.reLaunch({
-    url: '/pages/home/index',
-    success: () => { if (closed) uni.showToast({ title: '此板块已关闭', icon: 'none' }) },
-  })
+onPageNotFound(() => {
+  uni.reLaunch({ url: '/pages/home/index' })
 })
 
 onLaunch(() => {

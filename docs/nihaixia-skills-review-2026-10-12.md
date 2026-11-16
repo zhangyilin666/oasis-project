@@ -6,7 +6,7 @@
 
 - 个人学习和资料考证：优先关注 [JuneYaooo/nihaisha-nishi-tcm](https://github.com/JuneYaooo/nihaisha-nishi-tcm)，它有课程、截图和 PDF 证据检索设计。旧地址 nihaisha-tcm 已跳转到这个仓库。
 - 技能组织方式：参考 [Tespera/nihaisha-skill](https://github.com/Tespera/nihaisha-skill) 的分层加载和独立安全策略。
-- 猫来运转：目前不建议把任何一个整包直接接入生产。先确认所用资料的授权、校对天纪材料，再考虑只为现有“卜”增加易经人事解释。保持现有八字与起卦计算流程。
+- 猫来运转：目前不建议把任何一个整包直接接入生产。先确认所用资料的授权、校对天纪材料。现有产品保留八字 AI 解读，不再提供起卦。
 
 ## 主要候选
 
@@ -51,14 +51,6 @@ June 的使用说明明确限定非商业用途，并要求第三方课程等原
 
 来源：[June 使用说明](https://github.com/JuneYaooo/nihaisha-nishi-tcm/blob/main/docs/USE_AND_RISK_NOTICE.md)、[Tespera 语料与许可说明](https://github.com/Tespera/nihaisha-skill#语料来源与许可)、[jang README](https://github.com/jangviktor-web/nihaixia)、[qmzz README](https://github.com/qmzz/ni-haisha-tcm-skill)。
 
-## 猫来运转的可行接入方向
+## 猫来运转
 
-这是产品建议，尚未实施：
-
-1. 将范围限定为天纪中的易经、人事解释；现有“命”继续保留八字 AI 解读。
-2. 在“卜”的 AI 解读中试验一种可选解释视角，由当前起卦程序提供确定的卦象，检索经过校对的对应材料后再生成解读。
-3. 不增加课程大厅、诊疗入口或多套复杂操作；来源可折叠展示，正文保持简短。
-4. 使用可确认授权的材料，区分原文、课程整理、模型解释，不以真人身份或背书方式呈现。
-5. 上线前固定版本，并用同一批问题检查出处准确性、无依据断言、缺失资料处理、回复长度与延迟。当前没有实测证据证明某个候选能提高八字或问卦解读质量。
-
-推荐顺序：先用 June 做学习与出处核查，参考 Tespera 的加载结构；获得适用资料与质量证据后，才决定是否接入产品。
+这是当时的接入设想。问卦入口已经删除，不再作为当前产品范围。八字 AI 解读仍然保留。当前没有实测证据证明这些候选能提高八字解读质量。

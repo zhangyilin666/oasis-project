@@ -34,7 +34,6 @@ services:
       ALLOW_MOCK_AI: ${ALLOW_MOCK_AI:-false}
       CORS_ORIGINS: ""
       RATE_LIMIT_ANALYZE_PER_DAY: ${RATE_LIMIT_ANALYZE_PER_DAY:-5}
-      RATE_LIMIT_DIVINATION_PER_DAY: ${RATE_LIMIT_DIVINATION_PER_DAY:-5}
       REPORT_TIMEOUT_MINUTES: 15
     volumes:
       - ./data_center/knowledge:/app/data_center/knowledge:ro

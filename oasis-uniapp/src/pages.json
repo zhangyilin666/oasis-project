@@ -23,36 +23,18 @@
       }
     },
     {
-      "path": "pages/explore/index",
-      "style": {
-        "navigationBarTitleText": "八字 AI 解读",
-        "backgroundColor": "#faf8fc",
-        "navigationBarBackgroundColor": "#faf8fc",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
-      "path": "pages/divination-tools/index",
-      "style": {
-        "navigationBarTitleText": "问一卦",
-        "backgroundColor": "#faf8fc",
-        "navigationBarBackgroundColor": "#faf8fc",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
-      "path": "pages/divination/index",
-      "style": {
-        "navigationBarTitleText": "问一卦",
-        "backgroundColor": "#faf8fc",
-        "navigationBarBackgroundColor": "#faf8fc",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
       "path": "pages/almanac/index",
       "style": {
         "navigationBarTitleText": "黄历与节气",
+        "backgroundColor": "#faf8fc",
+        "navigationBarBackgroundColor": "#faf8fc",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/tarot/index",
+      "style": {
+        "navigationBarTitleText": "塔罗",
         "backgroundColor": "#faf8fc",
         "navigationBarBackgroundColor": "#faf8fc",
         "navigationBarTextStyle": "black"

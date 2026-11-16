@@ -7,7 +7,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.auth_api import router as auth_router
 from app.api.app_auth_api import router as app_auth_router
 from app.api.oasis_api import router as oasis_router
-from app.api.divination_api import router as divination_router
 from app.core.config import settings
 from app.core.exceptions import global_exception_handler
 from app.core.kb_provider import init_kb
@@ -70,7 +69,6 @@ if _cors_raw:
     )
 
 app.include_router(oasis_router)
-app.include_router(divination_router)
 app.include_router(auth_router)
 app.include_router(app_auth_router)  # App 手机号认证路由
 app.add_exception_handler(Exception, global_exception_handler)

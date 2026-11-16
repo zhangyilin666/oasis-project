@@ -1,19 +1,8 @@
 {
   "verifiedAt": "2026-10-03T09:37:02.352Z",
   "method": "production serializers → UTF-8 disk files → read back → exact bytes and parsed field equality",
-  "input": "Synthetic fixtures only; no user account, browser storage, credentials or personal records accessed.",
-  "boundary": "This verifies export content on disk. It does not certify an actual browser download, Android, iPhone Safari or WeChat device behavior.",
+  "note": "Entries for removed modules were deleted with those features. Remaining files are almanac and tarot.",
   "files": [
-    {
-      "name": "birth-rules-transits.json",
-      "bytes": 52301,
-      "sha256": "509cbd531ea6158e3d2f7e271da1ec4fa0a94ac1729cbf0a918160a90f8990b1"
-    },
-    {
-      "name": "divination-four-methods.json",
-      "bytes": 22511,
-      "sha256": "49d18e5d25478daef04fd7df751032bcf15eb7ac4bd10977131c0dde236a0a26"
-    },
     {
       "name": "almanac-snapshot.json",
       "bytes": 3325,
@@ -28,86 +17,6 @@
       "name": "tarot-records.json",
       "bytes": 3344,
       "sha256": "b128433ee153c6def777bd416b23554f5e18220b228c790070c64933841cfc3d"
-    },
-    {
-      "name": "practice-records.json",
-      "bytes": 1229,
-      "sha256": "73c25dccd26a21424279e23978d21e7b09dbc7a9eefeae3cf5abc2e90f8dcbcb"
-    },
-    {
-      "name": "space-records.json",
-      "bytes": 2542,
-      "sha256": "4aa79ae5fb558a7309b42f240e69414879758d14d73db6c7cd980160e4b21728"
-    },
-    {
-      "name": "name-culture-records.json",
-      "bytes": 3951,
-      "sha256": "da32a078f54bfe22808a73ca04241a8fea5a3e12adc481a1200029d2ce09f4cc"
-    },
-    {
-      "name": "jyotish-records.json",
-      "bytes": 29419,
-      "sha256": "1cc05418baba8e9784a609065a225810993fb3cbffc15f1f56b7d049bd90398e"
-    },
-    {
-      "name": "date-selection-records.json",
-      "bytes": 19006,
-      "sha256": "686930954d5d510155819d401d56f92735073dd368da851072039e794b6bf147"
-    },
-    {
-      "name": "qimen-records.json",
-      "bytes": 5636,
-      "sha256": "aa060ea59d2bea735f2f632470f909f215966025c9102607455b2051feabc54c"
-    },
-    {
-      "name": "qizheng-records.json",
-      "bytes": 9618,
-      "sha256": "6ed84797937aa79101e033c1a2ba566c91dd95a8d14285878241b045e8a06af1"
-    },
-    {
-      "name": "seasonal-care-records.json",
-      "bytes": 7295,
-      "sha256": "c9c48dd71374a7015567c44efd79c7a14c52cc1614d157d3bc37eb37397268f1"
-    },
-    {
-      "name": "physiognomy-records.json",
-      "bytes": 2361,
-      "sha256": "f18382db0fe0a075d73b0de840f016842411ef22c8acd97a93bc8baf11fc01c9"
-    },
-    {
-      "name": "bazhai-records.json",
-      "bytes": 6032,
-      "sha256": "f002260a23b727ce677a68c7f9ee0a3c3f61f0c0719da24c074e799d1c8c0814"
-    },
-    {
-      "name": "liuren-records.json",
-      "bytes": 4706,
-      "sha256": "28be2261c9049d41533b447cb9fe898f8ecd2364e12345b490dd4d62d184340c"
-    },
-    {
-      "name": "flow-study-records.json",
-      "bytes": 35182,
-      "sha256": "f22d564a586db2c0d60484fe5e187a9a30f5a1e481a73dc0fe4a8307bdbfcd28"
-    },
-    {
-      "name": "western-study-records.json",
-      "bytes": 23294,
-      "sha256": "ee2e35ad39db371e66dd2514af7221b8788cc4f11a4388be33dadcb0da5b0157"
-    },
-    {
-      "name": "taiyi-records.json",
-      "bytes": 21218,
-      "sha256": "a34aac0f344848979c444d281a860148021756b308dd299b472f02ff84cadb8e"
-    },
-    {
-      "name": "qizheng-lodges-records.json",
-      "bytes": 14167,
-      "sha256": "06b6de2bc5e18b606f3052a3f5ae2a6a49ee0f482b5fe6d25a180cce72ca07cb"
-    },
-    {
-      "name": "cross-reading-records.json",
-      "bytes": 253989,
-      "sha256": "bda486371c9e91d3dab0458946f87b893988d50f166c3bc8b85e09e9b61db877"
     }
   ]
 }

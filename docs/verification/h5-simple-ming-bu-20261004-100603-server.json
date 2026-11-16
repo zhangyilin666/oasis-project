@@ -1,9 +1,0 @@
-{
-  "release": "h5-simple-ming-bu-20261004-100603",
-  "bundleSha256": "8a6222f4e2bd1ccfbaa96a14f2c186460a24fa529af390b758aa36ad3c31c3a8",
-  "files": 73,
-  "indexSha256": "28f326a21befcf73c3267befa9e3a0754ed63643a0007f53b44db91af3ab5744",
-  "backup": "/root/oasis-backups/h5-simple-ming-bu-20261004-100603",
-  "containersUnchanged": true,
-  "health": "ok"
-}

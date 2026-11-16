@@ -8,4 +8,3 @@ from app.models.log_model import AnalysisLog  # noqa: F401
 from app.models.daily_fortune_model import DailyFortune  # noqa: F401
 from app.models.report_status import ReportStatus  # noqa: F401
 from app.models.otp_code_model import OtpCode  # noqa: F401
-from app.models.divination_model import DivinationReading  # noqa: F401

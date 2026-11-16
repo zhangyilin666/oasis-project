@@ -49,7 +49,6 @@ class Settings(BaseSettings):
 
     # 速率限制：每用户每天最大分析次数（0 = 无限制）
     RATE_LIMIT_ANALYZE_PER_DAY: int = 5
-    RATE_LIMIT_DIVINATION_PER_DAY: int = 5  # 独立问卦解读限额；0 表示不限
     KNOWLEDGE_DIR: str = ""
     ALLOW_MOCK_AI: bool = False
     REPORT_TIMEOUT_MINUTES: int = 15

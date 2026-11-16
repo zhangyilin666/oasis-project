@@ -4,6 +4,7 @@ from datetime import date, datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from pydantic import BaseModel, Field, field_validator
 from starlette.concurrency import run_in_threadpool
 from sqlalchemy import delete, func, select, update
 from sqlalchemy.orm import Session
@@ -24,6 +25,7 @@ from app.services.calendar_service import get_day_almanac
 from app.services.daily_fortune_service import get_daily_fortune
 from app.services.yun_service import get_yun_fortune
 from app.services.report_lifecycle import expire_stale_reports
+from app.services.fortune_stick_service import draw_stick, get_today_stick
 
 router = APIRouter()
 
@@ -541,4 +543,57 @@ async def get_yun(
         code=200,
         message="ok",
         data=data,
+    )
+
+
+class FortuneStickDraw(BaseModel):
+    """可选的短问题。只用于当次解说，不写入数据库。"""
+
+    question: str = Field(default="", max_length=40)
+
+    @field_validator("question")
+    @classmethod
+    def compact_question(cls, value: str) -> str:
+        return " ".join(value.split())
+
+
+@router.get(
+    "/api/v1/wechat/oasis/fortune-stick",
+    response_model=OasisResponse,
+    summary="今日一签（WeChat）",
+)
+@router.get(
+    "/api/v1/app/oasis/fortune-stick",
+    response_model=OasisResponse,
+    summary="今日一签（App）",
+)
+def today_fortune_stick(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """返回今天已经抽过的签。还没抽时 data 为空。"""
+    return OasisResponse(code=200, message="ok", data=get_today_stick(current_user.id, db))
+
+
+@router.post(
+    "/api/v1/wechat/oasis/fortune-stick",
+    response_model=OasisResponse,
+    summary="抽一支签（WeChat）",
+)
+@router.post(
+    "/api/v1/app/oasis/fortune-stick",
+    response_model=OasisResponse,
+    summary="抽一支签（App）",
+)
+def draw_fortune_stick(
+    body: Optional[FortuneStickDraw] = None,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """每人每天一支，包含管理员。已经抽过就返回今天的签。"""
+    question = body.question if body else ""
+    return OasisResponse(
+        code=200,
+        message="ok",
+        data=draw_stick(current_user.id, db, question),
     )

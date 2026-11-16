@@ -97,6 +97,22 @@ test('wraps long CJK lines without splitting a character and keeps explicit brea
   assert.equal(lines[1].startsWith('慢'), true)
 })
 
+test('adds one sign line and leaves the question off the card', () => {
+  const card = cardApi.buildFortuneCard({
+    ...source(),
+    sign: { number: 12, grade: '上', line: '天开地辟结良缘' },
+    question: '这件私事不要出现',
+  })
+  assert.equal(card.signLine, '第12签 · 上 · 天开地辟结良缘')
+  assert.equal(JSON.stringify(card).includes('这件私事不要出现'), false)
+  assert.equal(JSON.stringify(card).includes('算命'), false)
+})
+
+test('omits a sign line when the slip is incomplete', () => {
+  const card = cardApi.buildFortuneCard({ ...source(), sign: { number: 0, grade: '上上', line: '天开地辟结良缘' } })
+  assert.equal(card.signLine, null)
+})
+
 test('clips a long essay on a sentence boundary', () => {
   const sentence = '今天把桌子收拾干净。'.repeat(8)
   const card = cardApi.buildFortuneCard({ ...source(), fortuneText: sentence })

@@ -31,7 +31,7 @@
         <text v-if="fortune.lucky_direction">方位 · {{ fortune.lucky_direction }}</text>
       </view>
       <text class="fortune-reminder" v-if="fortune.warning && fortune.warning !== '无'">{{ fortune.warning }}</text>
-      <FortuneShareButton :fortune="fortune" :almanac="almanac" />
+      <FortuneShareButton :fortune="fortune" :almanac="almanac" :sign="todayStick" />
     </view>
     <view v-else-if="isFortuneError && fortuneErrorCode === 400" class="content-panel first-step">
       <view class="first-step-icon"><AppIcon name="moon" /></view>
@@ -40,6 +40,7 @@
     </view>
     <ErrorRetry v-else-if="isFortuneError" message="今日内容暂时没能加载" @retry="loadFortune" />
 
+    <FortuneStick @change="todayStick = $event" />
     </view>
 
     <view id="today-almanac" class="section-heading"><text class="section-title">翻开今日黄历</text><text class="muted">传统历法</text></view>
@@ -83,7 +84,9 @@ import ErrorRetry from '@/components/ErrorRetry.vue'
 import CatCompanion from '@/components/CatCompanion.vue'
 import AppIcon from '@/components/AppIcon.vue'
 import FortuneShareButton from '@/components/FortuneShareButton.vue'
+import FortuneStick from '@/components/FortuneStick.vue'
 const fortune = ref<DailyFortune | null>(null)
+const todayStick = ref<{ number: number; grade: string; line: string } | null>(null)
 const isFortuneLoading = ref(true), isFortuneError = ref(false), fortuneErrorCode = ref(0)
 const almanac = ref<AlmanacDay | null>(null)
 const isAlmanacLoading = ref(true), isAlmanacError = ref(false), almanacExpanded = ref(false)

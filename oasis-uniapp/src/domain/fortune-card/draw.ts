@@ -53,6 +53,12 @@ export function drawFortuneCard(
 
   drawFacts(ctx, card, 1020)
   drawAdvice(ctx, card, 1160)
+  if (card.signLine) {
+    ctx.textAlign = 'center'
+    ctx.fillStyle = '#6f538c'
+    ctx.font = `500 28px ${CARD_FONT}`
+    ctx.fillText(card.signLine, width / 2, 1224)
+  }
 
   ctx.fillStyle = '#a18abb'
   ctx.font = `600 32px ${CARD_FONT}`

@@ -141,6 +141,27 @@ export function getDailyFortuneApi(reportId?: number) {
   return get<DailyFortune>(`${XIAOYI}/daily-fortune`, { report_id: reportId }, { timeout: 150000 })
 }
 
+export interface FortuneStickResult {
+  number: number
+  grade: string
+  title: string
+  poem: string
+  line: string
+  plain: string
+  cat: string
+  date: string
+  already_drawn: boolean
+  disclaimer: string
+}
+
+export function getTodayStickApi() {
+  return get<FortuneStickResult | null>(`${XIAOYI}/fortune-stick`)
+}
+
+export function drawFortuneStickApi(question = '') {
+  return post<FortuneStickResult>(`${XIAOYI}/fortune-stick`, { question }, { timeout: 30000 })
+}
+
 export function retryReportApi(reportId: number) {
   return post<{ report_id: number; status: string }>(`${XIAOYI}/report/${reportId}/retry`)
 }

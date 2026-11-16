@@ -51,8 +51,15 @@ export interface FortuneCardSource {
   yearGanZhi?: string
   yi?: string[]
   ji?: string[]
+  sign?: FortuneCardSign | null
   /** Private text to strip from the summary. It is never copied onto the card. */
   redact?: string | null
+}
+
+export interface FortuneCardSign {
+  number?: number | null
+  grade?: string | null
+  line?: string | null
 }
 
 export interface FortuneCardModel {
@@ -70,6 +77,7 @@ export interface FortuneCardModel {
   luckyNumber: string | null
   yi: string | null
   ji: string | null
+  signLine: string | null
   footer: typeof APP_NAME
 }
 
@@ -129,6 +137,7 @@ export function buildFortuneCard(source: FortuneCardSource): FortuneCardModel {
     luckyNumber: cleanNumber(source.luckyNumber),
     yi: firstItem(source.yi),
     ji: firstItem(source.ji),
+    signLine: formatSignLine(source.sign),
     footer: APP_NAME,
   }
 }
@@ -177,6 +186,15 @@ function summarize(text: string | undefined, redact: string | null | undefined):
 function redactTokens(secret: string | null | undefined): string[] {
   if (!secret) return []
   return [...new Set(secret.split(/\s+/).map(token => token.trim()).filter(token => token.length >= 2))]
+}
+
+function formatSignLine(sign: FortuneCardSign | null | undefined): string | null {
+  const number = Number(sign?.number)
+  if (!Number.isInteger(number) || number < 1 || number > 100) return null
+  const grade = sign?.grade && ['上上', '上', '中', '下'].includes(sign.grade) ? sign.grade : ''
+  const line = clean(sign?.line || '', 16)
+  if (!line) return null
+  return [`第${number}签`, grade, line].filter(Boolean).join(' · ')
 }
 
 function firstItem(values: string[] | undefined): string | null {

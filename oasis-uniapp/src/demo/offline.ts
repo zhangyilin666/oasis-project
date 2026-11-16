@@ -38,6 +38,19 @@ const exampleReport = {
   updated_at: createdAt,
 }
 
+let demoStick: {
+  number: number
+  grade: string
+  title: string
+  poem: string
+  line: string
+  plain: string
+  cat: string
+  date: string
+  already_drawn: boolean
+  disclaimer: string
+} | null = null
+
 export function offlineResponse(url: string, method: string): { code: number; message: string; data: any } {
   const path = url.replace(/^https?:\/\/[^/]+/, '').split('?')[0]
   const today = new Date().toISOString().slice(0, 10)
@@ -58,6 +71,25 @@ export function offlineResponse(url: string, method: string): { code: number; me
       fortune_text: '今天先看看这只小猫和页面布局。正式版会显示与你相关的内容。',
       lucky_color: '暖紫', lucky_direction: '示例', warning: '本页展示的是虚构示例。', is_cached: true,
     }
+  } else if (path.endsWith('/oasis/fortune-stick')) {
+    const todayStick = new Date().toISOString().slice(0, 10)
+    if (method === 'POST' && !demoStick) {
+      demoStick = {
+        number: 1,
+        grade: '上上',
+        title: '宋太祖黄袍加身',
+        poem: '天开地辟结良缘，日吉时良万事全\n若得此签非小可，人行中正帝王宣',
+        line: '天开地辟结良缘',
+        plain: '这支签说的是开头顺利。事情可以往前走，仍要自己把步骤做完。',
+        cat: '喵，你默念的那件事，可以轻轻试一下，小猫在旁边看着。',
+        date: todayStick,
+        already_drawn: false,
+        disclaimer: '仅供娱乐参考',
+      }
+    } else if (demoStick) {
+      demoStick = { ...demoStick, already_drawn: true }
+    }
+    data = demoStick
   } else if (path.endsWith('/oasis/almanac')) {
     data = {
       solar_date: today, lunar_date: today, day_gan_zhi: '示例', animal: '示例',

@@ -3,13 +3,9 @@
     <AppButton class="share-button" :disabled="sharing" aria-label="生成今日运势卡片并保存图片" @click="saveCard">
       {{ sharing ? '正在生成卡片…' : '分享卡片 / 保存图片' }}
     </AppButton>
-    <canvas
-      id="fortuneShareCanvas"
-      canvas-id="fortuneShareCanvas"
-      class="share-canvas"
-      width="1080"
-      height="1440"
-    />
+    <!-- #ifndef H5 -->
+    <canvas id="fortuneShareCanvas" canvas-id="fortuneShareCanvas" class="share-canvas" />
+    <!-- #endif -->
   </view>
 </template>
 
@@ -19,8 +15,13 @@ import AppButton from '@/components/AppButton.vue'
 import type { AlmanacDay, DailyFortune } from '@/api/xiaoyi'
 import { buildFortuneCard, type FortuneCardSource } from '@/domain/fortune-card/map'
 import { drawFortuneCard } from '@/domain/fortune-card/draw'
+import { createShareBitmap } from '@/domain/fortune-card/export'
 
-const props = defineProps<{ fortune: DailyFortune; almanac: AlmanacDay | null }>()
+const props = defineProps<{
+  fortune: DailyFortune
+  almanac: AlmanacDay | null
+  sign?: { number: number; grade: string; line: string } | null
+}>()
 const sharing = ref(false)
 const catUrl = '/static/ui/cat-calico-sprite.webp'
 
@@ -37,6 +38,7 @@ function sourceFromProps(): FortuneCardSource {
     yearGanZhi: props.almanac?.year_gan_zhi,
     yi: props.almanac?.yi,
     ji: props.almanac?.ji,
+    sign: props.sign,
     redact: props.fortune.birth_info,
   }
 }
@@ -60,12 +62,17 @@ async function saveCard() {
 }
 
 async function prepareCanvas(): Promise<HTMLCanvasElement> {
+  // #ifdef H5
+  const fonts = document.fonts
+  if (fonts?.ready) await fonts.ready
+  return createShareBitmap(() => document.createElement('canvas'))
+  // #endif
+  // #ifndef H5
   await nextPaint()
   const canvas = findCanvas()
   if (!canvas) throw new Error('missing canvas')
-  canvas.width = 1080
-  canvas.height = 1440
-  return canvas
+  return createShareBitmap(() => canvas as HTMLCanvasElement)
+  // #endif
 }
 
 function findCanvas(): HTMLCanvasElement | null {
@@ -78,13 +85,19 @@ function findCanvas(): HTMLCanvasElement | null {
 function loadCat(): Promise<CanvasImageSource | null> {
   return new Promise(resolve => {
     const image = new Image()
-    image.onload = () => resolve(image)
+    image.onload = () => {
+      const decoded = image.decode?.()
+      if (decoded) decoded.then(() => resolve(image), () => resolve(image))
+      else resolve(image)
+    }
     image.onerror = () => resolve(null)
     image.src = catUrl
   })
 }
 
 async function exportCard(canvas: HTMLCanvasElement) {
+  await waitFrames(2)
+  if (canvas.width !== 1080 || canvas.height !== 1440) throw new Error('bitmap')
   const filename = '猫来运转-今日运势.png'
   // #ifdef H5
   downloadPng(canvas, filename)
@@ -135,6 +148,20 @@ function userDataPath(): string {
 function nextPaint(): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, 30))
 }
+
+function waitFrames(count: number): Promise<void> {
+  return new Promise(resolve => {
+    const step = (left: number) => {
+      if (left <= 0) {
+        resolve()
+        return
+      }
+      if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => step(left - 1))
+      else setTimeout(() => step(left - 1), 16)
+    }
+    step(count)
+  })
+}
 </script>
 
 <style scoped>
@@ -149,10 +176,9 @@ function nextPaint(): Promise<void> {
 }
 .share-canvas {
   position: fixed;
-  left: -2400px;
-  top: 0;
-  width: 1080px;
-  height: 1440px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
   pointer-events: none;
 }
 </style>

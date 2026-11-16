@@ -1,7 +1,7 @@
 {
   "verifiedAt": "2026-10-03T09:54:59.043Z",
   "capturedAt": "2026-10-03T09:53:06.201Z",
-  "note": "Exports for removed modules were deleted. Remaining captures are almanac and tarot.",
+  "note": "Exports for removed modules, including tarot, were deleted. The remaining capture is the almanac.",
   "files": [
     {
       "name": "almanac-ui.json",
@@ -9,13 +9,6 @@
       "records": 1,
       "bytes": 4096,
       "sha256": "dcf684c9557fb3431357bb0bccf1bb32a384e6d0c6b29c057c5c1da79f557285"
-    },
-    {
-      "name": "tarot-ui.json",
-      "kind": "tarot",
-      "records": 1,
-      "bytes": 3297,
-      "sha256": "0335f4805434e6992c416273f9cfe376a1abe890a9c4315b6e77db6f771596ac"
     }
   ]
 }

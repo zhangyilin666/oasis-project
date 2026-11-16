@@ -1,7 +1,7 @@
 {
   "verifiedAt": "2026-10-03T09:37:02.352Z",
   "method": "production serializers → UTF-8 disk files → read back → exact bytes and parsed field equality",
-  "note": "Entries for removed modules were deleted with those features. Remaining files are almanac and tarot.",
+  "note": "Entries for removed modules, including tarot, were deleted. The remaining files are almanac snapshots.",
   "files": [
     {
       "name": "almanac-snapshot.json",
@@ -12,11 +12,6 @@
       "name": "almanac-collection.json",
       "bytes": 4191,
       "sha256": "48ecd60b062b8a111aa18273dcbfd456b44069eedb6e141d03f75f35e6e7216a"
-    },
-    {
-      "name": "tarot-records.json",
-      "bytes": 3344,
-      "sha256": "b128433ee153c6def777bd416b23554f5e18220b228c790070c64933841cfc3d"
     }
   ]
 }

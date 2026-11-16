@@ -32,15 +32,6 @@
       }
     },
     {
-      "path": "pages/tarot/index",
-      "style": {
-        "navigationBarTitleText": "塔罗",
-        "backgroundColor": "#faf8fc",
-        "navigationBarBackgroundColor": "#faf8fc",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
       "path": "pages/analyze/index",
       "style": {
         "navigationBarTitleText": "八字 AI 解读",

@@ -58,18 +58,14 @@
     <view v-else-if="isAlmanacLoading" class="content-panel"><view class="skeleton skeleton-title"></view><view class="skeleton skeleton-line"></view></view>
     <ErrorRetry v-else-if="isAlmanacError" message="黄历暂时没能加载" @retry="loadAlmanac" />
     <AppButton class="almanac-toggle text-button" @click="goAlmanac">按日期查看黄历与交节时刻 ↗</AppButton>
-    <view class="primary-entries" role="group" aria-label="选择八字解读或塔罗手记">
-      <AppButton class="primary-entry ming-entry" aria-label="命，八字 AI 解读" @click="goAnalyze">
-        <view class="primary-entry-top"><text class="primary-character">命</text><text class="primary-arrow" aria-hidden="true">↗</text></view>
-        <text class="primary-title">八字 AI 解读</text>
-        <text class="primary-description">填写出生资料<br />读一份专属解读</text>
-      </AppButton>
-      <AppButton class="primary-entry bu-entry" aria-label="塔罗，记下牌阵与复盘" @click="goTarot">
-        <view class="primary-entry-top"><text class="primary-character">牌</text><text class="primary-arrow" aria-hidden="true">↗</text></view>
-        <text class="primary-title">塔罗手记</text>
-        <text class="primary-description">记下已经选出的牌<br />之后原样回看</text>
-      </AppButton>
-    </view>
+    <AppButton class="bazi-entry" aria-label="八字 AI 解读" @click="goAnalyze">
+      <text class="bazi-mark">命</text>
+      <view class="bazi-copy">
+        <text class="bazi-title">八字 AI 解读</text>
+        <text class="bazi-desc">填写出生资料，读一份专属解读</text>
+      </view>
+      <text class="bazi-arrow" aria-hidden="true">↗</text>
+    </AppButton>
     <view class="support-links" role="group" aria-label="报告与记录">
       <AppButton class="support-link" @click="goReports"><AppIcon name="book" /><text>我的报告</text><text aria-hidden="true">↗</text></AppButton>
     </view>
@@ -153,7 +149,6 @@ async function loadAlmanac() {
  finally { if (generation === almanacGeneration) isAlmanacLoading.value = false }
 }
 function goAnalyze() { uni.navigateTo({ url: '/pages/analyze/index' }) }
-function goTarot() { uni.navigateTo({ url: '/pages/tarot/index' }) }
 function goAlmanac() { uni.navigateTo({ url: '/pages/almanac/index' }) }
 function goReports() { uni.switchTab({ url: '/pages/reports/index' }) }
 function goProfile() { uni.switchTab({ url: '/pages/profile/index' }) }
@@ -178,15 +173,12 @@ onPullDownRefresh(() => { loadAll().finally(() => uni.stopPullDownRefresh()) })
 .cat-greeting.is-playful { transform: rotate(-3deg); }
 .welcome-cat { width: 90px; height: 90px; }
 .cat-tap-hint { font-size: 10px; color: #796b85; }
-.primary-entries { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 12px; margin-top: 16px; }
-.primary-entry { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; width: 100%; min-height: 194px; margin: 0; padding: 20px 18px; box-sizing: border-box; border: 1px solid var(--entry-border); border-radius: 22px; background: var(--entry-background); color: var(--entry-ink); text-align: left; white-space: normal; line-height: 1.6; }
-.ming-entry { --entry-background: #f5f0fa; --entry-border: #d8c9e6; --entry-ink: #6f538c; }
-.bu-entry { --entry-background: #eee7f7; --entry-border: #cdbbdc; --entry-ink: #6f538c; }
-.primary-entry-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-bottom: 16px; }
-.primary-character { font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif; font-size: 44px; font-weight: 600; line-height: 1.1; }
-.primary-arrow { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex-shrink: 0; border: 1px solid var(--entry-border); border-radius: 50%; font-size: 19px; line-height: 1; }
-.primary-title { display: block; font-size: 18px; font-weight: 600; line-height: 1.5; }
-.primary-description { display: block; margin-top: 7px; font-size: 12px; line-height: 1.8; }
+.bazi-entry { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 88px; margin: 16px 0 0; padding: 16px 18px; box-sizing: border-box; border: 1px solid #d8c9e6; border-radius: 22px; background: #f5f0fa; color: #6f538c; text-align: left; white-space: normal; line-height: 1.5; }
+.bazi-mark { flex-shrink: 0; font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif; font-size: 36px; font-weight: 600; line-height: 1; }
+.bazi-copy { flex: 1; min-width: 0; }
+.bazi-title { display: block; font-size: 18px; font-weight: 600; }
+.bazi-desc { display: block; margin-top: 4px; font-size: 12px; line-height: 1.6; }
+.bazi-arrow { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex-shrink: 0; border: 1px solid #d8c9e6; border-radius: 50%; font-size: 18px; line-height: 1; }
 .support-links { display: flex; justify-content: center; margin: 14px 0 4px; padding: 4px 0; border-bottom: 1px solid #eae3ef; }
 .support-link { display: flex; align-items: center; justify-content: center; gap: 8px; width: auto; min-width: 0; min-height: 44px; padding: 8px 2px; margin: 0; background: transparent; color: #756480; font-size: 12px; line-height: 1.6; }
 .support-link .app-icon { width: 17px; height: 17px; }
@@ -217,6 +209,6 @@ onPullDownRefresh(() => { loadAll().finally(() => uni.stopPullDownRefresh()) })
 .almanac-toggle { width: 100%; min-height: 44px; white-space: normal; margin-top: 8px; border-top: 1px solid #f0ecf5; padding-top: 12px; }
 .footer-note { font-size: 12px; margin-top: 16px; }
 .skeleton-title { height: 20px; width: 40%; margin-bottom: 20px; }.skeleton-line { height: 14px; margin: 12px 0; }.short { width: 75%; }.loading-hint { font-size: 12px; color: var(--color-text-muted); }
-@media (max-width: 350px) { .home-page { padding-left: 16px; padding-right: 16px; }.daily-panel { padding: 0 14px 14px; }.daily-panel > .content-panel { padding: 14px; }.welcome-panel { padding: 14px 0; grid-template-columns: minmax(0, 1fr) 76px; gap: 8px; }.cat-greeting { width: 76px; }.welcome-cat { width: 76px; height: 76px; }.welcome-title { font-size: 19px; }.date-label { font-size: 10px; }.primary-entries { gap: 10px; }.primary-entry { min-height: 180px; padding: 17px 13px; border-radius: 19px; }.primary-character { font-size: 42px; }.primary-title { font-size: 17px; }.primary-description { font-size: 11px; }.primary-arrow { width: 25px; height: 25px; font-size: 18px; }.support-link { gap: 4px; font-size: 11px; }.support-link .app-icon { width: 15px; height: 15px; } }
+@media (max-width: 350px) { .home-page { padding-left: 16px; padding-right: 16px; }.daily-panel { padding: 0 14px 14px; }.daily-panel > .content-panel { padding: 14px; }.welcome-panel { padding: 14px 0; grid-template-columns: minmax(0, 1fr) 76px; gap: 8px; }.cat-greeting { width: 76px; }.welcome-cat { width: 76px; height: 76px; }.welcome-title { font-size: 19px; }.date-label { font-size: 10px; }.bazi-entry { gap: 10px; min-height: 76px; padding: 14px; }.bazi-mark { font-size: 30px; }.bazi-title { font-size: 16px; }.bazi-desc { font-size: 11px; }.bazi-arrow { width: 28px; height: 28px; }.support-link { gap: 4px; font-size: 11px; }.support-link .app-icon { width: 15px; height: 15px; } }
 @media (prefers-reduced-motion: reduce) { .cat-greeting { transition: none; }.cat-greeting.is-playful { transform: none; } }
 </style>

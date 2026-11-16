@@ -35,7 +35,7 @@
 - 报告空状态、错误恢复码的行内提示、恢复失败后保留当前账号、断网退出加载状态与恢复联网后重试通过。
 - 使用本机模拟 AI 与隔离 MySQL，未调用付费模型。本轮没有 Android / iPhone 真机；Safari 真机和公网 HTTPS 仍需部署后验收。
 
-本机预览地址：`http://localhost:18080`。复用 `docker-compose.mobile.yml` 发布，操作见 `deploy/MOBILE_GUIDE.md`。
+本机预览地址曾经是 `http://localhost:18080`。公网现在用 `docker-compose.api-ip.yml` 加上 `docker-compose.api-mobile.yml`，说明见 `deploy/README.md`。旧的整站 Compose 文件在 `deploy/archive/`。
 
 ## 三花小先生接入
 

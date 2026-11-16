@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "猫来运转",
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark",
-  "usingComponents": {
-    "error-retry": "/components/error-retry/error-retry"
-  }
-}

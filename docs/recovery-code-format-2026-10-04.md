@@ -8,7 +8,7 @@
 
 最新发布版本：`h5-new-recovery-only-20261004-103118`。
 
-- [服务端发布记录](verification/h5-new-recovery-only-20261004-103118-server.json)
-- [公网文件校验](verification/h5-new-recovery-only-20261004-103118-public.json)
+- [服务端发布记录](archive/verification/h5-new-recovery-only-20261004-103118-server.json)
+- [公网文件校验](archive/verification/h5-new-recovery-only-20261004-103118-public.json)
 
 本记录不包含任何真实恢复码。

@@ -4,8 +4,8 @@
 
 ## 输入与数据边界
 
-- 日期逻辑使用项目已有的 `lunar-typescript`：公历与农历双向转换；闰月为独立选项并明确标注“闰”；缺项、无效日期及换月后失效的日期均报错，不自动补全或截断。最终公历日期下限为 `1900-01-01`，上限由页面传入当日本地日期；1900 年初对应的农历 1899 年可参与转换。见 [日期逻辑](../oasis-uniapp/src/domain/birth-input/date.ts)。
-- 地区支持省、市及可选区县；直辖市名称去除相邻重复。海外地点、历史地名或精确出生位置保留手动录入路径。解析器验证选项类型、编码和上下级关系，错误组合返回空结果。见 [地区解析器](../oasis-uniapp/src/domain/birth-input/places.ts)。
+- 日期逻辑使用项目已有的 `lunar-typescript`：公历与农历双向转换；闰月为独立选项并明确标注“闰”；缺项、无效日期及换月后失效的日期均报错，不自动补全或截断。最终公历日期下限为 `1900-01-01`，上限由页面传入当日本地日期；1900 年初对应的农历 1899 年可参与转换。见 [日期逻辑](../../oasis-uniapp/src/domain/birth-input/date.ts)。
+- 地区支持省、市及可选区县；直辖市名称去除相邻重复。海外地点、历史地名或精确出生位置保留手动录入路径。解析器验证选项类型、编码和上下级关系，错误组合返回空结果。见 [地区解析器](../../oasis-uniapp/src/domain/birth-input/places.ts)。
 - 地区表含 **34 个省级分组、369 个市级分组、3478 个县区条目**，包括香港、澳门、台湾及源表的直辖县、开发区等选择项；不是逐项审定的历史行政区划。
 - 其中 **246 个城市**提供 GeoNames 的 WGS84 城市行政中心地名参考点，另 **123 个市级分组不自动填入坐标**。自动坐标始终标注“城市中心（近似）”；选择区县仅细化地点名称，不改变坐标精度。缺失或歧义不使用省会、邻市或区县中心代替。
 - 大陆默认 `Asia/Shanghai`（北京时间），香港、澳门、台湾分别默认 `Asia/Hong_Kong`、`Asia/Macau`、`Asia/Taipei`。地区选择不能确定历史出生记录采用的时钟，用户仍需按实际记录核对时区与经纬度。
@@ -14,13 +14,13 @@
 
 名称提取自 [@vant/area-data 2.2.0](https://registry.npmjs.org/@vant/area-data/-/area-data-2.2.0.tgz)，按 MIT 许可保留原版权声明。城市参考点提取自 [GeoNames cities15000](https://download.geonames.org/export/dump/cities15000.zip) 的 2026-10-03 快照，遵循 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)。只纳入行政中心类型的居住地记录，以精确中文名称／别名匹配，并核对地区、省级归属及大陆非直辖市的地级编码；多个候选或不符合条件时不纳入。未作坐标系转换。
 
-[来源清单](../oasis-uniapp/src/domain/birth-input/data/provenance.json) 保存下载地址、快照时间、源文件及生成文件 SHA-256、筛选规则和未纳入条目；[城市坐标表](../oasis-uniapp/src/domain/birth-input/data/city-centers.json) 保留每个点的 GeoNames ID 与源记录信息。名称 JSON 为 86,792 字节、坐标 JSON 为 57,433 字节，两者 gzip 合计约 36 KB。
+[来源清单](../../oasis-uniapp/src/domain/birth-input/data/provenance.json) 保存下载地址、快照时间、源文件及生成文件 SHA-256、筛选规则和未纳入条目；[城市坐标表](../../oasis-uniapp/src/domain/birth-input/data/city-centers.json) 保留每个点的 GeoNames ID 与源记录信息。名称 JSON 为 86,792 字节、坐标 JSON 为 57,433 字节，两者 gzip 合计约 36 KB。
 
-[公开中文说明](../oasis-uniapp/src/static/data-licenses/birth-places.txt)、[原 MIT 许可](../oasis-uniapp/src/static/data-licenses/vant-area-data-MIT.txt)、[GeoNames 格式和许可声明](../oasis-uniapp/src/static/data-licenses/geonames-readme.txt)、[CC BY 4.0 全文](../oasis-uniapp/src/static/data-licenses/CC-BY-4.0-legalcode.txt) 及 [英文署名](../oasis-uniapp/src/static/data-licenses/birth-place-attribution.txt) 均置于 `src/static/data-licenses/`，供 H5 和小程序随静态资源分发。
+[公开中文说明](../../oasis-uniapp/src/static/data-licenses/birth-places.txt)、[原 MIT 许可](../../oasis-uniapp/src/static/data-licenses/vant-area-data-MIT.txt)、[GeoNames 格式和许可声明](../../oasis-uniapp/src/static/data-licenses/geonames-readme.txt)、[CC BY 4.0 全文](../../oasis-uniapp/src/static/data-licenses/CC-BY-4.0-legalcode.txt) 及 [英文署名](../../oasis-uniapp/src/static/data-licenses/birth-place-attribution.txt) 均置于 `src/static/data-licenses/`，供 H5 和小程序随静态资源分发。
 
 ## 已完成验证
 
-`node --test tests/birth-input-places.test.mjs`：**8 项通过**。覆盖已知省市区、北京及杭州独立坐标样例、区县不提高精度、缺失坐标不猜测、港澳台与新疆的时区默认值、错误类型／编码／上下级关系、返回值隔离、数据哈希及原始许可文件。见 [地区专项测试](../oasis-uniapp/tests/birth-input-places.test.mjs)。地区相关文件的 `git diff --check` 通过。
+`node --test tests/birth-input-places.test.mjs`：**8 项通过**。覆盖已知省市区、北京及杭州独立坐标样例、区县不提高精度、缺失坐标不猜测、港澳台与新疆的时区默认值、错误类型／编码／上下级关系、返回值隔离、数据哈希及原始许可文件。见 [地区专项测试](../../oasis-uniapp/tests/birth-input-places.test.mjs)。地区相关文件的 `git diff --check` 通过。
 
 另有日期工具及既有时区／档案、西占、印度占星、七政回归 **92 项通过**（其中新日期工具 7 项），合计 **100 项**相关测试通过。最终 `npm run typecheck`、正式 H5 构建与微信小程序构建均通过；两份产物均包含五份地区数据署名和许可文件。构建仍有原有 Sass legacy-js-api 弃用提示，没有新增构建错误。
 

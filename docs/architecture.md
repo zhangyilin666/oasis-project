@@ -2,7 +2,7 @@
 
 ## 1. 项目定义
 
-猫来运转是一个**AI 驱动的传统文化生活辅助平台**，以微信小程序为前端载体，FastAPI 为后端核心，融合农历历法、八字命理、黄历宜忌等传统文化知识库，通过 AI Agent 编排引擎为用户提供个性化分析与建议。
+猫来运转是一个**AI 驱动的传统文化生活辅助平台**。当前前端是 `oasis-uniapp`（公网以 H5 提供），后端是 FastAPI。旧微信小程序已从本分支移除，完整代码在 `archive/legacy-frontend`。
 
 ### 核心能力
 
@@ -79,28 +79,9 @@ D:\Oasis_Project\
 │       └── utils\                     ← 工具函数
 │           ├── security.py           ← JWT 签发/验证/宽限刷新
 │           └── __init__.py
-├── frontend\                          ← 微信小程序（6 页面 + 3 组件）
-│   ├── app.js / app.json / app.wxss  ← 应用入口
-│   ├── pages\                         ← 页面
-│   │   ├── login\                    ← 微信一键登录
-│   │   ├── home\                     ← 首页（黄历概览）
-│   │   ├── analyze\                  ← 八字分析（表单+结果）
-│   │   ├── reports\                  ← 报告列表（分页）
-│   │   ├── report-detail\            ← 报告详情（完整分析）
-│   │   ├── profile\                  ← 个人中心
-│   │   └── agreement\               ← 用户协议
-│   ├── components\                    ← 通用组件
-│   │   ├── loading-overlay\          ← 加载遮罩
-│   │   ├── empty-state\              ← 空状态占位
-│   │   └── error-retry\              ← 错误重试
-│   ├── services\                      ← API 调用封装
-│   │   ├── auth.service.js           ← 登录/刷新
-│   │   ├── oasis.service.js          ← 分析/报告
-│   │   └── almanac.service.js        ← 黄历查询
-│   └── utils\                         ← 工具
-│       ├── request.js                ← HTTP 客户端（401 静默刷新）
-│       ├── storage.js                ← 本地存储
-│       └── ui.js                     ← UI 工具（loading/toast）
+├── oasis-uniapp\                      ← 当前前端（H5 / App）
+│   └── src\pages\                     ← 首页运势、八字、黄历、塔罗、我的
+# 旧微信小程序已从本分支删除，完整代码在分支 archive/legacy-frontend
 ├── data_center\                       ← 数据存储
 │   └── knowledge\                     ← 古籍知识库文档
 │       ├── shishen_detail.txt        ← 十神详解

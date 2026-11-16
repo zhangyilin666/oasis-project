@@ -1,6 +1,0 @@
-<!-- 法律文本页（用户协议 / 隐私政策） -->
-<view class="agreement-page">
-  <view class="agreement-body">
-    <text class="agreement-text">{{content}}</text>
-  </view>
-</view>

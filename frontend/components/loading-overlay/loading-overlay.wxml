@@ -1,7 +1,0 @@
-<!-- 全屏加载遮罩 -->
-<view class="loading-overlay">
-  <view class="loading-content">
-    <view class="spinner"></view>
-    <text class="loading-text">{{text}}</text>
-  </view>
-</view>

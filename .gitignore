@@ -1,9 +1,11 @@
-# 环境变量（含密钥，绝对不入库）
+# 环境变量（含密钥，绝对不入库）。示例文件仍跟踪。
 .env
-.env.mobile
-.env.mobile.*
-!deploy/.env.mobile.example
-.env.api
+.env.*
+!.env.demo
+!**/.env.demo
+!**/.env.example
+!**/.env.*.example
+!**/.env.production.template
 deploy/out/
 *.sqlite3
 .pytest_cache/
@@ -27,13 +29,22 @@ __pycache__/
 .venv/
 *.egg-info/
 
-# Node
+# Node 依赖与前端构建产物
 node_modules/
+dist/
+build/
+unpackage/
+*.apk
+
+# 证书与密钥库
+*.keystore
+*.jks
+*.p12
+*.pfx
+
+# 含本机数据库口令的 Claude 本地设置（历史提交里仍有，需轮换口令）
+.claude/settings.local.json
 
 # 日志
 *.log
 *.log.[0-9]*
-
-# uniapp 构建产物（含误提交的 APK 缓存）
-unpackage/
-*.apk

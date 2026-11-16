@@ -1,6 +1,6 @@
 # 猫来运转手机网页版：本地验证与服务器发布
 
-> 安卓和 iPhone 实际使用选择此 H5 路线。已有 IP HTTPS API 的服务器，请用 [IP 手机网页版部署指南](MOBILE_IP_GUIDE.md) 复用现有数据库和证书；下面的域名方案适用于新部署。
+> 公网 `https://162.211.181.253` 现在不用这份指南里的 Compose。现行做法见 [deploy/README.md](README.md) 和 [IP 手机网页版部署指南](MOBILE_IP_GUIDE.md)。下面保留的是旧的域名整站步骤，对应文件已放到 `deploy/archive/docker-compose.mobile.yml`，不要在当前服务器上直接执行。
 
 本轮交付使用 `oasis-uniapp` 的 H5 网页和 `python_backend`。安卓与 iPhone 共用一个网址。暂不发布微信小程序，也不需要安装 APK 或上架 App Store。
 
@@ -20,7 +20,7 @@
 
 ## 部署步骤（服务器项目根目录）
 
-1. 将项目上传到服务器，保留 `data_center/knowledge`、`deploy`、`python_backend`、`oasis-uniapp` 和 `docker-compose.mobile.yml`。
+1. 将项目上传到服务器，保留 `data_center/knowledge`、`deploy`、`python_backend`、`oasis-uniapp`。旧的整站文件在 `deploy/archive/docker-compose.mobile.yml`。
 2. 复制配置模板：
 
 ```sh
@@ -33,9 +33,10 @@ chmod 600 .env.mobile
 5. 启动：
 
 ```sh
-docker compose --env-file .env.mobile -f docker-compose.mobile.yml up -d --build
-docker compose --env-file .env.mobile -f docker-compose.mobile.yml ps
-docker compose --env-file .env.mobile -f docker-compose.mobile.yml logs --tail 100 backend web
+# 历史命令。文件已不在仓库根目录，且路径按旧位置书写，当前服务器请改用 deploy/README.md。
+docker compose --env-file .env.mobile -f deploy/archive/docker-compose.mobile.yml up -d --build
+docker compose --env-file .env.mobile -f deploy/archive/docker-compose.mobile.yml ps
+docker compose --env-file .env.mobile -f deploy/archive/docker-compose.mobile.yml logs --tail 100 backend web
 ```
 
 首次构建需要下载镜像和依赖。启动时自动执行数据库迁移；Caddy 负责网页、API 转发和域名 HTTPS 证书。确认 db、backend 健康且 web 运行后，用手机访问 `https://实际域名`。
@@ -64,7 +65,7 @@ ALLOW_MOCK_AI=true
 ```sh
 mkdir -p backups
 chmod 700 backups
-docker compose --env-file .env.mobile -f docker-compose.mobile.yml exec -T db sh -c 'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysqldump -uroot --single-transaction --no-tablespaces oasis_db' > "backups/oasis-$(date +%Y%m%d-%H%M%S).sql"
+docker compose --env-file .env.mobile -f deploy/archive/docker-compose.mobile.yml exec -T db sh -c 'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysqldump -uroot --single-transaction --no-tablespaces oasis_db' > "backups/oasis-$(date +%Y%m%d-%H%M%S).sql"
 chmod 600 backups/*.sql
 ```
 
@@ -91,7 +92,7 @@ npm run build:h5
 - 空 MySQL 8 数据库迁移到最新版本、知识库加载、网页与 API 同域访问通过。
 - MySQL 并发验证：6 次提交恰好接受 5 次、拒绝 1 次；5 份报告均完成；4 次同时每日查询仅生成一次；账号恢复及跨用户报告访问隔离通过。
 - 浏览器 390px、360px 手机视口验证填写表单、报告轮询与列表、流年展开、每日查询对象和个人页；检查页面无横向溢出。此项为 Chromium 手机视口模拟，尚未在真实 Android / iPhone Safari 上验收。
-- 已用虚构出生信息和隔离数据库完成一次官方 DeepSeek 真正调用：报告、引用字段和今日提示成功，第二次今日查询命中缓存。详见 [真实 AI 联调记录](../docs/live-ai-acceptance.md)。这只是一份样例，不能代表模型长期稳定性或解读质量。
+- 已用虚构出生信息和隔离数据库完成一次官方 DeepSeek 真正调用：报告、引用字段和今日提示成功，第二次今日查询命中缓存。详见 [真实 AI 联调记录](../docs/archive/live-ai-acceptance.md)。这只是一份样例，不能代表模型长期稳定性或解读质量。
 - 公网 HTTPS、真实 Android / iPhone Safari 访问及服务器数据恢复仍待服务器就绪后验证。构建/测试仍有上游依赖弃用提示，但不影响本轮检查通过。
 
 ## 上线前仍需测试

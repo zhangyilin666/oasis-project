@@ -26,4 +26,4 @@
 - 前端类型检查、现有 5 项测试、最终 H5 生产构建通过。
 - 隔离 SQLite 演示环境生成模拟报告，Chromium 390px / 320px 手机视口验证资料展开、小猫词典、键盘 Enter 操作和无横向溢出。
 - 旧报告缺少 references / verification 时仍可打开，并显示未保存资料与未核对提示。
-- 第一阶段检查未执行真实 AI API 调用。随后于 2026-09-23 完成真实 DeepSeek 联调及部署依赖回归，见 [真实 AI 验收记录](live-ai-acceptance.md)。尚未部署公网或在实体 iPhone / 安卓手机验收。
+- 第一阶段检查未执行真实 AI API 调用。随后于 2026-09-23 完成真实 DeepSeek 联调及部署依赖回归，见 [真实 AI 验收记录](archive/live-ai-acceptance.md)。尚未部署公网或在实体 iPhone / 安卓手机验收。

@@ -1,6 +1,0 @@
-<!-- 错误重试 -->
-<view class="error-retry">
-  <view class="error-icon">⚠️</view>
-  <text class="error-message">{{message}}</text>
-  <button class="btn-retry" bindtap="onRetry">点击重试</button>
-</view>

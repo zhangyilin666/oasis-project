@@ -18,7 +18,7 @@
 
 ### A3. 填写公司/运营方信息
 
-- [x] `frontend/pages/agreement/agreement.js` — 用户协议 + 隐私政策已填入【张轶林】和 `3438627347@qq.com`
+- [x] 用户协议与隐私政策已写入当前 uni-app 的协议页。旧微信小程序 `frontend/` 已移到分支 `archive/legacy-frontend`
 
 ### A4. 生产环境 .env 配置
 
@@ -49,7 +49,7 @@ RATE_LIMIT_ANALYZE_PER_DAY=5
 ## B. 代码中的 TODO（搜索替换）
 
 - [ ] `oasis-uniapp/.env.local` — `VITE_API_BASE_URL` 替换为服务器地址
-- [ ] `deploy/nginx/oasis.conf` — 全局搜索 `your-domain.com` 替换为真实域名
+- [ ] 旧 Nginx 配置已放到 `deploy/archive/nginx/oasis.conf`，当前公网不用它
 
 ---
 
@@ -101,11 +101,8 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 4
 ### D2. Nginx
 
 ```bash
-# 复制配置
-cp deploy/nginx/oasis.conf /etc/nginx/sites-available/
-# 修改域名后
-ln -s /etc/nginx/sites-available/oasis.conf /etc/nginx/sites-enabled/
-nginx -t && systemctl reload nginx
+# 旧 Nginx 配置已归档，当前公网用 Caddy，见 deploy/README.md。
+# 若仍要查看旧文件：deploy/archive/nginx/oasis.conf
 ```
 
 ### D3. 进程守护（systemd）
@@ -172,11 +169,11 @@ mysql -u oasis_user -p -e "SELECT COUNT(*) FROM users" oasis_db
 | 文件 | 用途 |
 |------|------|
 | `python_backend/Dockerfile` | Backend 容器镜像构建 |
-| `docker-compose.yml` | 一键部署（MySQL + Backend + Nginx） |
+| `deploy/archive/docker-compose.nginx.yml` | 旧的 Nginx 一键部署，当前公网不用 |
 | `deploy/systemd/oasis.service` | 非 Docker 部署的 systemd 进程守护 |
 | `deploy/mysql/init.sql` | 数据库初始化脚本 |
 | `deploy/.env.production.template` | 生产环境变量模板（含注释） |
-| `deploy/deploy.sh` | 一键部署脚本（自动生成密钥+构建+SSL） |
+| `deploy/archive/deploy-nginx.sh` | 旧的 Nginx 部署脚本，当前公网不用 |
 
 ## H. 上线前最终待办（按优先级）
 
@@ -184,7 +181,7 @@ mysql -u oasis_user -p -e "SELECT COUNT(*) FROM users" oasis_db
 1. [ ] 生成强密码 JWT_SECRET_KEY：`openssl rand -hex 32`
 2. [ ] 生成强密码 MYSQL_PASSWORD：`openssl rand -hex 16`
 3. [ ] 更换 DeepSeek API Key（当前 .env 中的密钥已在本机使用过）
-4. [ ] deploy/nginx/oasis.conf 替换 `your-domain.com` 为真实域名
+4. [ ] 当前公网部署见 `deploy/README.md`，不要再改已归档的 Nginx 配置
 5. [ ] App 端 `oasis-uniapp/.env.local` 的 `VITE_API_BASE_URL` 指向服务器
 
 ### 🟡 强烈建议
@@ -194,5 +191,5 @@ mysql -u oasis_user -p -e "SELECT COUNT(*) FROM users" oasis_db
 ### 🟢 首次部署
 8. [ ] 服务器安装 Docker: `curl -fsSL https://get.docker.com | bash`
 9. [ ] 上传项目到服务器
-10. [ ] 运行 `./deploy/deploy.sh` 或 `docker compose up -d`
+10. [ ] 按 `deploy/README.md` 用 IP 版 Compose 启动，不要运行已归档的 `deploy/archive/deploy-nginx.sh`
 11. [ ] App 端 HBuilderX 重新打包 APK

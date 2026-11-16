@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "分析报告",
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark",
-  "usingComponents": {
-    "empty-state": "/components/empty-state/empty-state",
-    "error-retry": "/components/error-retry/error-retry"
-  }
-}

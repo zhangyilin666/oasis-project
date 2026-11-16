@@ -31,6 +31,7 @@
         <text v-if="fortune.lucky_direction">方位 · {{ fortune.lucky_direction }}</text>
       </view>
       <text class="fortune-reminder" v-if="fortune.warning && fortune.warning !== '无'">{{ fortune.warning }}</text>
+      <FortuneShareButton :fortune="fortune" :almanac="almanac" />
     </view>
     <view v-else-if="isFortuneError && fortuneErrorCode === 400" class="content-panel first-step">
       <view class="first-step-icon"><AppIcon name="moon" /></view>
@@ -85,6 +86,7 @@ import { DEMO_MODE } from '@/config/env'
 import ErrorRetry from '@/components/ErrorRetry.vue'
 import CatCompanion from '@/components/CatCompanion.vue'
 import AppIcon from '@/components/AppIcon.vue'
+import FortuneShareButton from '@/components/FortuneShareButton.vue'
 const fortune = ref<DailyFortune | null>(null)
 const isFortuneLoading = ref(true), isFortuneError = ref(false), fortuneErrorCode = ref(0)
 const almanac = ref<AlmanacDay | null>(null)

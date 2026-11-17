@@ -26,6 +26,7 @@
       <view class="fortune-heading"><text class="fortune-ganzhi">{{ fortune.day_gan_zhi }}日</text><text class="status-chip">{{ fortune.day_relation }}</text></view>
       <AppButton class="person-switch" @click="goReports" aria-label="到报告页切换每日查询对象"><text>{{ fortune.birth_info }}</text><text class="switch-label">切换 ›</text></AppButton>
       <text class="fortune-copy">{{ fortune.fortune_text }}</text>
+      <text class="fortune-clash" v-if="showClash">冲合 · {{ fortune.clash_info }}</text>
       <view class="fortune-extras">
         <text v-if="fortune.lucky_color">幸运色 · {{ fortune.lucky_color }}</text>
         <text v-if="fortune.lucky_direction">方位 · {{ fortune.lucky_direction }}</text>
@@ -75,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { computed, ref, onUnmounted } from 'vue'
 import { onShow, onPullDownRefresh, onHide } from '@dcloudio/uni-app'
 import { getAlmanacApi, getDailyFortuneApi, type AlmanacDay, type DailyFortune } from '@/api/xiaoyi'
 import { getSelectedReport, setSelectedReport, clearSelectedReport } from '@/utils/storage'
@@ -87,6 +88,10 @@ import FortuneShareButton from '@/components/FortuneShareButton.vue'
 import FortuneStick from '@/components/FortuneStick.vue'
 const fortune = ref<DailyFortune | null>(null)
 const todayStick = ref<{ number: number; grade: string; line: string } | null>(null)
+const showClash = computed(() => {
+  const clash = fortune.value?.clash_info?.trim()
+  return Boolean(clash && clash !== '无冲合')
+})
 const isFortuneLoading = ref(true), isFortuneError = ref(false), fortuneErrorCode = ref(0)
 const almanac = ref<AlmanacDay | null>(null)
 const isAlmanacLoading = ref(true), isAlmanacError = ref(false), almanacExpanded = ref(false)
@@ -195,6 +200,7 @@ onPullDownRefresh(() => { loadAll().finally(() => uni.stopPullDownRefresh()) })
 .person-switch > text:first-child { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .switch-label { white-space: nowrap; color: #6a509c; }
 .fortune-copy { display: block; overflow-wrap: anywhere; font-size: 16px; line-height: 1.9; white-space: pre-wrap; }
+.fortune-clash { display: block; margin-top: 12px; font-size: 14px; line-height: 1.7; color: #6d5887; }
 .fortune-extras { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; font-size: 12px; color: #6d5887; }
 .fortune-extras text { background: #f5f1fa; border-radius: 8px; padding: 6px 10px; }
 .fortune-reminder { display: block; background: #fcf4e9; color: #906438; padding: 12px; border-radius: 12px; margin-top: 12px; font-size: 14px; }

@@ -22,6 +22,16 @@ def test_invalid_daily_ai_result_is_rejected(text):
         _parse_ai_response(text)
 
 
+def test_daily_ai_text_may_be_a_few_hundred_characters_and_stops_at_2000():
+    from app.services.daily_fortune_service import _parse_ai_response
+    essay = "今" * 320
+    assert 250 <= len(essay) <= 400
+    parsed = _parse_ai_response(json.dumps({"fortune_text": essay}))
+    assert parsed["fortune_text"] == essay
+    with pytest.raises(RuntimeError):
+        _parse_ai_response(json.dumps({"fortune_text": "今" * 2001}))
+
+
 def test_daily_ai_markdown_json_is_accepted_without_fabricating_fields():
     from app.services.daily_fortune_service import _parse_ai_response
     result = _parse_ai_response('```json\n{"fortune_text":" 今日建议 "}\n```')

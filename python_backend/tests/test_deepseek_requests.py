@@ -40,5 +40,13 @@ def test_daily_uses_same_json_mode_and_model(monkeypatch):
     result = daily_fortune_service._call_deepseek_api(DailyFortuneData())
     assert result['fortune_text'] == '放慢脚步'
     assert calls[0]['model'] == 'deepseek-flash'
+    assert calls[0]['max_tokens'] == 1024
     assert calls[0]['response_format'] == {'type': 'json_object'}
     assert calls[0]['extra_body']['thinking']['type'] == 'disabled'
+    prompt = calls[0]['messages'][0]['content']
+    assert '6 到 8 句话' in prompt
+    assert '250 到 400 个汉字' in prompt
+    assert '第一段讲今天对你意味着什么' in prompt
+    assert '第二段讲今天可以怎么做' in prompt
+    assert '200字以内' not in prompt
+    assert '3-5句话' not in prompt

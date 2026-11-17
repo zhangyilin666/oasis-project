@@ -66,7 +66,7 @@ class DailyFortune(Base):
     fortune_text: Mapped[str] = mapped_column(
         Text,
         nullable=False,
-        comment="AI生成的运势解读（200字以内）",
+        comment="AI生成的运势解读（约250到400字，两段）",
     )
 
     lucky_color: Mapped[str | None] = mapped_column(
